@@ -5,6 +5,7 @@ using UnityEngine.InputSystem.XR;
 public class CroutchState : PlayerMoveState
 {
     [SerializeField] private float croutchOffset;
+    [SerializeField] private float cellingCheckRadius;
     public override void Enter()
     {
         controller.PlayerBody.transform.localScale = new Vector3(1,0.5f,1);
@@ -18,6 +19,16 @@ public class CroutchState : PlayerMoveState
 
     public override void Handle()
     {
+        Collider[] collidersAbove = Physics.OverlapSphere(controller.HeadCheck.transform.position, cellingCheckRadius, controller.GroundLayer);
+        Debug.Log(collidersAbove.Length);
+        if (collidersAbove.Length != 0)
+        {
+            CanExit = false;
+        }
+        else
+        {
+            CanExit = true;
+        }
         Vector2 horizontalInput = controller.HorizontalInput;
         Vector3 moveDirection = (controller.PlayerBody.transform.right * horizontalInput.x + controller.PlayerBody.transform.forward * horizontalInput.y).normalized;
         moveDirection = Vector3.ProjectOnPlane(moveDirection, controller.SlopeNormal);

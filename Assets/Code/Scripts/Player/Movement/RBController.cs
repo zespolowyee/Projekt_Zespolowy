@@ -8,9 +8,9 @@ public class RBController : NetworkBehaviour
     [SerializeField] private GameObject playerBody;
     [SerializeField] private GameObject cameraHolder;
     [SerializeField] private Transform groundCheck;
+    [SerializeField] private Transform headCheck;
 
     [Header("Basic Parameters")]
-    [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpPower = 5f;
     [SerializeField] private float mouseSensitivity = 2f;
 
@@ -24,6 +24,8 @@ public class RBController : NetworkBehaviour
     public Vector3 SlopeNormal { get; private set; }
     public float GroundCheckDistance { get => groundCheckDistance; private set {} }
     public GameObject PlayerBody { get => playerBody; set => playerBody = value; }
+    public LayerMask GroundLayer { get => groundLayer; set => groundLayer = value; }
+    public Transform HeadCheck { get => headCheck; set => headCheck = value; }
 
     private bool isGrounded;
     private float verticalCameraRotation = 0f;
@@ -53,7 +55,8 @@ public class RBController : NetworkBehaviour
     {
         if (!IsOwner)
         {
-            cameraHolder.SetActive(false); 
+            cameraHolder.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
             enabled = false;
             return;
         }
@@ -74,6 +77,11 @@ public class RBController : NetworkBehaviour
 
     private void SelectState()
     {
+        if (!moveState.CanExit)
+        {
+            return;
+        }
+
         PlayerMoveState nextState = moveState;
         if (isGrounded)
         {
@@ -91,7 +99,7 @@ public class RBController : NetworkBehaviour
         }
 
 
-        //Wykonujemy metody na wyjœciu i wejœciu do nowego stanu jeœli takowy siê zmieni³
+        //Wykonujemy metody na wyjœciu i wejœciu do nowego stanu jeœli on siê zmieni³
         if (nextState!= moveState)
         {
             moveState.Exit();

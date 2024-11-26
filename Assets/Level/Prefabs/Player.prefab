@@ -267,6 +267,7 @@ Transform:
   - {fileID: 6549581832506345858}
   - {fileID: 2147997873366132987}
   - {fileID: 1177678326903758528}
+  - {fileID: 8447003165316080034}
   m_Father: {fileID: 5628163060577913161}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1667811434367605448
@@ -388,7 +389,7 @@ MonoBehaviour:
   playerBody: {fileID: 5891105665328763567}
   cameraHolder: {fileID: 3425112624825140561}
   groundCheck: {fileID: 2147997873366132987}
-  moveSpeed: 5
+  headCheck: {fileID: 8447003165316080034}
   jumpPower: 20
   mouseSensitivity: 1
   groundCheckDistance: 0.1
@@ -402,6 +403,7 @@ MonoBehaviour:
   croutchState:
     moveSpeed: 3
     croutchOffset: 0.249
+    cellingCheckRadius: 0.4
 --- !u!114 &7279186434539353556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -438,6 +440,37 @@ MonoBehaviour:
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!1 &6051199826509307895
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8447003165316080034}
+  m_Layer: 0
+  m_Name: CellingCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8447003165316080034
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6051199826509307895}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.063, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8123032246194385685}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8653025118762136800
 GameObject:
   m_ObjectHideFlags: 0
