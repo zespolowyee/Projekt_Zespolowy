@@ -330,7 +330,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5891105665328763567}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 6a806881b1b455849addf7588c4bf71f, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -392,16 +392,23 @@ MonoBehaviour:
   headCheck: {fileID: 8447003165316080034}
   jumpPower: 20
   mouseSensitivity: 1
-  groundCheckDistance: 0.1
+  groundCheckDistance: 0.2
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
   walkState:
     moveSpeed: 10
+    smoothingFactor: 10
+  airbourneState:
+    moveSpeed: 5
+    smoothingFactor: 5
+    groundCheckDelay: 0.2
   runState:
     moveSpeed: 20
+    smoothingFactor: 5
   croutchState:
     moveSpeed: 3
+    smoothingFactor: 0
     croutchOffset: 0.249
     cellingCheckRadius: 0.4
 --- !u!114 &7279186434539353556

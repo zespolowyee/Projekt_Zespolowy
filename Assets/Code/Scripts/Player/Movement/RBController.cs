@@ -26,12 +26,14 @@ public class RBController : NetworkBehaviour
     public GameObject PlayerBody { get => playerBody; set => playerBody = value; }
     public LayerMask GroundLayer { get => groundLayer; set => groundLayer = value; }
     public Transform HeadCheck { get => headCheck; set => headCheck = value; }
+    public bool IsGrounded { get => isGrounded; set => isGrounded = value; }
 
     private bool isGrounded;
     private float verticalCameraRotation = 0f;
 
     [Header("State Setup")]
     public WalkState walkState;
+    public AirborneState airbourneState;
     public RunState runState;
     public CroutchState croutchState;
 
@@ -49,6 +51,7 @@ public class RBController : NetworkBehaviour
         walkState.Setup(this);
         runState.Setup(this);
         croutchState.Setup(this);
+        airbourneState.Setup(this);
     }
 
     private void Start()
@@ -64,6 +67,7 @@ public class RBController : NetworkBehaviour
 
     private void FixedUpdate()
     {
+        SelectState();
         moveState.Handle();
         HandleGroundCheck();
     }
@@ -72,7 +76,7 @@ public class RBController : NetworkBehaviour
     {
         HandleCamera();
         HandleInput();
-        SelectState();
+
     }
 
     private void SelectState()
@@ -98,14 +102,7 @@ public class RBController : NetworkBehaviour
             }
         }
 
-
-        //Wykonujemy metody na wyjœciu i wejœciu do nowego stanu jeœli on siê zmieni³
-        if (nextState!= moveState)
-        {
-            moveState.Exit();
-            moveState = nextState;
-            moveState.Enter();
-        }
+        SwitchToState(nextState, false);
 
     }
 
@@ -150,7 +147,22 @@ public class RBController : NetworkBehaviour
     {
         if (isGrounded)
         {
+            SwitchToState(airbourneState, false);
             Rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
         }
+    }
+
+    public void SwitchToState(PlayerMoveState nextState, bool ignoreCanExitClause)
+    {
+        //Jeœli pole CanExit w stanie != true, wtedy nie zmieniamy stanu. Chyba ¿e wymusimy to argumentem ignoreCanExitClause
+        if (!moveState.CanExit && !ignoreCanExitClause)
+        {
+            return;
+        }
+
+        //Wykonujemy metody na wyjœciu i wejœciu do nowego stanu jeœli on siê zmieni³
+        moveState.Exit();
+        moveState = nextState;
+        moveState.Enter();
     }
 }
