@@ -6,7 +6,7 @@ public class PlayerMoveState : State
     protected RBController controller;
     public bool CanExit { get; protected set; }
 
-    [SerializeField] protected float moveSpeed;
+    [SerializeField] public float moveSpeed;
     [SerializeField] protected float smoothingFactor;
     public void Setup(RBController controller)
     {
