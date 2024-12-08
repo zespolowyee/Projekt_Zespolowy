@@ -56,6 +56,7 @@ public class StairGenerator : MonoBehaviour
                 text.color = Color.black;
                 text.transform.SetParent(stair.transform);
                 text.transform.localPosition = new Vector3(width / 2, instancedHeight - height / 1.5f, 0);
+                text.transform.rotation = transform.rotation;
             }
         };
 
