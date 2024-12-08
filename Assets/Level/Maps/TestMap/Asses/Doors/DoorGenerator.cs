@@ -5,6 +5,8 @@ using UnityEngine.ProBuilder;
 using UnityEngine.ProBuilder.MeshOperations;
 using System.Globalization;
 using TMPro;
+using Unity.VisualScripting;
+using UnityEditor.ProBuilder;
 
 [ExecuteAlways]
 public class Door : MonoBehaviour
@@ -36,24 +38,25 @@ public class Door : MonoBehaviour
         {
             material = BuiltinMaterials.defaultMaterial;
         }
-        GenerateSlopes();
+        GenerateDoors();
     }
 
-    void GenerateSlopes()
+    void GenerateDoors()
     {
         #if UNITY_EDITOR
         UnityEditor.EditorApplication.delayCall += () =>
         {
-            foreach (var stair in GetComponentsInChildren<ProBuilderMesh>())
+            if (this == null) return;
+            foreach (var door in GetComponentsInChildren<ProBuilderMesh>())
             {
-                DestroyImmediate(stair.gameObject);
+                DestroyImmediate(door.gameObject);
             }
-            for (int i = 0; i <= numberOfDoors; i++)
+            for (int i = 0; i < numberOfDoors; i++)
             {
-                // float slopeDegree = minSlopeSlopeDegree + (maxSlopeSlopeDegree - minSlopeSlopeDegree) / numberOfSlopes * i;
-                var doorHeight = minDoorHeight + (maxDoorHeight - minDoorHeight) / numberOfDoors * i;
+                var doorHeight = minDoorHeight + (maxDoorHeight - minDoorHeight) / (numberOfDoors - 1) * i;
                 var door = ShapeGenerator.GenerateDoor(PivotLocation.FirstVertex, totalWidth, totalHeight, totalHeight - doorHeight, (totalWidth - doorWidth) / 2, depth);
                 door.transform.SetParent(transform);
+                door.AddComponent<MeshCollider>();
                 door.transform.localPosition = new Vector3(totalWidth * i, 0, 0);
                 var stepHeightString = doorHeight.ToString("F3", CultureInfo.InvariantCulture);
                 door.name = $"Door_h{stepHeightString}";
@@ -79,6 +82,7 @@ public class Door : MonoBehaviour
                 casing[i].name = $"Casing_{i}";
                 casing[i].transform.SetParent(transform);
                 casing[i].SetMaterial(casing[i].faces, material);
+                casing[i].AddComponent<MeshCollider>();
             }
             casing[0].transform.localPosition = new Vector3(-1, 0, 0);
             casing[1].transform.localPosition = new Vector3(totalWidth * (numberOfDoors + 1), 0, 0);

@@ -5,6 +5,7 @@ using UnityEngine.ProBuilder;
 using UnityEngine.ProBuilder.MeshOperations;
 using System.Globalization;
 using TMPro;
+using Unity.VisualScripting;
 
 [ExecuteAlways]
 public class StairGenerator : MonoBehaviour
@@ -20,7 +21,7 @@ public class StairGenerator : MonoBehaviour
 
     void OnValidate()
     {
-        if (numberOfStairs <= 0 || height <= 0 || width <= 0 || depth <= 0 || minStepHeight < 0 || maxStepHeight <= 0)
+        if (numberOfStairs < 0 || height <= 0 || width <= 0 || depth <= 0 || minStepHeight <= 0 || maxStepHeight <= 0)
         {
             return;
         }
@@ -32,17 +33,19 @@ public class StairGenerator : MonoBehaviour
         #if UNITY_EDITOR
         UnityEditor.EditorApplication.delayCall += () =>
         {
+            if (this == null) return;
             foreach (var stair in GetComponentsInChildren<ProBuilderMesh>())
             {
                 DestroyImmediate(stair.gameObject);
             }
-            for (int i = 0; i <= numberOfStairs; i++)
+            for (int i = 0; i < numberOfStairs; i++)
             {
-                float stepHeight = minStepHeight + (maxStepHeight - minStepHeight) / numberOfStairs * i;
+                float stepHeight = minStepHeight + (maxStepHeight - minStepHeight) / (numberOfStairs - 1) * i;
                 int stepCount = Mathf.CeilToInt(height / stepHeight);
                 float instancedHeight = stepHeight * stepCount;
                 var stair = ShapeGenerator.GenerateStair(PivotLocation.FirstVertex, new Vector3(width, instancedHeight, depth), stepCount, true);
                 stair.transform.SetParent(transform);
+                stair.AddComponent<MeshCollider>();
                 stair.transform.localPosition = new Vector3(width * i, height - instancedHeight, 0);
                 var stepHeightString = stepHeight.ToString("F2", CultureInfo.InvariantCulture);
                 stair.name = $"Stair_h{stepHeightString}";

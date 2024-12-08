@@ -5,6 +5,7 @@ using UnityEngine.ProBuilder;
 using UnityEngine.ProBuilder.MeshOperations;
 using System.Globalization;
 using TMPro;
+using Unity.VisualScripting;
 
 [ExecuteAlways]
 public class SlopeGenerator : MonoBehaviour
@@ -22,7 +23,7 @@ public class SlopeGenerator : MonoBehaviour
 
     void OnValidate()
     {
-        if (height <= 0 || width <= 0 || depth <= 0 || numberOfSlopes <= 0 || minSlopeSlopeDegree < 0 || maxSlopeSlopeDegree <= 0)
+        if (height <= 0 || width <= 0 || depth <= 0 || numberOfSlopes < 0 || minSlopeSlopeDegree < 0 || maxSlopeSlopeDegree <= 0)
         {
             return;
         }
@@ -38,16 +39,18 @@ public class SlopeGenerator : MonoBehaviour
         #if UNITY_EDITOR
         UnityEditor.EditorApplication.delayCall += () =>
         {
-            foreach (var stair in GetComponentsInChildren<ProBuilderMesh>())
+            if (this == null) return;
+            foreach (var slope in GetComponentsInChildren<ProBuilderMesh>())
             {
-                DestroyImmediate(stair.gameObject);
+                DestroyImmediate(slope.gameObject);
             }
-            for (int i = 0; i <= numberOfSlopes; i++)
+            for (int i = 0; i < numberOfSlopes; i++)
             {
-                float slopeDegree = minSlopeSlopeDegree + (maxSlopeSlopeDegree - minSlopeSlopeDegree) / numberOfSlopes * i;
+                float slopeDegree = minSlopeSlopeDegree + (maxSlopeSlopeDegree - minSlopeSlopeDegree) / (numberOfSlopes - 1) * i;
                 float instancedHeight = height / Mathf.Sin(slopeDegree * Mathf.Deg2Rad);
                 var slope = ShapeGenerator.GeneratePlane(PivotLocation.FirstVertex, width, instancedHeight, 1, 1, Axis.Up);
                 slope.transform.SetParent(transform);
+                slope.AddComponent<MeshCollider>();
                 slope.transform.localPosition = new Vector3(width * i, height, 0);
                 slope.transform.localRotation = Quaternion.Euler(0, 90, -slopeDegree);
                 var stepHeightString = slopeDegree.ToString("F1", CultureInfo.InvariantCulture);
