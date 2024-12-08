@@ -37,7 +37,7 @@ public class RBController : NetworkBehaviour
     public RunState runState;
     public CroutchState croutchState;
 
-    PlayerMoveState moveState;
+    public PlayerMoveState moveState;
 
     private void Awake()
     {
@@ -135,9 +135,12 @@ public class RBController : NetworkBehaviour
     {
         Vector2 mouseDelta = inputActions.Player.Look.ReadValue<Vector2>() * mouseSensitivity;
 
-        playerBody.transform.Rotate(Vector3.up * mouseDelta.x);
+		
 
-        verticalCameraRotation -= mouseDelta.y;
+		Quaternion horizontalRotation = Quaternion.Euler(0, mouseDelta.x, 0);
+		Rb.MoveRotation(Rb.rotation * horizontalRotation);
+
+		verticalCameraRotation -= mouseDelta.y;
         verticalCameraRotation = Mathf.Clamp(verticalCameraRotation, -90f, 90f);
 
         cameraHolder.transform.localRotation = Quaternion.Euler(verticalCameraRotation, 0, 0);
@@ -162,7 +165,8 @@ public class RBController : NetworkBehaviour
 
         //Wykonujemy metody na wyjœciu i wejœciu do nowego stanu jeœli on siê zmieni³
         moveState.Exit();
-        moveState = nextState;
-        moveState.Enter();
+		nextState.Enter();
+		moveState = nextState;
+
     }
 }

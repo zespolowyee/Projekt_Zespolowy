@@ -10,8 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5628163060577913161}
   - component: {fileID: 1134099450243446242}
-  - component: {fileID: 2272347581629907838}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +95,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1177678326903758528}
-  m_Layer: 0
+  - component: {fileID: 3048212991446593820}
+  m_Layer: 7
   m_Name: CameraHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119,6 +119,20 @@ Transform:
   - {fileID: 3198438394802428832}
   m_Father: {fileID: 8123032246194385685}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3048212991446593820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3425112624825140561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d88903ac39611e418411469e84df20a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lookDistance: 5
+  interactionDistance: 5
 --- !u!1 &5177022834069235977
 GameObject:
   m_ObjectHideFlags: 0
@@ -128,7 +142,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2147997873366132987}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -161,8 +175,7 @@ GameObject:
   - component: {fileID: 6549581832506345858}
   - component: {fileID: 953088510279735527}
   - component: {fileID: 3669725371103206542}
-  - component: {fileID: 8239493927048909662}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -237,27 +250,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &8239493927048909662
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5687853596775169701}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5891105665328763567
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,7 +265,7 @@ GameObject:
   - component: {fileID: 8464469752236948215}
   - component: {fileID: 3962796167191777835}
   - component: {fileID: 7279186434539353556}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PlayerBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -485,7 +477,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8447003165316080034}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CellingCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -519,7 +511,7 @@ GameObject:
   - component: {fileID: 8334132500115312059}
   - component: {fileID: 8766577605456662828}
   - component: {fileID: 2245058453537995388}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
