@@ -58,6 +58,34 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &2272347581629907838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1834764613449308951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f696b3856271d9c4daadff5c9377a921, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TestStat:
+    baseValue: 100
+    maxValue: 1000
+    minValue: 0
+  statModifier1:
+    modType: 100
+    value: 20
+    order: 100
+  statModifier2:
+    modType: 200
+    value: 0.2
+    order: 200
+  statModifier3:
+    modType: 300
+    value: 0.2
+    order: 300
 --- !u!1 &3425112624825140561
 GameObject:
   m_ObjectHideFlags: 0
