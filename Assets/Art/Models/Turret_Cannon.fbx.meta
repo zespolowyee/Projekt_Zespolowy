@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 5dd11526dc549364a8ba80cb9db0de79
+guid: 125b14fbccfdc6a468ed0990a7c30e98
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,28 +7,28 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Material
-    second: {fileID: 2100000, guid: 973cadbe8b1112043b75d2621300314c, type: 2}
+      name: BackWheels
+    second: {fileID: 2100000, guid: a2a10fdcc90dd944185e664c4a9e0ce8, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Material.001
-    second: {fileID: 2100000, guid: be422ef96ef017c419cc56ebd06fb517, type: 2}
+      name: Barrel
+    second: {fileID: 2100000, guid: 3acf504c67b2b9e4288d2393f5242d8f, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Material.002
-    second: {fileID: 2100000, guid: 679fa09bb6f1d444cbecca71baca0508, type: 2}
+      name: BarrelCart
+    second: {fileID: 2100000, guid: 3e3669d805d59e8409964c819f65b2b5, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Material.004
-    second: {fileID: 2100000, guid: eb0fa1a02841e4642b7e51987c36ac1d, type: 2}
+      name: Base
+    second: {fileID: 2100000, guid: cf5c2e51cb54d1647bcb6de8ffc87bff, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Material.006
-    second: {fileID: 2100000, guid: ff22a9878ddc83245b2f7c6938020c2a, type: 2}
+      name: FrontWheels
+    second: {fileID: 2100000, guid: 6b2b2fe7eeee6564283525fa97556051, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
