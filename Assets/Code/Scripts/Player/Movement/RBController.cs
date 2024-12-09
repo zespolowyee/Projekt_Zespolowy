@@ -77,8 +77,6 @@ public class RBController : NetworkBehaviour
     {
         HandleCamera();
         HandleInput();
-        Debug.Log(Rb.linearVelocity.y);
-
     }
 
     private void SelectState()
@@ -152,7 +150,6 @@ public class RBController : NetworkBehaviour
     {
         if (isGrounded)
         {
-			Debug.Log("jumped");
 			SwitchToState(airbourneState, false);
             Rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
         }
