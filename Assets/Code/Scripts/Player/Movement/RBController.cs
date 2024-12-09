@@ -42,8 +42,8 @@ public class RBController : NetworkBehaviour
     private void Awake()
     {
         Rb = playerBody.GetComponent<Rigidbody>();
-        
-        inputActions = new InputSystem_Actions();
+		Rb.MovePosition(NetworkManager.Singleton.transform.position);
+		inputActions = new InputSystem_Actions();
         inputActions.Enable();
         inputActions.Player.Jump.performed += Jump;
 
@@ -63,6 +63,7 @@ public class RBController : NetworkBehaviour
             enabled = false;
             return;
         }
+
     }
 
     private void FixedUpdate()
