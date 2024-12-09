@@ -76,6 +76,7 @@ public class RBController : NetworkBehaviour
     {
         HandleCamera();
         HandleInput();
+        Debug.Log(Rb.linearVelocity.y);
 
     }
 
@@ -150,7 +151,8 @@ public class RBController : NetworkBehaviour
     {
         if (isGrounded)
         {
-            SwitchToState(airbourneState, false);
+			Debug.Log("jumped");
+			SwitchToState(airbourneState, false);
             Rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
         }
     }
@@ -163,10 +165,15 @@ public class RBController : NetworkBehaviour
             return;
         }
 
-        //Wykonujemy metody na wyjœciu i wejœciu do nowego stanu jeœli on siê zmieni³
-        moveState.Exit();
-		nextState.Enter();
-		moveState = nextState;
+        if (!nextState.CanEnterToItself && moveState == nextState)
+        {
+            return;
+        }
 
-    }
+		//Wykonujemy metody na wyjœciu i wejœciu do nowego stanu jeœli on siê zmieni³
+		PlayerMoveState previousState = moveState;
+		moveState.Exit();
+		moveState = nextState;
+		nextState.Enter(previousState);
+	}
 }

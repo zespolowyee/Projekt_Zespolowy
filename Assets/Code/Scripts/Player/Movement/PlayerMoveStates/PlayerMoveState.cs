@@ -3,12 +3,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerMoveState : State
 {
-    protected RBController controller;
-    public bool CanExit { get; protected set; }
 
-    [SerializeField] public float moveSpeed;
-    [SerializeField] protected float smoothingFactor;
-    public void Setup(RBController controller)
+	[SerializeField] public float moveSpeed;
+
+	public bool CanExit { get; protected set; }
+	public bool CanEnterToItself = false;
+	protected PlayerMoveState previousState;
+	protected RBController controller;
+	public void Setup(RBController controller)
     {
         this.controller = controller;
         CanExit = true;
@@ -16,6 +18,10 @@ public class PlayerMoveState : State
     public override void Enter()
     {
 
+    }
+    public virtual void Enter(PlayerMoveState previousState)
+    {
+        this.previousState = previousState;
     }
     public override void Exit()
     {
@@ -29,29 +35,8 @@ public class PlayerMoveState : State
 
     protected void HandleBasicHorizontalMovement()
     {
-        /*
-        Vector2 horizontalInput = controller.HorizontalInput;
 
-        Vector3 moveDirection = (controller.PlayerBody.transform.right * horizontalInput.x
-                                + controller.PlayerBody.transform.forward * horizontalInput.y).normalized;
-        moveDirection = Vector3.ProjectOnPlane(moveDirection, controller.SlopeNormal);
-
-        Vector3 targetVelocity = moveDirection * moveSpeed;
-
-        Vector3 currentVelocity = new Vector3(controller.Rb.linearVelocity.x, 0, controller.Rb.linearVelocity.z);
-
-        Vector3 smoothedVelocity = Vector3.Lerp(currentVelocity, targetVelocity, Time.deltaTime * smoothingFactor);
-
-        Vector3 velocityChange = smoothedVelocity - currentVelocity;
-
-        velocityChange.y = 0;
-
-        // Zastosuj si³ê
-        controller.Rb.AddForce(velocityChange, ForceMode.VelocityChange);
-        */
-
-        
-        Vector2 horizontalInput = controller.HorizontalInput;
+		Vector2 horizontalInput = controller.HorizontalInput;
         Vector3 moveDirection = (controller.PlayerBody.transform.right * horizontalInput.x + controller.PlayerBody.transform.forward * horizontalInput.y).normalized;
         moveDirection = Vector3.ProjectOnPlane(moveDirection, controller.SlopeNormal);
 
