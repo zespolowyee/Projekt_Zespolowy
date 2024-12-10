@@ -6,10 +6,11 @@ public class CroutchState : PlayerMoveState
 {
     [SerializeField] private float croutchOffset;
     [SerializeField] private float cellingCheckRadius;
-    public override void Enter()
+    public override void Enter(PlayerMoveState previousState)
     {
         controller.PlayerBody.transform.localScale = new Vector3(1,0.5f,1);
         controller.PlayerBody.transform.position += new Vector3(0, -croutchOffset, 0);
+        base.Enter(previousState);
     }
     public override void Exit()
     {

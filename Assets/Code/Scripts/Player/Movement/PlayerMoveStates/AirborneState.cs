@@ -7,12 +7,20 @@ public class AirborneState : PlayerMoveState
 {
     [SerializeField] private float groundCheckDelay = 0.1f;
     private float remainingDelay;
-    public override void Enter()
+    public override void Enter(PlayerMoveState previousState)
     {
-        moveSpeed = controller.moveState.moveSpeed;
+
+        controller.Rb.linearVelocity = new Vector3(
+			controller.Rb.linearVelocity.x,
+            0,
+			controller.Rb.linearVelocity.z
+			);
         CanExit = false;
         remainingDelay = groundCheckDelay;
-    }
+
+        base.Enter( previousState );
+		moveSpeed = previousState.moveSpeed;
+	}
 
     public override void Exit()
     {
@@ -35,7 +43,7 @@ public class AirborneState : PlayerMoveState
 
 		Vector2 horizontalInput = controller.HorizontalInput;
 		Vector3 moveDirection = (controller.PlayerBody.transform.right * horizontalInput.x + controller.PlayerBody.transform.forward * horizontalInput.y).normalized;
-		moveDirection = Vector3.ProjectOnPlane(moveDirection, controller.SlopeNormal);
+		moveDirection = Vector3.ProjectOnPlane(moveDirection, Vector3.up);
 
 		Vector3 targetVelocity = moveDirection * moveSpeed;
 		Vector3 currentVelocity = new Vector3(controller.Rb.linearVelocity.x, 0, controller.Rb.linearVelocity.z);
@@ -44,7 +52,7 @@ public class AirborneState : PlayerMoveState
 		{
 			velocityChange.y = 0;
 		}
-
+        
 		controller.Rb.AddForce(velocityChange, ForceMode.VelocityChange);
 
 	}
