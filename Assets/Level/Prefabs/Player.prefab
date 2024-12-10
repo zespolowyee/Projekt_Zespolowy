@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5628163060577913161}
   - component: {fileID: 1134099450243446242}
+  - component: {fileID: 2272347581629907838}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -45,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 394072725
+  GlobalObjectIdHash: 3703349583
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
