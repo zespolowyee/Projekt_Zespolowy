@@ -6,7 +6,6 @@ using UnityEngine.ProBuilder.MeshOperations;
 using System.Globalization;
 using TMPro;
 using Unity.VisualScripting;
-using UnityEditor.ProBuilder;
 
 [ExecuteAlways]
 public class Door : MonoBehaviour

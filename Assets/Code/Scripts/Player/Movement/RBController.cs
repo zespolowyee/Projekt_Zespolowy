@@ -42,8 +42,8 @@ public class RBController : NetworkBehaviour
     private void Awake()
     {
         Rb = playerBody.GetComponent<Rigidbody>();
-        
-        inputActions = new InputSystem_Actions();
+		Rb.MovePosition(NetworkManager.Singleton.transform.position);
+		inputActions = new InputSystem_Actions();
         inputActions.Enable();
         inputActions.Player.Jump.performed += Jump;
 
@@ -63,6 +63,7 @@ public class RBController : NetworkBehaviour
             enabled = false;
             return;
         }
+
     }
 
     private void FixedUpdate()
@@ -76,7 +77,6 @@ public class RBController : NetworkBehaviour
     {
         HandleCamera();
         HandleInput();
-
     }
 
     private void SelectState()
@@ -150,7 +150,7 @@ public class RBController : NetworkBehaviour
     {
         if (isGrounded)
         {
-            SwitchToState(airbourneState, false);
+			SwitchToState(airbourneState, false);
             Rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
         }
     }
@@ -163,10 +163,15 @@ public class RBController : NetworkBehaviour
             return;
         }
 
-        //Wykonujemy metody na wyjœciu i wejœciu do nowego stanu jeœli on siê zmieni³
-        moveState.Exit();
-		nextState.Enter();
-		moveState = nextState;
+        if (!nextState.CanEnterToItself && moveState == nextState)
+        {
+            return;
+        }
 
-    }
+		//Wykonujemy metody na wyjœciu i wejœciu do nowego stanu jeœli on siê zmieni³
+		PlayerMoveState previousState = moveState;
+		moveState.Exit();
+		moveState = nextState;
+		nextState.Enter(previousState);
+	}
 }
