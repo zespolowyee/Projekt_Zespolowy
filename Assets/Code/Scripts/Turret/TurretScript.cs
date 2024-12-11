@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 public class TurretScript : MonoBehaviour
@@ -8,8 +9,16 @@ public class TurretScript : MonoBehaviour
     [SerializeField]
     private Transform barrelObject;
     
+    [SerializeField]
+    private Transform barrelClamp;
+    
+    [SerializeField]
+    private Transform cannonPivot;
+    
     [SerializeField] private float maxUpRotation = -10;
     [SerializeField] private float maxDownRotation = 20;
+    [SerializeField] private LayerMask targetLayer;
+    [SerializeField] private float sphereRadius = 5;
 
     private RaycastHit hit;
     
@@ -23,33 +32,48 @@ public class TurretScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            var result = Physics.SphereCast(transform.position, 5f, Vector3.forward, out hit, 10f, 7);
-            Debug.Log(result);
-            Debug.DrawRay(transform.position, Vector3.forward * 5f, Color.red, 1f);
+        Collider[] targets = Physics.OverlapSphere(transform.position, sphereRadius, targetLayer);
+        if (targets.Length > 0){
+            
+            //Find the closest target
+            float smallestDistance = Vector3.Distance(transform.position, targets[0].transform.position);
+            Collider closestTarget = targets[0];
+            foreach (Collider target in targets)
+            {
+                var distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
+                if (distanceToTarget < smallestDistance)
+                {
+                    smallestDistance = distanceToTarget;
+                    closestTarget = target;
+                }
+            }
+            
+            //Rotate the cannon without moving lowering or raising the barrel
+            Vector3 targetPostition = new Vector3( closestTarget.transform.position.x, 
+                                            transform.position.y, 
+                                            closestTarget.transform.position.z ) ;
+            cannonPivot.LookAt( targetPostition ) ;
+            
+            //Lower or raise the hidden element that is at the same position as barrel
+            barrelClamp.LookAt( closestTarget.transform.position );
+
+            //Get the rotation from the hidden element
+            Vector3 clampedRotation = barrelClamp.eulerAngles;
+            
+            //Clamp the x rotation of barrel
+            float xRotation = clampedRotation.x;
+            
+            if (xRotation > 180)
+            {
+                xRotation -= 360;
+            }
+            
+            clampedRotation.x = Math.Clamp( xRotation, maxUpRotation, maxDownRotation );
+            
+            //Apply the rotation with clamped x to the barrel
+            barrelObject.eulerAngles = clampedRotation;
+
         }
-        /*var rotationVector = new Vector3();
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            rotationVector.x = -1;
-        }
-
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            rotationVector.x = 1;
-        }
-
-        var currentRotation = barrelObject.eulerAngles.x;
-
-        if (currentRotation > 180)
-        {
-            currentRotation -= 360;
-        }
-
-        var newRotation = Math.Round(currentRotation) + rotationVector.x;
-
-        if (newRotation>=maxUpRotation && newRotation<=maxDownRotation)
-            barrelObject.Rotate(rotationVector); */
+        
     }
 }
