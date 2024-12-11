@@ -6,8 +6,6 @@ public class Path
 {
 	public List<Transform> Waypoints;
 
-	public float waypointRadiusSquared = 9f;
-
 	private int lastVisitedWaypointId = -1;
 
 	public int LastVisitedWaypointId
