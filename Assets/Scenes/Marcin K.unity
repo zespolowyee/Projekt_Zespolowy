@@ -255,6 +255,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 207161603}
   m_CullTransparentMesh: 1
+--- !u!1 &333340907
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 333340908}
+  m_Layer: 6
+  m_Name: BarrelClamp
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &333340908
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333340907}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.14091, z: 0.4188499}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1749147330}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &390006615
 GameObject:
   m_ObjectHideFlags: 0
@@ -626,8 +657,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   barrelObject: {fileID: 3652011955856812517}
+  barrelClamp: {fileID: 333340908}
+  cannonPivot: {fileID: 1749147330}
   maxUpRotation: -10
   maxDownRotation: 20
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  sphereRadius: 5
 --- !u!1 &745007673
 GameObject:
   m_ObjectHideFlags: 0
@@ -1433,6 +1470,7 @@ Transform:
   - {fileID: 3652011955856812517}
   - {fileID: 3387047123529394186}
   - {fileID: 1389032409072302556}
+  - {fileID: 333340908}
   m_Father: {fileID: 543450652735613372}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1757217715
