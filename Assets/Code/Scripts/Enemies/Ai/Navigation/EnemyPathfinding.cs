@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 public class EnemyPathfinding : MonoBehaviour
 {
-	[SerializeField] private Path path;
+	[SerializeField] private EnemyPath path;
 	[SerializeField] private float waypontCheckFrequency = 1f;
 	[SerializeField] private float playerCheckFrequency = 0.4f;
 	[SerializeField] private float desiredDistanceToWaypoint = 9f;

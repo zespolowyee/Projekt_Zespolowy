@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Path 
+public class EnemyPath : MonoBehaviour
 {
 	public List<Transform> Waypoints;
 
@@ -28,5 +28,17 @@ public class Path
 		}
 
 		return Waypoints[lastVisitedWaypointId+1];
+	}
+
+	
+	private void OnDrawGizmosSelected()
+	{
+		Gizmos.color = Color.cyan;
+
+		for (int i = 1; i< Waypoints.Count; i++)
+		{
+			Gizmos.DrawLine(Waypoints[i - 1].position, Waypoints[i].position);
+		}
+
 	}
 }
