@@ -13,7 +13,7 @@ public class ENS_FollowPath : EnemyNavigationState
 
 	public override void Setup(EnemyNavigation controller)
 	{
-		waypontCheckFrequency += Random.Range(-0.25f, 0.25f);
+		waypontCheckFrequency += Random.Range(-0.1f, 0.1f);
 		desiredDistanceToWaypointSquared = desiredDistanceToWaypoint * desiredDistanceToWaypoint;
 		base.Setup(controller);
 	}

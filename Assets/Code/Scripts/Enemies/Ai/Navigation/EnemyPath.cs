@@ -2,10 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class EnemyPath : MonoBehaviour
+public class EnemyPath
 {
 	public List<Transform> Waypoints;
-
 	private int lastVisitedWaypointId = -1;
 
 	public int LastVisitedWaypointId
@@ -30,15 +29,12 @@ public class EnemyPath : MonoBehaviour
 		return Waypoints[lastVisitedWaypointId+1];
 	}
 
-	
-	private void OnDrawGizmosSelected()
+	public EnemyPath Copy()
 	{
-		Gizmos.color = Color.cyan;
-
-		for (int i = 1; i< Waypoints.Count; i++)
+		return new EnemyPath
 		{
-			Gizmos.DrawLine(Waypoints[i - 1].position, Waypoints[i].position);
-		}
-
+			Waypoints = this.Waypoints,
+			LastVisitedWaypointId = this.LastVisitedWaypointId
+		};
 	}
 }

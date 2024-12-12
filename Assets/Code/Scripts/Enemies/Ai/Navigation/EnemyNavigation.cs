@@ -1,11 +1,13 @@
 
 using System.IO;
+using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.InputSystem.XR.Haptics;
 
-public class EnemyNavigation : MonoBehaviour
+public class EnemyNavigation : NetworkBehaviour
 {
 	[SerializeField] private EnemyPath path;
 
@@ -25,7 +27,11 @@ public class EnemyNavigation : MonoBehaviour
 
 	private NavMeshAgent navMeshAgent;
 	public NavMeshAgent Agent { get { return navMeshAgent; }}
-	public EnemyPath EnemyPath { get { return path; } }
+	public EnemyPath EnemyPath
+	{
+		get { return path; }
+		private set { path = value; }
+	}
 	public Transform Target { get { return target; } }
 	
 	void Start()
@@ -48,7 +54,10 @@ public class EnemyNavigation : MonoBehaviour
 		navMeshAgent.SetDestination(target.position);
 	}
 
-
+	public void SetPath(EnemyPath enemyPath)
+	{
+		EnemyPath = enemyPath.Copy(); 
+	}
 	void Update()
 	{
 		CurrentState.Handle();
