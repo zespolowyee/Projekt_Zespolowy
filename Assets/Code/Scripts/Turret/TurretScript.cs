@@ -1,8 +1,9 @@
 using System;
 using System.Linq;
+using Unity.Netcode;
 using UnityEngine;
 
-public class TurretScript : MonoBehaviour
+public class TurretScript : NetworkBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
@@ -13,28 +14,35 @@ public class TurretScript : MonoBehaviour
     private Transform barrelClamp;
     
     [SerializeField]
+    private Transform barrelShootingPoint;
+    
+    [SerializeField]
     private Transform cannonPivot;
+
+    [SerializeField] private GameObject cannonball;
+    [SerializeField] private float cannonballVelocity;
     
     [SerializeField] private float maxUpRotation = -10;
     [SerializeField] private float maxDownRotation = 20;
     [SerializeField] private LayerMask targetLayer;
     [SerializeField] private float sphereRadius = 5;
+    [SerializeField] private float shootingInterval = 3f;
 
-    private RaycastHit hit;
+    private Collider _currentTarget;
+    private float timeElapsed = 0f;
     
     
     void Start()
     {
         
     }
-    
 
-    // Update is called once per frame
-    void Update()
+    bool FindClosestTarget()
     {
         Collider[] targets = Physics.OverlapSphere(transform.position, sphereRadius, targetLayer);
-        if (targets.Length > 0){
-            
+        if (targets.Length > 0)
+        {
+
             //Find the closest target
             float smallestDistance = Vector3.Distance(transform.position, targets[0].transform.position);
             Collider closestTarget = targets[0];
@@ -48,32 +56,70 @@ public class TurretScript : MonoBehaviour
                 }
             }
             
-            //Rotate the cannon without moving lowering or raising the barrel
-            Vector3 targetPostition = new Vector3( closestTarget.transform.position.x, 
-                                            transform.position.y, 
-                                            closestTarget.transform.position.z ) ;
-            cannonPivot.LookAt( targetPostition ) ;
-            
-            //Lower or raise the hidden element that is at the same position as barrel
-            barrelClamp.LookAt( closestTarget.transform.position );
-
-            //Get the rotation from the hidden element
-            Vector3 clampedRotation = barrelClamp.eulerAngles;
-            
-            //Clamp the x rotation of barrel
-            float xRotation = clampedRotation.x;
-            
-            if (xRotation > 180)
-            {
-                xRotation -= 360;
-            }
-            
-            clampedRotation.x = Math.Clamp( xRotation, maxUpRotation, maxDownRotation );
-            
-            //Apply the rotation with clamped x to the barrel
-            barrelObject.eulerAngles = clampedRotation;
-
+            _currentTarget = closestTarget;
+            return true;
         }
-        
+
+        return false;
     }
+
+    void LookAtTarget()
+    {
+        //Rotate the cannon without moving lowering or raising the barrel
+        Vector3 targetPostition = new Vector3(_currentTarget.transform.position.x,
+            transform.position.y,
+            _currentTarget.transform.position.z);
+        cannonPivot.LookAt(targetPostition);
+
+        //Lower or raise the hidden element that is at the same position as barrel
+        barrelClamp.LookAt(_currentTarget.transform.position);
+
+        //Get the rotation from the hidden element
+        Vector3 clampedRotation = barrelClamp.eulerAngles;
+
+        //Clamp the x rotation of barrel
+        float xRotation = clampedRotation.x;
+
+        if (xRotation > 180)
+        {
+            xRotation -= 360;
+        }
+
+        clampedRotation.x = Math.Clamp(xRotation, maxUpRotation, maxDownRotation);
+
+        //Apply the rotation with clamped x to the barrel
+        barrelObject.eulerAngles = clampedRotation;
+    }
+
+    void ShootAtTarget()
+    {
+        var ball = Instantiate(cannonball, barrelShootingPoint.position, barrelShootingPoint.rotation);
+        ball.GetComponent<Rigidbody>().linearVelocity = barrelShootingPoint.transform.forward * cannonballVelocity;
+        ball.GetComponent<NetworkObject>().Spawn();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+            timeElapsed += Time.deltaTime;
+            
+            var found = FindClosestTarget();
+            if (found)
+            {
+                LookAtTarget();
+                
+                if (timeElapsed >= shootingInterval)
+                {
+                    if (IsServer)
+                    {
+                        ShootAtTarget();
+                    }
+
+                    timeElapsed = 0f;
+                }
+                    
+            }
+
+    }
+        
 }
