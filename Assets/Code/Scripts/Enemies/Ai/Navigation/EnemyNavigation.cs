@@ -1,31 +1,45 @@
 
+using System.IO;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.InputSystem.XR.Haptics;
 
-public class EnemyPathfinding : MonoBehaviour
+public class EnemyNavigation : MonoBehaviour
 {
 	[SerializeField] private EnemyPath path;
-	[SerializeField] private float waypontCheckFrequency = 1f;
+
 	[SerializeField] private float playerCheckFrequency = 0.4f;
-	[SerializeField] private float desiredDistanceToWaypoint = 9f;
 	[SerializeField] private float checkForPlayerDistance = 9f;
 	[SerializeField] private LayerMask whatIsPlayer;
-	private float lastWaypointCheckTime;
 	private float lastPlayerCheckTime;
 
+
+	[Header("State Setup")]
+	[SerializeField] private ENS_FollowPath followPathState;
+	[SerializeField] private ENS_FollowNearestPlayer followNearestPlayer;
+
+	public EnemyNavigationState CurrentState { get; private set; }
+
 	private Transform target;
-	private bool isTargetWaypoint = true;
-	private bool switchedToNextWaypoint = false;
+
 	private NavMeshAgent navMeshAgent;
+	public NavMeshAgent Agent { get { return navMeshAgent; }}
+	public EnemyPath EnemyPath { get { return path; } }
+	public Transform Target { get { return target; } }
+	
 	void Start()
 	{
-		waypontCheckFrequency += Random.Range(-0.25f, 0.25f);
+
 		playerCheckFrequency += Random.Range(-0.1f, 0.1f);
 		navMeshAgent = GetComponent<NavMeshAgent>();
-		navMeshAgent.SetDestination(path.GetNextWaypoint().position);
-		SetTarget(path.GetNextWaypoint());
-		lastWaypointCheckTime = Time.time;
+
+		followPathState.Setup(this);
+		followNearestPlayer.Setup(this);
+
 		lastPlayerCheckTime = Time.time;
+
+		SwitchState(followPathState);
 	}
 
 	public void SetTarget(Transform target)
@@ -34,19 +48,10 @@ public class EnemyPathfinding : MonoBehaviour
 		navMeshAgent.SetDestination(target.position);
 	}
 
-	public void GoToNextWaypoint()
-	{
-		path.IncrementLastVisitedWaypoint();
-		SetTarget(path.GetNextWaypoint());
-		isTargetWaypoint = true;
-	}
 
 	void Update()
 	{
-		if (lastWaypointCheckTime + waypontCheckFrequency < Time.time)
-		{
-			CheckIfReachedWaypoint();
-		}
+		CurrentState.Handle();
 		if (lastPlayerCheckTime + playerCheckFrequency < Time.time)
 		{
 			SearchForPlayerInRange();
@@ -54,45 +59,22 @@ public class EnemyPathfinding : MonoBehaviour
 	}
 
 
-	public void CheckIfReachedWaypoint()
-	{
-		lastWaypointCheckTime = Time.time;
-		if (!isTargetWaypoint)
-		{
-			return;
-		}
-		if ((transform.position - target.position).sqrMagnitude < desiredDistanceToWaypoint)
-		{
-			if (!switchedToNextWaypoint)
-			{
-				GoToNextWaypoint();
-				switchedToNextWaypoint = true;
-			}
-
-		}
-		else
-		{
-			switchedToNextWaypoint = false;
-		}
-	}
-
 	public void SearchForPlayerInRange()
 	{
 		Collider[] playersInReach = Physics.OverlapSphere(transform.position, checkForPlayerDistance, whatIsPlayer);
 
 		if (playersInReach.Length == 0)
 		{
-			if (!isTargetWaypoint)
+			if (CurrentState != followPathState)
 			{
-				SetTarget(path.GetNextWaypoint());
-				isTargetWaypoint = true;
+				SwitchState(followPathState);
 			}
 			return;
 		}
 
 		Transform closestPlayerTransform = FindClosestPlayer(playersInReach);
 		SetTarget(closestPlayerTransform);
-		isTargetWaypoint = false;
+		SwitchState(followNearestPlayer);
 	}
 
 	public Transform FindClosestPlayer(Collider[] playersInReach)
@@ -114,5 +96,12 @@ public class EnemyPathfinding : MonoBehaviour
 			}
 		}
 		return closestPlayer.gameObject.transform;
+	}
+
+	public void SwitchState(EnemyNavigationState newState)
+	{
+		CurrentState?.Exit();
+		CurrentState = newState;
+		CurrentState.Enter();
 	}
 }
