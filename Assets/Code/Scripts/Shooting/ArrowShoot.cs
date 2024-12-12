@@ -11,7 +11,6 @@ public class ArrowShoot : MonoBehaviour
     private BowShooterAnimationController animationController; // Referencja do skryptu animacji
 
     private float lastShootTime = 0f;                         // Czas ostatniego strzału
-    [SerializeField] private GameObject cameraHolder;
     [SerializeField] public GameObject HandArrow;
     void Start()
     {
@@ -41,7 +40,7 @@ public class ArrowShoot : MonoBehaviour
         GameObject arrow = Instantiate(arrowPrefab, arrowSpawnPoint.position, arrowSpawnPoint.rotation);
         Rigidbody rb = arrow.GetComponent<Rigidbody>();
 
-        Vector3 targetDirection = cameraHolder.transform.forward; 
+        Vector3 targetDirection = arrowSpawnPoint.forward; 
         // Dodaj siłę do strzały z lekkim uwzględnieniem grawitacji
         if (rb != null)
         {
