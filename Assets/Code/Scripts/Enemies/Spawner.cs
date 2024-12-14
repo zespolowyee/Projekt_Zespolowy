@@ -9,7 +9,7 @@ public class Spawner : NetworkBehaviour
 	[SerializeField] private EnemyPath defaultPath;
 
 
-	[ServerRpc]
+	[ServerRpc(RequireOwnership = false)]
 	public void SpawnEnemyServerRpc()
 	{
 		GameObject spawnedEnemy = Instantiate(enemyPrefab);
