@@ -5,121 +5,127 @@ using UnityEngine;
 
 public class TurretScript : NetworkBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
 
-    [SerializeField]
-    private Transform barrelObject;
-    
-    [SerializeField]
-    private Transform barrelClamp;
-    
-    [SerializeField]
-    private Transform barrelShootingPoint;
-    
-    [SerializeField]
-    private Transform cannonPivot;
+	[SerializeField]
+	private Transform barrelObject;
 
-    [SerializeField] private GameObject cannonball;
-    [SerializeField] private float cannonballVelocity;
-    
-    [SerializeField] private float maxUpRotation = -10;
-    [SerializeField] private float maxDownRotation = 20;
-    [SerializeField] private LayerMask targetLayer;
-    [SerializeField] private float sphereRadius = 5;
-    [SerializeField] private float shootingInterval = 3f;
+	[SerializeField]
+	private Transform barrelClamp;
 
-    private Collider _currentTarget;
-    private float timeElapsed = 0f;
-    
-    
-    void Start()
-    {
-        
-    }
+	[SerializeField]
+	private Transform barrelShootingPoint;
 
-    bool FindClosestTarget()
-    {
-        Collider[] targets = Physics.OverlapSphere(transform.position, sphereRadius, targetLayer);
-        if (targets.Length > 0)
-        {
+	[SerializeField]
+	private Transform cannonPivot;
 
-            //Find the closest target
-            float smallestDistance = Vector3.Distance(transform.position, targets[0].transform.position);
-            Collider closestTarget = targets[0];
-            foreach (Collider target in targets)
-            {
-                var distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
-                if (distanceToTarget < smallestDistance)
-                {
-                    smallestDistance = distanceToTarget;
-                    closestTarget = target;
-                }
-            }
-            
-            _currentTarget = closestTarget;
-            return true;
-        }
+	[SerializeField] private GameObject cannonball;
+	[SerializeField] private float cannonballVelocity;
 
-        return false;
-    }
+	[SerializeField] private float maxUpRotation = -10;
+	[SerializeField] private float maxDownRotation = 20;
+	[SerializeField] private LayerMask targetLayer;
+	[SerializeField] private float sphereRadius = 5;
+	[SerializeField] private float shootingInterval = 3f;
 
-    void LookAtTarget()
-    {
-        //Rotate the cannon without moving lowering or raising the barrel
-        Vector3 targetPostition = new Vector3(_currentTarget.transform.position.x,
-            transform.position.y,
-            _currentTarget.transform.position.z);
-        cannonPivot.LookAt(targetPostition);
+	private Collider _currentTarget;
+	private float timeElapsed = 0f;
 
-        //Lower or raise the hidden element that is at the same position as barrel
-        barrelClamp.LookAt(_currentTarget.transform.position);
 
-        //Get the rotation from the hidden element
-        Vector3 clampedRotation = barrelClamp.eulerAngles;
+	bool FindClosestTarget()
+	{
+		Collider[] targets = Physics.OverlapSphere(transform.position, sphereRadius, targetLayer);
+		if (targets.Length > 0)
+		{
 
-        //Clamp the x rotation of barrel
-        float xRotation = clampedRotation.x;
+			//Find the closest target
+			float smallestDistance = Vector3.Distance(transform.position, targets[0].transform.position);
+			Collider closestTarget = targets[0];
+			foreach (Collider target in targets)
+			{
+				var distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
+				if (distanceToTarget < smallestDistance)
+				{
+					smallestDistance = distanceToTarget;
+					closestTarget = target;
+				}
+			}
 
-        if (xRotation > 180)
-        {
-            xRotation -= 360;
-        }
+			_currentTarget = closestTarget;
+			return true;
+		}
 
-        clampedRotation.x = Math.Clamp(xRotation, maxUpRotation, maxDownRotation);
+		return false;
+	}
 
-        //Apply the rotation with clamped x to the barrel
-        barrelObject.eulerAngles = clampedRotation;
-    }
+	void LookAtTarget()
+	{
+		//Rotate the cannon without moving lowering or raising the barrel
+		Vector3 targetPostition = new Vector3(_currentTarget.transform.position.x,
+			transform.position.y,
+			_currentTarget.transform.position.z);
+		cannonPivot.LookAt(targetPostition);
 
-    void ShootAtTarget()
-    {
-        var ball = Instantiate(cannonball, barrelShootingPoint.position, barrelShootingPoint.rotation);
-        ball.GetComponent<Rigidbody>().linearVelocity = barrelShootingPoint.transform.forward * cannonballVelocity;
-        ball.GetComponent<NetworkObject>().Spawn();
-    }
+		//Lower or raise the hidden element that is at the same position as barrel
+		barrelClamp.LookAt(_currentTarget.transform.position);
 
-    // Update is called once per frame
-    void Update()
-    {
-            timeElapsed += Time.deltaTime;
-            
-            var found = FindClosestTarget();
-            if (found)
-            {
-                LookAtTarget();
-                
-                if (timeElapsed >= shootingInterval)
-                {
-                    if (IsServer)
-                    {
-                        ShootAtTarget();
-                    }
+		//Get the rotation from the hidden element
+		Vector3 clampedRotation = barrelClamp.eulerAngles;
 
-                    timeElapsed = 0f;
-                }
-                    
-            }
+		//Clamp the x rotation of barrel
+		float xRotation = clampedRotation.x;
 
-    }
-        
+		if (xRotation > 180)
+		{
+			xRotation -= 360;
+		}
+
+		clampedRotation.x = Math.Clamp(xRotation, maxUpRotation, maxDownRotation);
+
+		//Apply the rotation with clamped x to the barrel
+		barrelObject.eulerAngles = clampedRotation;
+	}
+
+	void ShootAtTarget()
+	{
+		var ball = Instantiate(cannonball, barrelShootingPoint.position, barrelShootingPoint.rotation);
+		ball.GetComponent<Rigidbody>().linearVelocity = barrelShootingPoint.transform.forward * cannonballVelocity;
+	}
+
+	[ServerRpc]
+	void ShootAtTargetServerRpc()
+	{
+		ShootAtTargetClientRpc();
+	}
+
+	[ClientRpc]
+	void ShootAtTargetClientRpc()
+	{
+		var ball = Instantiate(cannonball, barrelShootingPoint.position, barrelShootingPoint.rotation);
+		ball.GetComponent<Rigidbody>().linearVelocity = barrelShootingPoint.transform.forward * cannonballVelocity;
+	}
+
+	void Update()
+	{
+		timeElapsed += Time.deltaTime;
+
+		var found = FindClosestTarget();
+		if (!found)
+		{
+			return;
+		}
+
+		LookAtTarget();
+
+		if (timeElapsed >= shootingInterval)
+		{
+			if (IsServer)
+			{
+				ShootAtTargetServerRpc();
+			}
+
+			timeElapsed = 0f;
+		}
+
+	}
+
 }

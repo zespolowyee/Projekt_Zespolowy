@@ -1,44 +1,55 @@
+using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class HPSystem : MonoBehaviour
+public class HPSystem : NetworkBehaviour
 {
-    public int maxHP = 100;
-    private bool isDead = false;
+	NetworkVariable<int> currentHP = new NetworkVariable<int>(100);
+	public int maxHP = 100;
+	private bool isDead = false;
 
-    public Animator animator;
-    private int currentHP;
+	public Animator animator;
+	//private int currentHP;
 
-    private void Start()
-    {
-        currentHP = maxHP;
-        animator = GetComponent<Animator>();
-    }
+	private void Start()
+	{
+		if (IsServer)
+		{
+			currentHP.Value = maxHP;
+		}
 
-    public void Update()
-    {
-        if (!isDead && Input.GetKeyDown(KeyCode.P) && animator != null)
-        {
-                TakeDamage(100);
-        }
-    }
+		animator = GetComponent<Animator>();
+	}
 
-    public void TakeDamage(int damage)
-    {
-        currentHP -= damage;
-        if (currentHP <= 0)
-        {
-            currentHP = 0;
-            Die();
-        }
-    }
+	public void Update()
+	{
+		if (!isDead && Input.GetKeyDown(KeyCode.P) && animator != null)
+		{
+			TakeDamage(100);
+		}
+	}
 
-    private void Die()
-    {
-        isDead = true;
-        if (animator != null)
-        {
-            animator.Play("Die", -1, 0f);
-            Debug.Log($"{gameObject.name} has died.");
-        }
-    }
+	public void TakeDamage(int damage)
+	{
+		if (IsServer)
+		{
+			currentHP.Value -= damage;
+			Debug.Log(gameObject.name + " took: " + damage + " damage" + " hp left:" + currentHP.Value);
+			if (currentHP.Value <= 0)
+			{
+				currentHP.Value = 0;
+				Die();
+			}
+		}
+	}
+
+	private void Die()
+	{
+		isDead = true;
+		if (animator != null)
+		{
+			animator.Play("Die", -1, 0f);
+			Debug.Log($"{gameObject.name} has died.");
+		}
+	}
 }
