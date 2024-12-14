@@ -22,6 +22,7 @@ public class Arrow : MonoBehaviour
         if (hpSystem != null)
         {
             hpSystem.TakeDamage(damage);  // Zadaj obrażenia przeciwnikowi
+            Debug.Log($"Zadano obrazenia obiektowi {collision.gameObject.name}");
         }
 
         // Zatrzymaj strzałę na trafionym obiekcie
