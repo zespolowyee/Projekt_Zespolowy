@@ -1,15 +1,12 @@
-
-using System.IO;
 using Unity.Netcode;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.InputSystem.LowLevel;
-using UnityEngine.InputSystem.XR.Haptics;
+
 
 public class EnemyNavigation : NetworkBehaviour
 {
 	[SerializeField] private EnemyPath path;
+	private int lastVisitedWaypointId = -1;
 
 	[SerializeField] private float playerCheckFrequency = 0.4f;
 	[SerializeField] private float checkForPlayerDistance = 9f;
@@ -48,6 +45,21 @@ public class EnemyNavigation : NetworkBehaviour
 		SwitchState(followPathState);
 	}
 
+	public void IncrementLastVisitedWaypoint()
+	{
+		lastVisitedWaypointId++;
+	}
+	public Transform GetNextWaypoint()
+	{
+		if (lastVisitedWaypointId + 1 >= path.Waypoints.Count)
+		{
+			lastVisitedWaypointId = -1;
+		}
+
+		return path.Waypoints[lastVisitedWaypointId + 1];
+	}
+
+
 	public void SetTarget(Transform target)
 	{
 		this.target = target;
@@ -56,7 +68,7 @@ public class EnemyNavigation : NetworkBehaviour
 
 	public void SetPath(EnemyPath enemyPath)
 	{
-		EnemyPath = enemyPath.Copy(); 
+		EnemyPath = enemyPath; 
 	}
 	void Update()
 	{

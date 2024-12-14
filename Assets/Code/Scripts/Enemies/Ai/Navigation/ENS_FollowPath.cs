@@ -21,7 +21,7 @@ public class ENS_FollowPath : EnemyNavigationState
 	public override void Enter()
 	{
 		lastWaypointCheckTime = Time.time;
-		controller.SetTarget(controller.EnemyPath.GetNextWaypoint());
+		controller.SetTarget(controller.GetNextWaypoint());
 		base.Enter();
 	}
 
@@ -34,8 +34,8 @@ public class ENS_FollowPath : EnemyNavigationState
 	}
 	public void GoToNextWaypoint()
 	{
-		controller.EnemyPath.IncrementLastVisitedWaypoint();
-		controller.SetTarget(controller.EnemyPath.GetNextWaypoint());
+		controller.IncrementLastVisitedWaypoint();
+		controller.SetTarget(controller.GetNextWaypoint());
 	}
 
 	public void CheckIfReachedWaypoint()
