@@ -41,4 +41,9 @@ public class HPSystem : MonoBehaviour
             Debug.Log($"{gameObject.name} has died.");
         }
     }
+
+    public bool IsDead()
+    {
+        return isDead;
+    }
 }
