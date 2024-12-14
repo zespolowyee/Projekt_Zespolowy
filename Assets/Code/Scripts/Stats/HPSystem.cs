@@ -8,13 +8,13 @@ public class HPSystem : MonoBehaviour
     public Animator animator;
     private int currentHP;
 
-    private void Start()
+    protected virtual void Start()
     {
         currentHP = maxHP;
         animator = GetComponent<Animator>();
     }
 
-    public void Update()
+    public virtual void Update()
     {
         if (!isDead && Input.GetKeyDown(KeyCode.P) && animator != null)
         {
@@ -22,7 +22,7 @@ public class HPSystem : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage)
     {
         currentHP -= damage;
         if (currentHP <= 0)
@@ -32,7 +32,7 @@ public class HPSystem : MonoBehaviour
         }
     }
 
-    private void Die()
+    protected virtual void Die()
     {
         isDead = true;
         if (animator != null)
@@ -42,8 +42,5 @@ public class HPSystem : MonoBehaviour
         }
     }
 
-    public bool IsDead()
-    {
-        return isDead;
-    }
+    
 }
