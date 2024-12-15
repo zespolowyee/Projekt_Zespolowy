@@ -246,7 +246,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: -7654976172407188664}
         m_TargetAssemblyTypeName: EnemyController, Assembly-CSharp
-        m_MethodName: DoDespanin
+        m_MethodName: DoDespawn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

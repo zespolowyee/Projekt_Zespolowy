@@ -44,7 +44,6 @@ public class Wave : NetworkBehaviour
 
 	public bool IsWaveDefeated()
 	{
-		Debug.Log(activeEnemies);
 		if (activeEnemies <1)
 		{
 			return true;
