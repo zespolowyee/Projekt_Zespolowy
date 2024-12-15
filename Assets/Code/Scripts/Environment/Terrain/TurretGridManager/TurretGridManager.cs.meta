@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 6468a6cd3da095c47bb211a00b8f9620
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - turretGridArea: {instanceID: 0}
+  - gridSettings: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

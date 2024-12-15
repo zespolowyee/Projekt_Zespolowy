@@ -18,7 +18,8 @@ public class StairGenerator : MonoBehaviour
     public float minStepHeight = 1f;
     public float maxStepHeight = 2f;
 
-
+    [SerializeField]
+    private Material material;
     void OnValidate()
     {
         if (numberOfStairs < 0 || height <= 0 || width <= 0 || depth <= 0 || minStepHeight <= 0 || maxStepHeight <= 0)
@@ -49,7 +50,7 @@ public class StairGenerator : MonoBehaviour
                 stair.transform.localPosition = new Vector3(width * i, height - instancedHeight, 0);
                 var stepHeightString = stepHeight.ToString("F2", CultureInfo.InvariantCulture);
                 stair.name = $"Stair_h{stepHeightString}";
-                stair.SetMaterial(stair.faces, BuiltinMaterials.defaultMaterial);
+                stair.SetMaterial(stair.faces, material);
                 var text = new GameObject("Text").AddComponent<TextMesh>();
                 text.text = $"Step height: {stepHeightString}";
                 text.characterSize = 0.1f;
