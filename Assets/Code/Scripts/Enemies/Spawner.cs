@@ -1,5 +1,7 @@
 using NUnit.Framework;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -13,6 +15,7 @@ public class Spawner : NetworkBehaviour
 	[SerializeField] private Wave[] waves;
 	private int activeWaveId = -1;
 
+	private bool isWaiting = false;
 
 	public void Start()
 	{
@@ -31,45 +34,47 @@ public class Spawner : NetworkBehaviour
 	public void StartNextWaveServerRpc()
 	{
 		activeWaveId++;
-		waves[activeWaveId].StartNextWaveServerRpc();
-		/*
-		foreach(WaveEntry entry in waves[activeWaveId].WaveEntries)
+		if (activeWaveId == waves.Length)
 		{
-			for (int i =0; i< entry.EnemyAmount; i++)
-			{
-				GameObject spawnedEnemy = Instantiate(
-					entry.EnemyPrefab, 
-					waves[activeWaveId].gameObject.transform,
-					false);
-
-				if (entry.UseCustomPath)
-				{
-					spawnedEnemy.GetComponent<EnemyNavigation>().SetPath(entry.EnemyPath);
-				}
-				else
-				{
-					spawnedEnemy.GetComponent<EnemyNavigation>().SetPath(defaultPath);
-				}
-				spawnedEnemy.GetComponent<NetworkObject>().Spawn(true);
-
-			}
-
+			return;
 		}
-		*/
-
-
+		waves[activeWaveId].StartNextWaveServerRpc();
+		
 	}
 
 
 
 	private void OnDrawGizmosSelected()
 	{
-		Gizmos.color = Color.cyan;
+		Gizmos.color = Color.red;
 
 		for (int i = 1; i < defaultPath.Waypoints.Count; i++)
 		{
 			Gizmos.DrawLine(defaultPath.Waypoints[i - 1].position, defaultPath.Waypoints[i].position);
 		}
 
+	}
+
+	public void Update()
+	{
+		if (activeWaveId == waves.Length || activeWaveId < 0)
+		{
+			return;
+		}
+
+		if (waves[activeWaveId].IsWaveDefeated() && !isWaiting)
+		{
+			StartCoroutine(WaitBetweenWaves(waves[activeWaveId].TimeAfterWaveDefeated));
+		}
+	}
+
+	public IEnumerator WaitBetweenWaves(float waitTime)
+	{
+		Debug.Log("waiting for next wave");
+		isWaiting = true;
+		yield return new WaitForSeconds(waitTime);
+		Debug.Log("started next wave");
+		StartNextWaveServerRpc();
+		isWaiting = false;
 	}
 }
