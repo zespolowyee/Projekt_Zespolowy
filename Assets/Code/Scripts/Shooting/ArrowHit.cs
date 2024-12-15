@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Arrow : MonoBehaviour
+public class ArrowHit : MonoBehaviour
 {
     public int damage = 25;  // Ilość obrażeń zadawanych przez strzałę
     private Rigidbody rb;
@@ -23,6 +23,10 @@ public class Arrow : MonoBehaviour
         {
             hpSystem.TakeDamage(damage);  // Zadaj obrażenia przeciwnikowi
             Debug.Log($"Zadano obrazenia obiektowi {collision.gameObject.name}");
+        }
+        else
+        {
+            Debug.Log($"Trafiono w {gameObject.name}");
         }
 
         // Zatrzymaj strzałę na trafionym obiekcie
