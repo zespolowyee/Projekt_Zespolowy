@@ -13,7 +13,7 @@ public class CannonballScript : NetworkBehaviour
 		{
 			return;	
 		}
-		
+
 		if (other.gameObject.TryGetComponent<HPSystem>(out var otherHp))
 		{
 			otherHp.TakeDamage(5);
