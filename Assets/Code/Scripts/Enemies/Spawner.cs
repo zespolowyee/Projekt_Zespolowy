@@ -15,7 +15,6 @@ public class Spawner : NetworkBehaviour
 	[SerializeField] private Wave[] waves;
 	private int activeWaveId = -1;
 
-	private bool isWaiting = false;
 
 	public void Start()
 	{
@@ -42,8 +41,6 @@ public class Spawner : NetworkBehaviour
 		
 	}
 
-
-
 	private void OnDrawGizmosSelected()
 	{
 		Gizmos.color = Color.red;
@@ -55,26 +52,13 @@ public class Spawner : NetworkBehaviour
 
 	}
 
-	public void Update()
+	public bool IsActiveWaveDeafeated()
 	{
-		if (activeWaveId == waves.Length || activeWaveId < 0)
+		if(activeWaveId == -1)
 		{
-			return;
+			return false;
 		}
-
-		if (waves[activeWaveId].IsWaveDefeated() && !isWaiting)
-		{
-			StartCoroutine(WaitBetweenWaves(waves[activeWaveId].TimeAfterWaveDefeated));
-		}
+		return waves[activeWaveId].IsWaveDefeated();
 	}
 
-	public IEnumerator WaitBetweenWaves(float waitTime)
-	{
-		Debug.Log("waiting for next wave");
-		isWaiting = true;
-		yield return new WaitForSeconds(waitTime);
-		Debug.Log("started next wave");
-		StartNextWaveServerRpc();
-		isWaiting = false;
-	}
 }
