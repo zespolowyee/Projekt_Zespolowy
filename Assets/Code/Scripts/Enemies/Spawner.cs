@@ -16,6 +16,11 @@ public class Spawner : NetworkBehaviour
 
 	public void Start()
 	{
+		if (IsServer)
+		{
+			gameObject.SetActive(false);
+		}
+
 		foreach (Wave wave in waves)
 		{
 			wave.SetDeafaultServerPath(defaultPath);

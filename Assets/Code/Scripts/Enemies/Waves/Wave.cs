@@ -6,17 +6,17 @@ public class Wave : NetworkBehaviour
 {
     [SerializeField] private WaveEntry[] waveEntries;
 	private EnemyPath defaultServerPath;
-
-
-	private List<GameObject> activeEnemies = new List<GameObject>();
+	private int activeEnemies = 0;
 	public WaveEntry[] WaveEntries { get => waveEntries; set => waveEntries = value; }
 
-	[ServerRpc]
+	[ServerRpc(RequireOwnership = false)]
 	public void StartNextWaveServerRpc()
 	{
+		int inWaveId = 0;
 
 		foreach (WaveEntry entry in waveEntries)
 		{
+
 			for (int i = 0; i < entry.EnemyAmount; i++)
 			{
 				GameObject spawnedEnemy = Instantiate(
@@ -33,11 +33,32 @@ public class Wave : NetworkBehaviour
 					spawnedEnemy.GetComponent<EnemyNavigation>().SetPath(defaultServerPath);
 				}
 				spawnedEnemy.GetComponent<NetworkObject>().Spawn(true);
-
-				activeEnemies.Add(spawnedEnemy);
+				spawnedEnemy.GetComponent<EnemyController>().SetWaveData(this, inWaveId);
+				inWaveId++;
+				activeEnemies++;
 			}
 		}
 	}
+
+	public bool IsWaveDefeated()
+	{
+		if (activeEnemies <1)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	[ServerRpc]
+	public void MarkEnemyAsDefeatedServerRpc()
+	{
+		activeEnemies--;
+	}
+
+
 
 	public void SetDeafaultServerPath(EnemyPath path)
 	{
