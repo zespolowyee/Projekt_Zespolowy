@@ -59,12 +59,12 @@ public class RBController : NetworkBehaviour
         if (!IsOwner)
         {
             cameraHolder.SetActive(false);
-            Cursor.lockState = CursorLockMode.Locked;
             enabled = false;
             return;
         }
+		Cursor.lockState = CursorLockMode.Locked;
 
-    }
+	}
 
     private void FixedUpdate()
     {
