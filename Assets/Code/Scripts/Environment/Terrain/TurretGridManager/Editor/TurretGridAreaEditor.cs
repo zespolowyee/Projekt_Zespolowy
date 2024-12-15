@@ -5,6 +5,7 @@ using System.Security.Permissions;
 using System.Collections.Generic;
 using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEngine.UIElements;
+using Unity.Mathematics;
 
 [CustomEditor(typeof(TurretGridArea))]
 public class TurretGridAreaEditor : Editor
@@ -69,7 +70,7 @@ public class TurretGridAreaEditor : Editor
     private Vector3 GetMouseWorldPosition()
     {
         Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        if (Physics.Raycast(ray, out RaycastHit hit, maxDistance: math.INFINITY))
         {
             return hit.point;
         }

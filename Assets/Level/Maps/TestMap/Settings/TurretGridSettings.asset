@@ -17,5 +17,5 @@ MonoBehaviour:
   cubeHeight: 0.2
   globalOffset: {x: 0, y: 0, z: 0}
   gridMaterial: {fileID: 0}
-  gridType: 1
+  gridType: 0
   gridColor: {r: 1, g: 0, b: 0, a: 0.5529412}
