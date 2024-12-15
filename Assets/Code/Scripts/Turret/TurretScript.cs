@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TurretScript : NetworkBehaviour
@@ -88,6 +89,7 @@ public class TurretScript : NetworkBehaviour
 	void ShootAtTarget()
 	{
 		var ball = Instantiate(cannonball, barrelShootingPoint.position, barrelShootingPoint.rotation);
+		ball.GetComponent<CannonballScript>().SetTargetLayer(targetLayer);
 		ball.GetComponent<Rigidbody>().linearVelocity = barrelShootingPoint.transform.forward * cannonballVelocity;
 	}
 
@@ -100,8 +102,7 @@ public class TurretScript : NetworkBehaviour
 	[ClientRpc]
 	void ShootAtTargetClientRpc()
 	{
-		var ball = Instantiate(cannonball, barrelShootingPoint.position, barrelShootingPoint.rotation);
-		ball.GetComponent<Rigidbody>().linearVelocity = barrelShootingPoint.transform.forward * cannonballVelocity;
+		ShootAtTarget();
 	}
 
 	void Update()

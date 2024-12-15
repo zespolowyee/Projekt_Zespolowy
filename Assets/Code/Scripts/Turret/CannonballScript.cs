@@ -22,6 +22,11 @@ public class CannonballScript : NetworkBehaviour
 
 	}
 
+	public void SetTargetLayer(LayerMask layer)
+	{
+		whatIsTarget = layer;
+	}
+
 	public void Start()
 	{
 		Destroy(gameObject, 5f);
