@@ -8,7 +8,7 @@ public class EnemyController : NetworkBehaviour
 
 	public void SetWaveData(Wave wave, int inWaveId)
 	{
-		Debug.Log("chhoj");
+
 		this.inWaveId = inWaveId;
 		this.wave = wave;
 	}
@@ -22,17 +22,13 @@ public class EnemyController : NetworkBehaviour
 	[ServerRpc (RequireOwnership = false)]
 	public void DespawnEnemyServerRpc()
 	{
+		DeleteFromActiveEnemiesInWaveServerRpc();
 		GetComponent<NetworkObject>().Despawn(true);
 	}
 
-	public void DoDespanin()
+	public void DoDespawn()
 	{
 		DespawnEnemyServerRpc();
 	}
 
-	public override void OnDestroy()
-	{
-		DeleteFromActiveEnemiesInWaveServerRpc();
-		base.OnDestroy();
-	}
 }

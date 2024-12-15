@@ -5,9 +5,11 @@ using UnityEngine;
 public class Wave : NetworkBehaviour
 {
     [SerializeField] private WaveEntry[] waveEntries;
+	[SerializeField] private float timeAfterWaveDefeated = 5f;
 	private EnemyPath defaultServerPath;
 	private int activeEnemies = 0;
 	public WaveEntry[] WaveEntries { get => waveEntries; set => waveEntries = value; }
+	public float TimeAfterWaveDefeated { get => timeAfterWaveDefeated; set => timeAfterWaveDefeated = value; }
 
 	[ServerRpc(RequireOwnership = false)]
 	public void StartNextWaveServerRpc()
@@ -42,6 +44,7 @@ public class Wave : NetworkBehaviour
 
 	public bool IsWaveDefeated()
 	{
+		Debug.Log(activeEnemies);
 		if (activeEnemies <1)
 		{
 			return true;
