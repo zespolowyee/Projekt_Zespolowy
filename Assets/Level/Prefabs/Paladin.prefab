@@ -440,7 +440,7 @@ GameObject:
   - component: {fileID: 690142728163902805}
   - component: {fileID: 8953077722320630384}
   - component: {fileID: 6011787782708880375}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Paladin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4060,7 +4060,7 @@ GameObject:
   - component: {fileID: 2115288395327622801}
   - component: {fileID: 8772735560775969004}
   - component: {fileID: 4335753714163302464}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Paladin J Nordstrom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
