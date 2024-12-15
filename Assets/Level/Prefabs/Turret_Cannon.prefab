@@ -655,7 +655,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 835881319
+  GlobalObjectIdHash: 848874878
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -691,9 +691,9 @@ MonoBehaviour:
   maxDownRotation: 20
   targetLayer:
     serializedVersion: 2
-    m_Bits: 128
-  sphereRadius: 10
-  shootingInterval: 3
+    m_Bits: 256
+  sphereRadius: 20
+  shootingInterval: 1
 --- !u!1 &9214457764781702272
 GameObject:
   m_ObjectHideFlags: 0

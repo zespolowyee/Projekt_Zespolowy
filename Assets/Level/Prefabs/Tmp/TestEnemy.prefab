@@ -283,7 +283,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1ac2a0a17ba7404eb3d54321fa8663c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 10
+  ShowTopMostFoldoutHeaderGroup: 1
+  maxHP: 30
   animator: {fileID: 0}
   OnEnemyDeath:
     m_PersistentCalls:

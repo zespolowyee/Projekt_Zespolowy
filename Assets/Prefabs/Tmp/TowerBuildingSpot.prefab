@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2183544157
+  GlobalObjectIdHash: 1928228743
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -148,4 +148,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  towerPrefab: {fileID: 2275255456320242815, guid: ea70a6b2afc5a1d41b9c943b4048c5f4, type: 3}
+  towerPrefab: {fileID: 8527545519523951861, guid: 3b494635d9ea64a44985b6f6824fd4bf, type: 3}

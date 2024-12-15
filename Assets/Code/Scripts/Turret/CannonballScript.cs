@@ -16,7 +16,7 @@ public class CannonballScript : NetworkBehaviour
 
 		if (other.gameObject.TryGetComponent<HPSystem>(out var otherHp))
 		{
-			otherHp.TakeDamage(5);
+			otherHp.TakeDamage(20);
 			Destroy(gameObject);
 		}
 
