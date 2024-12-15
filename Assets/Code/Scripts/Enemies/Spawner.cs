@@ -54,7 +54,7 @@ public class Spawner : NetworkBehaviour
 
 	public bool IsActiveWaveDeafeated()
 	{
-		if(activeWaveId == -1)
+		if(activeWaveId == -1 || activeWaveId > waves.Length-1)
 		{
 			return false;
 		}
