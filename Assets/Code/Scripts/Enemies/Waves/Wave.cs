@@ -54,8 +54,7 @@ public class Wave : NetworkBehaviour
 		}
 	}
 
-	[ServerRpc]
-	public void MarkEnemyAsDefeatedServerRpc()
+	public void MarkEnemyAsDefeated()
 	{
 		activeEnemies--;
 	}
