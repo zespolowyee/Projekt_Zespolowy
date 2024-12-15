@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3703349583
+  GlobalObjectIdHash: 394072725
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -265,6 +265,7 @@ GameObject:
   - component: {fileID: 4189010699724505119}
   - component: {fileID: 8464469752236948215}
   - component: {fileID: 3962796167191777835}
+  - component: {fileID: 8305784777722334483}
   - component: {fileID: 7279186434539353556}
   m_Layer: 7
   m_Name: PlayerBody
@@ -420,19 +421,34 @@ MonoBehaviour:
     m_Bits: 64
   walkState:
     moveSpeed: 10
-    smoothingFactor: 10
+    CanEnterToItself: 0
   airbourneState:
     moveSpeed: 5
-    smoothingFactor: 5
+    CanEnterToItself: 0
     groundCheckDelay: 0.2
   runState:
     moveSpeed: 20
-    smoothingFactor: 5
+    CanEnterToItself: 0
   croutchState:
     moveSpeed: 3
-    smoothingFactor: 0
+    CanEnterToItself: 0
     croutchOffset: 0.249
     cellingCheckRadius: 0.4
+--- !u!114 &8305784777722334483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5891105665328763567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80588a08e4c9fe664a82b92d787e485d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  maxHP: 100
+  animator: {fileID: 0}
 --- !u!114 &7279186434539353556
 MonoBehaviour:
   m_ObjectHideFlags: 0

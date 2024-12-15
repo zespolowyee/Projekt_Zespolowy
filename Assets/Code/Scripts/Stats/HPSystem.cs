@@ -11,7 +11,7 @@ public class HPSystem : NetworkBehaviour
 	public Animator animator;
 	//private int currentHP;
 	
-	private void Start()
+	protected virtual void Start()
 	{
 		if (IsServer)
 		{
@@ -21,7 +21,7 @@ public class HPSystem : NetworkBehaviour
 		animator = GetComponent<Animator>();
 	}
 
-	public void Update()
+	public virtual void Update()
 	{
 		if (!isDead && Input.GetKeyDown(KeyCode.P) && animator != null)
 		{
@@ -29,7 +29,7 @@ public class HPSystem : NetworkBehaviour
 		}
 	}
 
-	public void TakeDamage(int damage)
+	public virtual void TakeDamage(int damage)
 	{
 		if (IsServer)
 		{
@@ -43,7 +43,7 @@ public class HPSystem : NetworkBehaviour
 		}
 	}
 
-	private void Die()
+	protected virtual void Die()
 	{
 		isDead = true;
 		if (animator != null)
