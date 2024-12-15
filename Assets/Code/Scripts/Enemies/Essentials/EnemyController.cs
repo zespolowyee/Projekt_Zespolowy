@@ -8,22 +8,23 @@ public class EnemyController : NetworkBehaviour
 
 	public void SetWaveData(Wave wave, int inWaveId)
 	{
-
 		this.inWaveId = inWaveId;
 		this.wave = wave;
 	}
 
-	[ServerRpc (RequireOwnership = false)]
-	private void DeleteFromActiveEnemiesInWaveServerRpc()
+	private void DeleteFromActiveEnemiesInWave()
 	{
-		wave.MarkEnemyAsDefeatedServerRpc();
+		wave.MarkEnemyAsDefeated();
 	}
 
-	[ServerRpc (RequireOwnership = false)]
+	[ServerRpc(RequireOwnership = false)]
 	public void DespawnEnemyServerRpc()
 	{
-		DeleteFromActiveEnemiesInWaveServerRpc();
+
+		DeleteFromActiveEnemiesInWave();
 		GetComponent<NetworkObject>().Despawn(true);
+
+
 	}
 
 	public void DoDespawn()
