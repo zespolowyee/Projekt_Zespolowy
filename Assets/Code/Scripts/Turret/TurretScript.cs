@@ -96,7 +96,15 @@ public class TurretScript : NetworkBehaviour
 	[ServerRpc]
 	void ShootAtTargetServerRpc()
 	{
-		ShootAtTargetClientRpc();
+		if (IsServer && IsClient)
+		{
+			ShootAtTargetClientRpc();
+		}
+		else
+		{
+			ShootAtTargetClientRpc();
+			ShootAtTarget();
+		}
 	}
 
 	[ClientRpc]
