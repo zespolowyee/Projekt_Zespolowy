@@ -37,8 +37,16 @@ public class EnemyNavigation : NetworkBehaviour
 	void Start()
 	{
 
-		playerCheckFrequency += Random.Range(-0.1f, 0.1f);
 		navMeshAgent = GetComponent<NavMeshAgent>();
+		if (!IsServer)
+		{
+			navMeshAgent.enabled = false;
+			this.enabled = false;
+			return;
+		}
+
+		playerCheckFrequency += Random.Range(-0.1f, 0.1f);
+
 
 		followPathState.Setup(this);
 		followNearestPlayer.Setup(this);
