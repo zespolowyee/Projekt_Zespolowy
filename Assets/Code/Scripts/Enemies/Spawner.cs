@@ -1,3 +1,7 @@
+using NUnit.Framework;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -8,18 +12,38 @@ public class Spawner : NetworkBehaviour
 	[SerializeField] private GameObject enemyPrefab;
 	[SerializeField] private EnemyPath defaultPath;
 
+	[SerializeField] private Wave[] waves;
+	private int activeWaveId = -1;
 
-	[ServerRpc(RequireOwnership = false)]
-	public void SpawnEnemyServerRpc()
+
+	public void Start()
 	{
-		GameObject spawnedEnemy = Instantiate(enemyPrefab);
-		spawnedEnemy.GetComponent<EnemyNavigation>().SetPath(defaultPath);
-		spawnedEnemy.GetComponent<NetworkObject>().Spawn(true);
+		if (IsServer)
+		{
+			gameObject.SetActive(false);
+		}
+
+		foreach (Wave wave in waves)
+		{
+			wave.SetDeafaultServerPath(defaultPath);
+		}
+	}
+
+	[ServerRpc]
+	public void StartNextWaveServerRpc()
+	{
+		activeWaveId++;
+		if (activeWaveId == waves.Length)
+		{
+			return;
+		}
+		waves[activeWaveId].StartNextWaveServerRpc();
+		
 	}
 
 	private void OnDrawGizmosSelected()
 	{
-		Gizmos.color = Color.cyan;
+		Gizmos.color = Color.red;
 
 		for (int i = 1; i < defaultPath.Waypoints.Count; i++)
 		{
@@ -27,4 +51,14 @@ public class Spawner : NetworkBehaviour
 		}
 
 	}
+
+	public bool IsActiveWaveDeafeated()
+	{
+		if(activeWaveId == -1)
+		{
+			return false;
+		}
+		return waves[activeWaveId].IsWaveDefeated();
+	}
+
 }
