@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3703349583
+  GlobalObjectIdHash: 394072725
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -134,6 +134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lookDistance: 5
   interactionDistance: 5
+  playerPublicPreferences: {fileID: 11400000, guid: 8523793f66d24b54c9d23dadd41565aa, type: 2}
 --- !u!1 &5177022834069235977
 GameObject:
   m_ObjectHideFlags: 0
@@ -420,17 +421,17 @@ MonoBehaviour:
     m_Bits: 64
   walkState:
     moveSpeed: 10
-    smoothingFactor: 10
+    CanEnterToItself: 0
   airbourneState:
     moveSpeed: 5
-    smoothingFactor: 5
+    CanEnterToItself: 0
     groundCheckDelay: 0.2
   runState:
     moveSpeed: 20
-    smoothingFactor: 5
+    CanEnterToItself: 0
   croutchState:
     moveSpeed: 3
-    smoothingFactor: 0
+    CanEnterToItself: 0
     croutchOffset: 0.249
     cellingCheckRadius: 0.4
 --- !u!114 &7279186434539353556

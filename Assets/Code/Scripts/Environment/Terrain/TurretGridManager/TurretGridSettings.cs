@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "TurretGridSettings", menuName = "TowerDefense/GridSettings")]
+[CreateAssetMenu(fileName = "TurretGridSettings", menuName = "Custom Settings/Grid Settings")]
 public class TurretGridSettings : ScriptableObject
 {
     [Header("Grid Configuration")]
