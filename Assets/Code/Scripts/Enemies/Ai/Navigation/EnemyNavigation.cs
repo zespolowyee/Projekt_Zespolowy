@@ -1,21 +1,20 @@
 
 using System.IO;
 using Unity.Netcode;
-using Unity.VisualScripting;
+using Unity.Netcode.Components;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.InputSystem.LowLevel;
-using UnityEngine.InputSystem.XR.Haptics;
+
 
 public class EnemyNavigation : NetworkBehaviour
 {
-	[SerializeField] private EnemyPath path;
+	private EnemyPath path;
 
 	[SerializeField] private float playerCheckFrequency = 0.4f;
 	[SerializeField] private float checkForPlayerDistance = 9f;
 	[SerializeField] private LayerMask whatIsPlayer;
 	private float lastPlayerCheckTime;
-
+	private NetworkAnimator animator;
 
 	[Header("State Setup")]
 	[SerializeField] private ENS_FollowPath followPathState;
@@ -38,14 +37,15 @@ public class EnemyNavigation : NetworkBehaviour
 	{
 
 		navMeshAgent = GetComponent<NavMeshAgent>();
+
 		if (!IsServer)
 		{
 			navMeshAgent.enabled = false;
 			this.enabled = false;
 			return;
 		}
-
-		playerCheckFrequency += Random.Range(-0.1f, 0.1f);
+        animator = GetComponent<NetworkAnimator>();
+        playerCheckFrequency += Random.Range(-0.1f, 0.1f);
 
 
 		followPathState.Setup(this);
