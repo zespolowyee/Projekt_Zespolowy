@@ -55,7 +55,7 @@ public class SlopeGenerator : MonoBehaviour
                 slope.transform.localRotation = Quaternion.Euler(0, 90, -slopeDegree);
                 var stepHeightString = slopeDegree.ToString("F1", CultureInfo.InvariantCulture);
                 slope.name = $"Slope_{stepHeightString}_deg";
-                slope.SetMaterial(slope.faces, material);
+                slope.GetComponent<MeshRenderer>().sharedMaterial = material;
                 var text = new GameObject("Text").AddComponent<TextMesh>();
                 text.text = $"Slope: {stepHeightString}\u00B0";
                 text.characterSize = 0.1f;
