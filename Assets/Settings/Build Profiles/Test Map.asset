@@ -22,9 +22,9 @@ MonoBehaviour:
   m_Scenes:
   - m_enabled: 1
     m_path: Assets/Level/Maps/TestMap/TestScene.unity
-  - m_enabled: 1
+  - m_enabled: 0
     m_path: Assets/Scenes/Wojciech.unity
-  - m_enabled: 1
+  - m_enabled: 0
     m_path: Assets/Scenes/SampleScene.unity
   m_ScriptingDefines: []
   m_PlayerSettingsYaml:

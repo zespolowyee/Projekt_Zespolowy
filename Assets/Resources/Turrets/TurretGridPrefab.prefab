@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1193207877609869377}
   - component: {fileID: 6454293962498809155}
   - component: {fileID: 4824963095418327574}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TurretGridPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 0
+  GlobalObjectIdHash: 1571553216
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -148,3 +148,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  shouldInteractionBeSyncedOnNet: 1
