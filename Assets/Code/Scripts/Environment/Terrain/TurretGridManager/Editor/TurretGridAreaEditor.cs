@@ -34,18 +34,19 @@ public class TurretGridAreaEditor : Editor
         {
             isPainting = false;
         }
-        if (e.type == EventType.KeyDown && e.keyCode == KeyCode.R)
-        {
-            gridArea.gridCells.Clear();
-            e.Use();
-        }
-        if (e.type == EventType.KeyDown && e.keyCode == KeyCode.B)
-        {
-            gridArea.BakeGrid();
-            e.Use();
-        }
+        
         if (isPainting)
         {
+            if (e.type == EventType.KeyDown && e.keyCode == KeyCode.R)
+            {
+                gridArea.gridCells.Clear();
+                e.Use();
+            }
+            if (e.type == EventType.KeyDown && e.keyCode == KeyCode.B)
+            {
+                gridArea.BakeGrid();
+                e.Use();
+            }
             if (e.type == EventType.ScrollWheel)
             {
                 brushSize *= 1 - e.delta.x * .1f;
@@ -60,7 +61,12 @@ public class TurretGridAreaEditor : Editor
             DrawBrush(selectedCells);
             if (e.type == EventType.MouseDrag || e.type == EventType.MouseDown)
             {
-                gridArea.gridCells.UnionWith(selectedCells);
+                // if left mouse button is pressed
+                if (e.button == 1)
+                    gridArea.gridCells.ExceptWith(selectedCells);
+                // if right mouse button is pressed
+                if (e.button == 0)
+                    gridArea.gridCells.UnionWith(selectedCells);
                 e.Use();
             }
         }
