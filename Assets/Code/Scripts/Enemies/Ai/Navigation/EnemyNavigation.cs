@@ -18,9 +18,10 @@ public class EnemyNavigation : NetworkBehaviour
 
 	[Header("State Setup")]
 	[SerializeField] private ENS_FollowPath followPathState;
-	[SerializeField] private ENS_FollowNearestPlayer followNearestPlayer;
+	[SerializeField] private ENS_FollowNearestPlayer followNearestPlayerState;
+	[SerializeField] private EnemyAttackState attackState;
 
-	public EnemyNavigationState CurrentState { get; private set; }
+    public EnemyState CurrentState { get; private set; }
 
 	private Transform target;
 
@@ -49,7 +50,8 @@ public class EnemyNavigation : NetworkBehaviour
 
 
 		followPathState.Setup(this);
-		followNearestPlayer.Setup(this);
+		followNearestPlayerState.Setup(this);
+		attackState.Setup(this);
 
 		lastPlayerCheckTime = Time.time;
 
@@ -72,8 +74,14 @@ public class EnemyNavigation : NetworkBehaviour
 		if (lastPlayerCheckTime + playerCheckFrequency < Time.time)
 		{
 			SearchForPlayerInRange();
+
 		}
-	}
+		if (attackState.CheckAllConditions())
+		{
+			SwitchState(attackState);
+		}
+
+    }
 
 
 	public void SearchForPlayerInRange()
@@ -91,7 +99,7 @@ public class EnemyNavigation : NetworkBehaviour
 
 		Transform closestPlayerTransform = FindClosestPlayer(playersInReach);
 		SetTarget(closestPlayerTransform);
-		SwitchState(followNearestPlayer);
+		SwitchState(followNearestPlayerState);
 	}
 
 	public Transform FindClosestPlayer(Collider[] playersInReach)
@@ -115,7 +123,7 @@ public class EnemyNavigation : NetworkBehaviour
 		return closestPlayer.gameObject.transform;
 	}
 
-	public void SwitchState(EnemyNavigationState newState)
+	public void SwitchState(EnemyState newState)
 	{
 		CurrentState?.Exit();
 		CurrentState = newState;
