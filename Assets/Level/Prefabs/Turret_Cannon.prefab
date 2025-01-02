@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 7497229020472913593}
   - component: {fileID: 6118203584681520488}
   - component: {fileID: 1466397108706588722}
+  - component: {fileID: 8595004595852668274}
   m_Layer: 6
   m_Name: BackWheels
   m_TagString: Untagged
@@ -140,6 +141,35 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -8782119142174837459, guid: 125b14fbccfdc6a468ed0990a7c30e98, type: 3}
+--- !u!114 &8595004595852668274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3736553185631510164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3f996a492693944db039e18e07bdb50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  OnInteraction:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -1306846499251793394}
+        m_TargetAssemblyTypeName: UpgradeTurret, Assembly-CSharp
+        m_MethodName: Upgrade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  shouldInteractionBeSyncedOnNet: 0
 --- !u!1 &4120021555661350502
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,6 +182,7 @@ GameObject:
   - component: {fileID: 7479150336794217363}
   - component: {fileID: 2625863106709586402}
   - component: {fileID: 8498548581956892054}
+  - component: {fileID: 832704206201442860}
   m_Layer: 6
   m_Name: Barrel
   m_TagString: Untagged
@@ -250,6 +281,35 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 8108563764783910780, guid: 125b14fbccfdc6a468ed0990a7c30e98, type: 3}
+--- !u!114 &832704206201442860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4120021555661350502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3f996a492693944db039e18e07bdb50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  OnInteraction:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -1306846499251793394}
+        m_TargetAssemblyTypeName: UpgradeTurret, Assembly-CSharp
+        m_MethodName: Upgrade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  shouldInteractionBeSyncedOnNet: 0
 --- !u!1 &5583137535391971165
 GameObject:
   m_ObjectHideFlags: 0
@@ -293,6 +353,7 @@ GameObject:
   - component: {fileID: 2743218974856197670}
   - component: {fileID: 8952650211035999368}
   - component: {fileID: 2585527795974306440}
+  - component: {fileID: 3162130142232283993}
   m_Layer: 6
   m_Name: BarrelCart
   m_TagString: Untagged
@@ -390,6 +451,35 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 8993710757797625901, guid: 125b14fbccfdc6a468ed0990a7c30e98, type: 3}
+--- !u!114 &3162130142232283993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6243985681929906498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3f996a492693944db039e18e07bdb50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  OnInteraction:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -1306846499251793394}
+        m_TargetAssemblyTypeName: UpgradeTurret, Assembly-CSharp
+        m_MethodName: Upgrade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  shouldInteractionBeSyncedOnNet: 0
 --- !u!1 &7192314731763593794
 GameObject:
   m_ObjectHideFlags: 0
@@ -402,6 +492,7 @@ GameObject:
   - component: {fileID: 7603007638498357690}
   - component: {fileID: 4545147170538415228}
   - component: {fileID: 4961145671085864435}
+  - component: {fileID: 2101488605394793839}
   m_Layer: 6
   m_Name: Base
   m_TagString: Untagged
@@ -499,6 +590,35 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3909233067320746374, guid: 125b14fbccfdc6a468ed0990a7c30e98, type: 3}
+--- !u!114 &2101488605394793839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7192314731763593794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3f996a492693944db039e18e07bdb50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  OnInteraction:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -1306846499251793394}
+        m_TargetAssemblyTypeName: UpgradeTurret, Assembly-CSharp
+        m_MethodName: Upgrade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  shouldInteractionBeSyncedOnNet: 0
 --- !u!1 &7412517421880371501
 GameObject:
   m_ObjectHideFlags: 0
@@ -511,6 +631,7 @@ GameObject:
   - component: {fileID: 3043205048979549493}
   - component: {fileID: 847588391975049552}
   - component: {fileID: 3184253505277566279}
+  - component: {fileID: 575960277676729023}
   m_Layer: 6
   m_Name: FrontWheels
   m_TagString: Untagged
@@ -608,6 +729,35 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4164666299690521892, guid: 125b14fbccfdc6a468ed0990a7c30e98, type: 3}
+--- !u!114 &575960277676729023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7412517421880371501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3f996a492693944db039e18e07bdb50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  OnInteraction:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -1306846499251793394}
+        m_TargetAssemblyTypeName: UpgradeTurret, Assembly-CSharp
+        m_MethodName: Upgrade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  shouldInteractionBeSyncedOnNet: 0
 --- !u!1 &8527545519523951861
 GameObject:
   m_ObjectHideFlags: 0
@@ -619,6 +769,7 @@ GameObject:
   - component: {fileID: 7316587107335967141}
   - component: {fileID: 906083672528512081}
   - component: {fileID: 5009007113466822775}
+  - component: {fileID: -1306846499251793394}
   m_Layer: 6
   m_Name: Turret_Cannon
   m_TagString: Untagged
@@ -694,6 +845,18 @@ MonoBehaviour:
     m_Bits: 128
   sphereRadius: 10
   shootingInterval: 3
+--- !u!114 &-1306846499251793394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8527545519523951861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51b837b942cd4794b8cde366735331b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9214457764781702272
 GameObject:
   m_ObjectHideFlags: 0
