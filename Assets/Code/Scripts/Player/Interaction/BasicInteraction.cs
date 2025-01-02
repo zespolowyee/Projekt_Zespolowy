@@ -21,10 +21,13 @@ public class BasicInteraction : NetworkBehaviour, IInteractable
 	}
 	public virtual void Interact()
 	{
-		OnInteraction?.Invoke();
 		if (shouldInteractionBeSyncedOnNet)
 		{
 			TriggerInteractionServerRpc();
+		}
+		else
+		{
+			OnInteraction?.Invoke();
 		}
 	}
 }
