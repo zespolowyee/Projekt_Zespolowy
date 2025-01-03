@@ -1503,6 +1503,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -1306846499251793394, guid: 3b494635d9ea64a44985b6f6824fd4bf, type: 3}
+      propertyPath: upgradeUI
+      value: 
+      objectReference: {fileID: 2345384520125782939, guid: f7bd249fc3badfb4d80f15a7f961b534, type: 3}
     - target: {fileID: 5009007113466822775, guid: 3b494635d9ea64a44985b6f6824fd4bf, type: 3}
       propertyPath: cannonball
       value: 

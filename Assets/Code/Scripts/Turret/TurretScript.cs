@@ -4,37 +4,55 @@ using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class TurretScript : NetworkBehaviour
+public class TurretScript : NetworkBehaviour, ITurretScript
 {
-
-	[SerializeField]
-	private Transform barrelObject;
-
-	[SerializeField]
-	private Transform barrelClamp;
-
-	[SerializeField]
-	private Transform barrelShootingPoint;
-
-	[SerializeField]
-	private Transform cannonPivot;
-
+	[Header("Rotation objects")]
+	[SerializeField] private Transform barrelObject;
+	[SerializeField] private Transform barrelClamp;
+	[SerializeField] private Transform barrelShootingPoint;
+	[SerializeField] private Transform cannonPivot;
+	
+	[Header("Cannonball info")]
 	[SerializeField] private GameObject cannonball;
 	[SerializeField] private float cannonballVelocity;
-
+	
+	[Header("Turret's target")]
+	[SerializeField] private LayerMask targetLayer;
+	
+	[Header("Up and down rotation limits")]
 	[SerializeField] private float maxUpRotation = -10;
 	[SerializeField] private float maxDownRotation = 20;
-	[SerializeField] private LayerMask targetLayer;
-	[SerializeField] private float sphereRadius = 5;
-	[SerializeField] private float shootingInterval = 3f;
+	
+	[Header("Turret's stats")]
+	[SerializeField] private float detectionRange = 5;
+	[SerializeField] private float shootingInterval = 3;
+	[SerializeField] private int damage = 5;
 
 	private Collider _currentTarget;
 	private float timeElapsed = 0f;
 
+	public ITurretScript SetDetectionRange(float detectionRange)
+	{
+		this.detectionRange = detectionRange;
+		return this;
+	}
 
+	public ITurretScript SetShootingInterval(float shootingInterval)
+	{
+		this.shootingInterval = shootingInterval;
+		return this;
+	}
+
+	public ITurretScript SetDamage(int damage)
+	{
+		this.damage = damage;
+		return this;
+	}
+	
+	
 	bool FindClosestTarget()
 	{
-		Collider[] targets = Physics.OverlapSphere(transform.position, sphereRadius, targetLayer);
+		Collider[] targets = Physics.OverlapSphere(transform.position, detectionRange, targetLayer);
 		if (targets.Length > 0)
 		{
 
@@ -89,7 +107,9 @@ public class TurretScript : NetworkBehaviour
 	void ShootAtTarget()
 	{
 		var ball = Instantiate(cannonball, barrelShootingPoint.position, barrelShootingPoint.rotation);
-		ball.GetComponent<CannonballScript>().SetTargetLayer(targetLayer);
+		ball.GetComponent<CannonballScript>()
+			.SetTargetLayer(targetLayer)
+			.SetBallDamage(damage);
 		ball.GetComponent<Rigidbody>().linearVelocity = barrelShootingPoint.transform.forward * cannonballVelocity;
 	}
 
