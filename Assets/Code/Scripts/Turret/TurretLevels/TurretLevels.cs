@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "TurretLevels", menuName = "Scriptable Objects/TurretLevels")]
@@ -10,7 +11,7 @@ public class TurretLevels : ScriptableObject
 }
 
 [Serializable]
-public class TurretLevel
+public struct TurretLevel : INetworkSerializable
 {
     [Header("Level Info")]
     [Tooltip("Turret level number.")]
@@ -29,4 +30,13 @@ public class TurretLevel
     [Header("Upgrade Info")]
     [Tooltip("Cost to upgrade to this level.")]
     public int upgradeCost;
+
+    public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
+    {
+        serializer.SerializeValue(ref level);
+        serializer.SerializeValue(ref damage);
+        serializer.SerializeValue(ref shootingInterval);
+        serializer.SerializeValue(ref range);
+        serializer.SerializeValue(ref upgradeCost);
+    }
 }

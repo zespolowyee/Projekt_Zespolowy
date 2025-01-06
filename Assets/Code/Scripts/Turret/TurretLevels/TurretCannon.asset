@@ -28,8 +28,8 @@ MonoBehaviour:
     shootingInterval: 1
     range: 5
     upgradeCost: 15
-  - level: 3
+  - level: 4
     damage: 10
     shootingInterval: 1
-    range: 10
+    range: 20
     upgradeCost: 20

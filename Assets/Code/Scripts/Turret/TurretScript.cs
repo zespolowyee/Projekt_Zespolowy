@@ -23,36 +23,28 @@ public class TurretScript : NetworkBehaviour, ITurretScript
 	[SerializeField] private float maxUpRotation = -10;
 	[SerializeField] private float maxDownRotation = 20;
 	
-	[Header("Turret's stats")]
-	[SerializeField] private float detectionRange = 5;
-	[SerializeField] private float shootingInterval = 3;
-	[SerializeField] private int damage = 5;
-
+	
+	private NetworkVariable<TurretLevel> currentTurretLevel = new NetworkVariable<TurretLevel>(
+		new TurretLevel
+		{
+			level = 0,
+			damage = 0,
+			shootingInterval = 0,
+			range = 0,
+			upgradeCost = 0
+		});
 	private Collider _currentTarget;
 	private float timeElapsed = 0f;
 
-	public ITurretScript SetDetectionRange(float detectionRange)
+	[ServerRpc]
+	public void SetTurretLevelServerRpc(TurretLevel turretLevel)
 	{
-		this.detectionRange = detectionRange;
-		return this;
+		currentTurretLevel.Value = turretLevel;
 	}
 
-	public ITurretScript SetShootingInterval(float shootingInterval)
-	{
-		this.shootingInterval = shootingInterval;
-		return this;
-	}
-
-	public ITurretScript SetDamage(int damage)
-	{
-		this.damage = damage;
-		return this;
-	}
-	
-	
 	bool FindClosestTarget()
 	{
-		Collider[] targets = Physics.OverlapSphere(transform.position, detectionRange, targetLayer);
+		Collider[] targets = Physics.OverlapSphere(transform.position, currentTurretLevel.Value.range, targetLayer);
 		if (targets.Length > 0)
 		{
 
@@ -109,7 +101,7 @@ public class TurretScript : NetworkBehaviour, ITurretScript
 		var ball = Instantiate(cannonball, barrelShootingPoint.position, barrelShootingPoint.rotation);
 		ball.GetComponent<CannonballScript>()
 			.SetTargetLayer(targetLayer)
-			.SetBallDamage(damage);
+			.SetBallDamage(currentTurretLevel.Value.damage);
 		ball.GetComponent<Rigidbody>().linearVelocity = barrelShootingPoint.transform.forward * cannonballVelocity;
 	}
 
@@ -145,7 +137,7 @@ public class TurretScript : NetworkBehaviour, ITurretScript
 
 		LookAtTarget();
 
-		if (timeElapsed >= shootingInterval)
+		if (timeElapsed >= currentTurretLevel.Value.shootingInterval)
 		{
 			if (IsServer)
 			{
