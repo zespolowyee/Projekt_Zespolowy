@@ -23,7 +23,6 @@ public class TurretGridAreaEditor : Editor
     private void OnSceneGUI()
     {
         if (gridSettings == null) return;
-
         Event e = Event.current;
 
         if (e.type == EventType.KeyDown && e.keyCode == KeyCode.LeftShift)
@@ -39,7 +38,7 @@ public class TurretGridAreaEditor : Editor
         {
             if (e.type == EventType.KeyDown && e.keyCode == KeyCode.R)
             {
-                gridArea.gridCells.Clear();
+                gridArea.ClearGrid();
                 e.Use();
             }
             if (e.type == EventType.KeyDown && e.keyCode == KeyCode.B)
@@ -121,17 +120,9 @@ public class TurretGridAreaEditor : Editor
         }
         return cells;
     }
-private bool isPointingOnPrefab()
-{
-    Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
-    if (Physics.Raycast(ray, out RaycastHit hit))
+    private bool isPointingOnPrefab()
     {
-        if (hit.collider.gameObject.name == "GridPrefabCube")
-        {
-            return true;
-        }
+        Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
+        return Physics.Raycast(ray.origin, ray.direction, Mathf.Infinity, LayerMask.GetMask("TurretGrid"));
     }
-    return false;
-}
-
 }

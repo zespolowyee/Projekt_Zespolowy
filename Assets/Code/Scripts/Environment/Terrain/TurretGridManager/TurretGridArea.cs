@@ -8,20 +8,13 @@ public class TurretGridArea : MonoBehaviour
 {
     public TurretGridSettings gridSettings;
     public HashSet<Vector3> gridCells = new HashSet<Vector3>();
-    private HashSet<Vector3> prevGridCells;
-    public string gridSavePath = "Assets/Level/Maps/TestMap/Assets/TurretGrid/grid.json";
+    private HashSet<Vector3> prevGridCells = new HashSet<Vector3>();
     public GameObject gridCellPrefab;
 
-    private void OnEnable()
-    {
-        prevGridCells = new HashSet<Vector3>(PersistentGrid<List<Vector3>>.LoadGridData(gridSavePath) ?? new List<Vector3>());
-    }
     private void OnDrawGizmos()
     {
         if (gridSettings == null) return;
 
-        if (prevGridCells == null)
-            prevGridCells = new HashSet<Vector3>(PersistentGrid<List<Vector3>>.LoadGridData(gridSavePath) ?? new List<Vector3>());
         Gizmos.color = new Color(Color.magenta.r, Color.magenta.g, Color.magenta.b, 0.5f);
         foreach (var cellPosition in prevGridCells)
         {
@@ -43,10 +36,6 @@ public class TurretGridArea : MonoBehaviour
     public void BakeGrid()
     {
         gridCells.UnionWith(prevGridCells);
-        Debug.Log($"Grid baked. {gridCells.Count} cells in total.");
-        var tmp  = new List<Vector3>(gridCells);
-        Debug.Log($"Grid baked. {tmp.Count} cells in total.");
-        PersistentGrid<List<Vector3>>.SaveGridData(new List<Vector3>(gridCells), gridSavePath);
         for (int i = 0; i < transform.childCount; i++)
         {
             if (transform.GetChild(i).gameObject.name == gridCellPrefab.name)
@@ -64,5 +53,13 @@ public class TurretGridArea : MonoBehaviour
                 );
             }
         }
+        prevGridCells = new HashSet<Vector3>(gridCells);
+        gridCells.Clear();
+    }
+
+    public void ClearGrid()
+    {
+        gridCells.Clear();
+        prevGridCells.Clear();
     }
 }
