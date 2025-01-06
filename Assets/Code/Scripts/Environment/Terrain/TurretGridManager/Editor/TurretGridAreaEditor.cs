@@ -23,6 +23,8 @@ public class TurretGridAreaEditor : Editor
     private void OnSceneGUI()
     {
         if (gridSettings == null) return;
+        Tools.current = Tool.None;
+        
         Event e = Event.current;
 
         if (e.type == EventType.KeyDown && e.keyCode == KeyCode.LeftShift)
