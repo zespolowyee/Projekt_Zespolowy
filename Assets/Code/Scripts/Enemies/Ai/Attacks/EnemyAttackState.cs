@@ -27,6 +27,7 @@ public class EnemyAttackState : EnemyState
 
 	public override void Exit()
 	{
+        Debug.Log("exited attack state");
 		controller.animator.Animator.SetBool("IsAttacking", false);
 	}
 	public bool CheckAllConditions()

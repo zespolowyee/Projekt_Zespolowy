@@ -1,4 +1,5 @@
 
+using System.ComponentModel.Design.Serialization;
 using System.IO;
 using Unity.Netcode;
 using Unity.Netcode.Components;
@@ -20,7 +21,7 @@ public class EnemyNavigation : NetworkBehaviour
 	[SerializeField] private ENS_FollowPath followPathState;
 	[SerializeField] private ENS_FollowNearestPlayer followNearestPlayerState;
 	[SerializeField] private EnemyAttackState attackState;
-
+	private ENS_IdleState idleState;
     public EnemyState CurrentState { get; private set; }
 
 	private Transform target;
@@ -55,6 +56,8 @@ public class EnemyNavigation : NetworkBehaviour
 		followPathState.Setup(this);
 		followNearestPlayerState.Setup(this);
 		attackState.Setup(this);
+		idleState = new ENS_IdleState();
+		idleState.Setup(this);
 
 		lastPlayerCheckTime = Time.time;
 
@@ -77,7 +80,8 @@ public class EnemyNavigation : NetworkBehaviour
 		if (lastPlayerCheckTime + playerCheckFrequency < Time.time)
 		{
 			SearchForPlayerInRange();
-			CalculateDistanceToTarget();
+
+			
 
 		}
 
@@ -105,10 +109,18 @@ public class EnemyNavigation : NetworkBehaviour
 			}
 			return;
 		}
-
+		CalculateDistanceToTarget();
 		Transform closestPlayerTransform = FindClosestPlayer(playersInReach);
 		SetTarget(closestPlayerTransform);
-		SwitchState(followNearestPlayerState);
+		if(DistanceToTarget < Agent.stoppingDistance * Agent.stoppingDistance)
+		{
+			SwitchState(idleState);
+		}
+		else
+		{
+			SwitchState(followNearestPlayerState);
+		}
+
 	}
 
 	public Transform FindClosestPlayer(Collider[] playersInReach)

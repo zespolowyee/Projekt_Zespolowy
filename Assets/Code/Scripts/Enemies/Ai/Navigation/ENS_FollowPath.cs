@@ -26,6 +26,12 @@ public class ENS_FollowPath : EnemyNavigationState
 		base.Enter();
 	}
 
+	public override void Exit()
+	{
+		controller.animator.Animator.SetBool("IsWalking", false);
+		base.Exit();
+	}
+
 	public override void Handle()
 	{
 		if (lastWaypointCheckTime + waypontCheckFrequency < Time.time)
