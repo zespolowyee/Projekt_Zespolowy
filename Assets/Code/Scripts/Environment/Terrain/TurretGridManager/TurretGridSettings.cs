@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "TurretGridSettings", menuName = "Custom Settings/Grid Settings")]
@@ -13,6 +14,7 @@ public class TurretGridSettings : ScriptableObject
     public Material gridMaterial;
     public GridType gridType;
     public Color gridColor = Color.red;
+    public Boolean displayLessAssets = true;
 }
 public enum GridType
 {

@@ -24,7 +24,7 @@ public class TurretGridAreaEditor : Editor
     {
         if (gridSettings == null) return;
         Tools.current = Tool.None;
-        
+
         Event e = Event.current;
 
         if (e.type == EventType.KeyDown && e.keyCode == KeyCode.LeftShift)
@@ -59,7 +59,7 @@ public class TurretGridAreaEditor : Editor
                 return;
             }
             var selectedCells = getCellsInBrushRange(GetMouseWorldPosition());
-            DrawBrush(selectedCells);
+            DrawBrush(gridArea.gridSettings.displayLessAssets ? getDrawnCells(selectedCells) : selectedCells);
             if (e.type == EventType.MouseDrag || e.type == EventType.MouseDown)
             {
                 // if left mouse button is pressed
@@ -121,6 +121,39 @@ public class TurretGridAreaEditor : Editor
             }
         }
         return cells;
+    }
+    private List<Vector3> getDrawnCells(List<Vector3> selectedCells)
+    {
+        List<Vector3> drawnCells = new List<Vector3>();
+        float minX = Mathf.Infinity, minZ = Mathf.Infinity, maxX = -Mathf.Infinity, maxZ = -Mathf.Infinity;
+        foreach (var cell in selectedCells)
+        {
+            if (cell.x < minX)
+                minX = cell.x;
+            if (cell.z < minZ)
+                minZ = cell.z;
+            if (cell.x > maxX)
+                maxX = cell.x;
+            if (cell.z > maxZ)
+                maxZ = cell.z;
+        }
+        switch (gridSettings.gridType)
+        {
+            case GridType.Square:
+                selectedCells.ForEach(cell => {
+                    if (cell.x == minX || cell.x == maxX || cell.z == minZ || cell.z == maxZ)
+                        drawnCells.Add(cell);
+                });
+                break;
+            case GridType.Circle:
+                selectedCells.ForEach(cell => {
+                    var dist = Vector3.Distance(cell, new Vector3((minX + maxX) / 2, 0, (minZ + maxZ) / 2));
+                    if (dist >= brushSize - gridSettings.cellSize && dist <= brushSize + gridSettings.cellSize)
+                        drawnCells.Add(cell);
+                });
+                break;
+        }
+        return drawnCells;
     }
     private bool isPointingOnPrefab()
     {
