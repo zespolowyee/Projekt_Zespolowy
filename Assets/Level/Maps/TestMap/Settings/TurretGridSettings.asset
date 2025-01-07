@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4099f2c1da26fe441bb7d6bf58267eb0, type: 3}
   m_Name: TurretGridSettings
   m_EditorClassIdentifier: 
-  cellSize: 1
-  cubeFill: 0.819
-  cubeHeight: 0.2
+  cellSize: 3
+  cubeFill: 1
+  cubeHeight: 0.3
   globalOffset: {x: 0, y: 0, z: 0}
   gridMaterial: {fileID: 0}
   gridType: 0

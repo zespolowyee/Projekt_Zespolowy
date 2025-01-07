@@ -2,6 +2,7 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class RBController : NetworkBehaviour
 {
@@ -29,6 +30,7 @@ public class RBController : NetworkBehaviour
     public bool IsGrounded { get => isGrounded; set => isGrounded = value; }
 
     private bool isGrounded;
+    private bool isGridVisible = false;
     private float verticalCameraRotation = 0f;
 
     [Header("State Setup")]
@@ -46,7 +48,8 @@ public class RBController : NetworkBehaviour
 		inputActions = new InputSystem_Actions();
         inputActions.Enable();
         inputActions.Player.Jump.performed += Jump;
-
+        inputActions.Player.ShowTurretGrid.performed += ToggleTurretGrid;
+        ToggleTurretGrid(default);
         moveState = walkState;
         walkState.Setup(this);
         runState.Setup(this);
@@ -111,7 +114,7 @@ public class RBController : NetworkBehaviour
         HorizontalInput = inputActions.Player.Move.ReadValue<Vector2>();
     }
 
-    //Funkcja sprawdzaj¹cy czy gracz stoi na ziemi i jesli tak to jaki jest wektor normalny powierzchni na której stoi
+    //Funkcja sprawdzajï¿½cy czy gracz stoi na ziemi i jesli tak to jaki jest wektor normalny powierzchni na ktï¿½rej stoi
     private void HandleGroundCheck()
     {        
         isGrounded = Physics.Raycast(groundCheck.position, Vector3.down, groundCheckDistance, groundLayer);
@@ -157,7 +160,7 @@ public class RBController : NetworkBehaviour
 
     public void SwitchToState(PlayerMoveState nextState, bool ignoreCanExitClause)
     {
-        //Jeœli pole CanExit w stanie != true, wtedy nie zmieniamy stanu. Chyba ¿e wymusimy to argumentem ignoreCanExitClause
+        //Jeï¿½li pole CanExit w stanie != true, wtedy nie zmieniamy stanu. Chyba ï¿½e wymusimy to argumentem ignoreCanExitClause
         if (!moveState.CanExit && !ignoreCanExitClause)
         {
             return;
@@ -168,10 +171,24 @@ public class RBController : NetworkBehaviour
             return;
         }
 
-		//Wykonujemy metody na wyjœciu i wejœciu do nowego stanu jeœli on siê zmieni³
+		//Wykonujemy metody na wyjï¿½ciu i wejï¿½ciu do nowego stanu jeï¿½li on siï¿½ zmieniï¿½
 		PlayerMoveState previousState = moveState;
 		moveState.Exit();
 		moveState = nextState;
 		nextState.Enter(previousState);
 	}
+
+    private void ToggleTurretGrid(InputAction.CallbackContext context)
+    {
+        isGridVisible = !isGridVisible;
+        int turretLayer = LayerMask.NameToLayer("TurretGrid");
+        if (isGridVisible)
+        {
+            cameraHolder.GetComponentInChildren<Camera>().cullingMask |= (1 << turretLayer);
+        }
+        else
+        {
+            cameraHolder.GetComponentInChildren<Camera>().cullingMask &= ~(1 << turretLayer);
+        }
+    }
 }
