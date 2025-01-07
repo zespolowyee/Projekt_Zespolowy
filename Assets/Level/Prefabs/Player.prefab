@@ -134,6 +134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lookDistance: 5
   interactionDistance: 5
+  playerPublicPreferences: {fileID: 11400000, guid: 8523793f66d24b54c9d23dadd41565aa, type: 2}
 --- !u!1 &5177022834069235977
 GameObject:
   m_ObjectHideFlags: 0

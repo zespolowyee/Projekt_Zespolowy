@@ -6,6 +6,7 @@ public class PlayerInteract : MonoBehaviour
 {
 	[SerializeField] private float lookDistance;
 	[SerializeField] private float interactionDistance;
+	[SerializeField] private PlayerPublicPreferences playerPublicPreferences;
 	private InputSystem_Actions inputActions;
 
 	private void Awake()
@@ -36,10 +37,17 @@ public class PlayerInteract : MonoBehaviour
 		RaycastHit hit;
 		if (Physics.Raycast(transform.position, transform.forward, out hit, interactionDistance))
 		{
-			IInteractable target = hit.transform.GetComponent<IInteractable>();
-			if (target != null)
+			IInteractable targetInteractable = hit.transform.GetComponent<IInteractable>();
+			if (targetInteractable != null)
 			{
-				target.Interact();
+				targetInteractable.Interact();
+				return;
+			}
+
+			IInteractableTwoWay targetInteractableTwoWay = hit.transform.GetComponent<IInteractableTwoWay>();
+			if (targetInteractableTwoWay != null)
+			{
+				targetInteractableTwoWay.Interact(playerPublicPreferences);
 			}
 		}
 	}
