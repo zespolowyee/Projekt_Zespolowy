@@ -10,6 +10,7 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField] private Vector3 attackPos2;
     [SerializeField] private float attackRadius;
 
+    [SerializeField] LayerMask whatIsTarget;
     private float lastPerformedTime;
     private EnemyNavigation controller;
 
@@ -20,7 +21,7 @@ public class EnemyAttack : MonoBehaviour
     }
     public virtual bool CheckAttackConditon()
     {
-        if (Time.time >= lastPerformedTime + cooldown)
+        if (Time.time >= lastPerformedTime + cooldown && controller.DistanceToTarget < 9 && controller.IsTargetPlayer)
         {
             return true;
         }
@@ -30,6 +31,7 @@ public class EnemyAttack : MonoBehaviour
 
     public virtual void PerformAttack()
     {
+		/*
         lastPerformedTime = Time.time;
         Debug.Log("performedAttack");
         Collider[] targets = Physics.OverlapCapsule(attackPos1, attackPos2, attackRadius);
@@ -40,7 +42,18 @@ public class EnemyAttack : MonoBehaviour
                 targetHp.TakeDamage(damage);
             }
         }
-        
-    }
+        */
+
+		lastPerformedTime = Time.time;
+		Debug.Log("performedAttack");
+		Collider[] targets = Physics.OverlapSphere(transform.position, attackRadius, whatIsTarget);
+		foreach (Collider target in targets)
+		{
+			if (target.gameObject.TryGetComponent<HPSystem>(out var targetHp))
+			{
+				targetHp.TakeDamage(damage);
+			}
+		}
+	}
 
 }

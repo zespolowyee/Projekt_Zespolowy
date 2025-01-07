@@ -21,9 +21,15 @@ public class EnemyAttackState : EnemyState
     {
         Debug.Log("entered attackState");
         attacks[attackToPerformId].PerformAttack();
+        controller.animator.Animator.SetBool("IsAttacking", true);
         base.Enter();
     }
-    public bool CheckAllConditions()
+
+	public override void Exit()
+	{
+		controller.animator.Animator.SetBool("IsAttacking", false);
+	}
+	public bool CheckAllConditions()
     {
         for (int i = 0; i< attacks.Count; i++)
         {

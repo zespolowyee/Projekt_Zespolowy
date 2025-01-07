@@ -14,7 +14,7 @@ public class EnemyNavigation : NetworkBehaviour
 	[SerializeField] private float checkForPlayerDistance = 9f;
 	[SerializeField] private LayerMask whatIsPlayer;
 	private float lastPlayerCheckTime;
-	private NetworkAnimator animator;
+	public NetworkAnimator animator;
 
 	[Header("State Setup")]
 	[SerializeField] private ENS_FollowPath followPathState;
@@ -24,6 +24,7 @@ public class EnemyNavigation : NetworkBehaviour
     public EnemyState CurrentState { get; private set; }
 
 	private Transform target;
+	public bool IsTargetPlayer {  get; set; }
 
 	private NavMeshAgent navMeshAgent;
 	public NavMeshAgent Agent { get { return navMeshAgent; }}
@@ -33,6 +34,8 @@ public class EnemyNavigation : NetworkBehaviour
 		private set { path = value; }
 	}
 	public Transform Target { get { return target; } }
+
+	public float DistanceToTarget { get; set; }
 	
 	void Start()
 	{
@@ -74,15 +77,21 @@ public class EnemyNavigation : NetworkBehaviour
 		if (lastPlayerCheckTime + playerCheckFrequency < Time.time)
 		{
 			SearchForPlayerInRange();
+			CalculateDistanceToTarget();
 
 		}
+
 		if (attackState.CheckAllConditions())
 		{
 			SwitchState(attackState);
 		}
-
+		
     }
 
+	public void CalculateDistanceToTarget()
+	{
+		DistanceToTarget = Vector3.SqrMagnitude(transform.position - target.position);
+	}
 
 	public void SearchForPlayerInRange()
 	{
