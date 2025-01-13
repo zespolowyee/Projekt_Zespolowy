@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23e1385f5bce8a54b92a3b5c9347cb95, type: 3}
+  m_Name: WarriorUpgradeTree
+  m_EditorClassIdentifier: 
+  nodes:
+  - id: health1
+    description: Poprawa zdrowia
+    cost: 15
+    effects:
+      healthBonus: 10
+      damageBonus: 0
+      speedBonus: 0
+    childNodes: []
+    isUnlocked: 1
+  - id: damage1
+    description: zwiekszenie obrazen
+    cost: 100
+    effects:
+      healthBonus: 0
+      damageBonus: 10
+      speedBonus: 0
+    childNodes: []
+    isUnlocked: 0
+  - id: speed1
+    description: "Zwi\u0119kszenie pr\u0119dko\u015Bci"
+    cost: 6660
+    effects:
+      healthBonus: 0
+      damageBonus: 0
+      speedBonus: 10
+    childNodes: []
+    isUnlocked: 1
