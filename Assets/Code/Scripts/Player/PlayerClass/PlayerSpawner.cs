@@ -20,12 +20,16 @@ public class PlayerSpawner : MonoBehaviour
 
     private void OnClassSelected(string className)
     {
+        Debug.Log("Selected caught");
+        
         if (NetworkManager.Singleton.IsClient && NetworkManager.Singleton.IsHost)
         {
+            Debug.Log("Host");
             SpawnPlayer(className, NetworkManager.Singleton.LocalClientId);
         }
         else if (NetworkManager.Singleton.IsClient)
         {
+            Debug.Log("Client");
             // Tell the server to spawn the selected class
             SpawnPlayerServerRpc(className);
         }
@@ -40,11 +44,13 @@ public class PlayerSpawner : MonoBehaviour
     private void SpawnPlayer(string className, ulong clientId)
     {
         GameObject playerPrefab = null;
+        Debug.Log("Spawning: " + className);
 
         switch (className)
         {
             case "Knight":
                 playerPrefab = knightPrefab;
+                Debug.Log(playerPrefab);
                 break;
             case "Hunter":
                 playerPrefab = hunterPrefab;
