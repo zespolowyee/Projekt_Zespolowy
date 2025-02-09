@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &58780071944749464
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8097605118634140022}
+  m_Layer: 0
+  m_Name: HeadCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8097605118634140022
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 58780071944749464}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.802, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 487679418707082207}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1283098937278283077
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,6 +215,37 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!1 &5906245963582879560
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8441035831241633072}
+  m_Layer: 0
+  m_Name: GroundCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8441035831241633072
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5906245963582879560}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 487679418707082207}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &94061731733609524
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -254,6 +316,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: ad026c1bc08c7252c9078546bc6248f9, type: 3}
       insertIndex: 0
       addedObject: {fileID: 2369228111994361662}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: ad026c1bc08c7252c9078546bc6248f9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8441035831241633072}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: ad026c1bc08c7252c9078546bc6248f9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8097605118634140022}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ad026c1bc08c7252c9078546bc6248f9, type: 3}
       insertIndex: -1
@@ -273,6 +341,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ad026c1bc08c7252c9078546bc6248f9, type: 3}
       insertIndex: -1
       addedObject: {fileID: -1668062233790617033}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ad026c1bc08c7252c9078546bc6248f9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -1642688406241657422}
   m_SourcePrefab: {fileID: 100100000, guid: ad026c1bc08c7252c9078546bc6248f9, type: 3}
 --- !u!4 &487679418707082207 stripped
 Transform:
@@ -402,8 +473,8 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   playerBody: {fileID: 977076010543325541}
   cameraHolder: {fileID: 1283098937278283077}
-  groundCheck: {fileID: 0}
-  headCheck: {fileID: 0}
+  groundCheck: {fileID: 8441035831241633072}
+  headCheck: {fileID: 8097605118634140022}
   jumpPower: 20
   mouseSensitivity: 1
   groundCheckDistance: 0.2
@@ -437,3 +508,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62703c8fee94ee1908376e740f5e9b96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-1642688406241657422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 977076010543325541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80588a08e4c9fe664a82b92d787e485d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  maxHP: 150
+  animator: {fileID: 5774944085285544357}
+--- !u!95 &5774944085285544357 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: ad026c1bc08c7252c9078546bc6248f9, type: 3}
+  m_PrefabInstance: {fileID: 94061731733609524}
+  m_PrefabAsset: {fileID: 0}
