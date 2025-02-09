@@ -5,6 +5,7 @@ public class PlayerClass : NetworkBehaviour
 {
     public string className;
     public float attackRange;
+    public int damage;
 
     [ServerRpc]
     public void SetClassNameServerRpc(string newClassName)

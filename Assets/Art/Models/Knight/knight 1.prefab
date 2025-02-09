@@ -347,6 +347,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ad026c1bc08c7252c9078546bc6248f9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 122589581372559052}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ad026c1bc08c7252c9078546bc6248f9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -4083557466471801919}
   m_SourcePrefab: {fileID: 100100000, guid: ad026c1bc08c7252c9078546bc6248f9, type: 3}
 --- !u!4 &487679418707082207 stripped
 Transform:
@@ -525,6 +528,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   maxHP: 150
+  isDead: 0
   animator: {fileID: 5774944085285544357}
 --- !u!114 &122589581372559052
 MonoBehaviour:
@@ -538,6 +542,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 008ba0b0c9bc5eaedbd9c1a30d81d622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-4083557466471801919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 977076010543325541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47d9ea8da1682e790b58b5d8cd367f3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  className: Knight
+  attackRange: 3
+  damage: 20
 --- !u!95 &5774944085285544357 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: ad026c1bc08c7252c9078546bc6248f9, type: 3}
