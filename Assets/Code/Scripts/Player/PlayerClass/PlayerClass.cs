@@ -1,6 +1,8 @@
 using Unity.Netcode;
 using UnityEngine;
 
+// Klasa generyczna ze statystykami postaci gracza.
+// Dziedzicz po tej klasie, aby dodać nową klasę postaci.
 public class PlayerClass : NetworkBehaviour
 {
     public string className;

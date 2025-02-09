@@ -1,6 +1,9 @@
 using UnityEngine;
 using System.Collections;
 
+// Ten skrypt jest odpowiedzialny za atakowanie przeciwników za pomocą miecza.
+// Dodawaj go do prefabów będących mele postaciami gracza.
+// W Animation Controller musisz użyć animacji "Attack" z triggerem "Attack".
 public class SwordAttack : MonoBehaviour
 {
     private int damage;  // Amount of damage dealt by the sword

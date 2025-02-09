@@ -1,6 +1,8 @@
 using Unity.Netcode;
 using UnityEngine;
 
+// Ten skrypt spawnuje gracza w zależności od jego wyboru klasy.
+// W przypadku dodania nowej klasy, uwzględnij ją w metodzie SpawnPlayer.
 public class PlayerSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject knightPrefab;

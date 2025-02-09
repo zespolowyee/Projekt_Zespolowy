@@ -525,7 +525,7 @@ GameObject:
   - component: {fileID: 889285356}
   - component: {fileID: 889285355}
   m_Layer: 5
-  m_Name: PlayerButton
+  m_Name: KnightButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -690,7 +690,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Player
+  m_text: Knight
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -788,6 +788,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   maxHP: 100
+  isDead: 0
   animator: {fileID: 0}
 --- !u!1 &1058961675
 GameObject:
@@ -1459,8 +1460,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a88470724f4641ba97c0fb258cbbbc69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knightButton: {fileID: 1130201843}
-  hunterButton: {fileID: 889285355}
+  knightButton: {fileID: 889285355}
+  paladinButton: {fileID: 1130201843}
 --- !u!1 &1635041254
 GameObject:
   m_ObjectHideFlags: 0
@@ -1580,7 +1581,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   knightPrefab: {fileID: 977076010543325541, guid: 720003cc4617f72dd888021a022ac6d7, type: 3}
-  hunterPrefab: {fileID: 661236070342234390, guid: 3de8d03cf81dc47269e78b2f51457a0c, type: 3}
+  paladinPrefab: {fileID: 661236070342234390, guid: 3de8d03cf81dc47269e78b2f51457a0c, type: 3}
 --- !u!1 &1636885101
 GameObject:
   m_ObjectHideFlags: 0
