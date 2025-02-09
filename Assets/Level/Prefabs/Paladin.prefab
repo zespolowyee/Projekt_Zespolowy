@@ -439,7 +439,6 @@ GameObject:
   m_Component:
   - component: {fileID: 690142728163902805}
   - component: {fileID: 8953077722320630384}
-  - component: {fileID: 6011787782708880375}
   m_Layer: 0
   m_Name: Paladin
   m_TagString: Untagged
@@ -488,34 +487,6 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
---- !u!114 &6011787782708880375
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 661236070342234390}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f696b3856271d9c4daadff5c9377a921, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TestStat:
-    baseValue: 1
-    maxValue: 1000
-    minValue: 0
-  statModifier1:
-    modType: 0
-    value: 0
-    order: 0
-  statModifier2:
-    modType: 0
-    value: 0
-    order: 0
-  statModifier3:
-    modType: 0
-    value: 0
-    order: 0
 --- !u!1 &687922934608293715
 GameObject:
   m_ObjectHideFlags: 0
@@ -4059,7 +4030,9 @@ GameObject:
   - component: {fileID: 5623855106788125647}
   - component: {fileID: 2115288395327622801}
   - component: {fileID: 8772735560775969004}
-  - component: {fileID: 4335753714163302464}
+  - component: {fileID: 971318665522388343}
+  - component: {fileID: 8917512636873394364}
+  - component: {fileID: 7390431640309843900}
   m_Layer: 0
   m_Name: Paladin J Nordstrom
   m_TagString: Untagged
@@ -4283,7 +4256,22 @@ MonoBehaviour:
   StringIdlePos: {fileID: 2598292037813596740}
   StringPullPos: {fileID: 1610132588506190713}
   pullSpeed: 5
---- !u!114 &4335753714163302464
+--- !u!114 &971318665522388343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8366909806467494178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d88903ac39611e418411469e84df20a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lookDistance: 0
+  interactionDistance: 0
+  playerPublicPreferences: {fileID: 11400000, guid: 8523793f66d24b54c9d23dadd41565aa, type: 2}
+--- !u!114 &8917512636873394364
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4295,8 +4283,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80588a08e4c9fe664a82b92d787e485d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   maxHP: 100
   animator: {fileID: 4898325958261134333}
+--- !u!114 &7390431640309843900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8366909806467494178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1362a4259e95435489c20ff15fa1cba5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  damage: 10
+  speed: 5
+  currentEXP: 1000
 --- !u!1 &8462858325339113138
 GameObject:
   m_ObjectHideFlags: 0
@@ -4439,6 +4444,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lookDistance: 5
   interactionDistance: 5
+  playerPublicPreferences: {fileID: 0}
 --- !u!1 &9006908669535317665
 GameObject:
   m_ObjectHideFlags: 0

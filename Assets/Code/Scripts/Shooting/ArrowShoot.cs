@@ -1,25 +1,26 @@
 using UnityEngine;
+using Unity.Netcode;
 
-public class ArrowShoot : MonoBehaviour
+public class ArrowShoot : NetworkBehaviour
 {
     [Header("Settings")]
-    [SerializeField] private GameObject arrowPrefab;          // Prefab strzały
-    [SerializeField] private Transform arrowSpawnPoint;       // Punkt, z którego wystrzeliwana jest strzała
-    [SerializeField] private float baseShootForce = 5f;      // Bazowa siła strzału
-    [SerializeField] private float maxShootForce = 40f;       // Maksymalna siła strzału
-    [SerializeField] private float chargeSpeed = 5f;         // Szybkość ładowania siły strzału
-    [SerializeField] private float shootCooldown = 1f;        // Czas odnowienia między strzałami
+    [SerializeField] private GameObject arrowPrefab;        
+    [SerializeField] private Transform arrowSpawnPoint;       
+    [SerializeField] private float baseShootForce = 5f;      
+    [SerializeField] private float maxShootForce = 40f;       
+    [SerializeField] private float chargeSpeed = 5f;         
+    [SerializeField] private float shootCooldown = 1f;        
 
     [Header("Trajectory")]
-    [SerializeField] private LineRenderer trajectoryRenderer; // LineRenderer do rysowania trajektorii
-    [SerializeField] private int lineSegmentCount = 20;       // Ilość segmentów trajektorii
+    [SerializeField] private LineRenderer trajectoryRenderer; 
+    [SerializeField] private int lineSegmentCount = 20;       
 
     [Header("Hand Arrow")]
-    [SerializeField] private GameObject handArrow;            // Strzała trzymana w ręku podczas celowania
+    [SerializeField] private GameObject handArrow;            
 
-    private BowShooterAnimationController animationController; // Referencja do skryptu animacji
-    private float lastShootTime = 0f;                         // Czas ostatniego strzału
-    private float currentShootForce;                          // Aktualna siła strzału
+    private BowShooterAnimationController animationController; 
+    private float lastShootTime = 0f;                        
+    private float currentShootForce;                       
 
     void Start()
     {
@@ -28,13 +29,14 @@ public class ArrowShoot : MonoBehaviour
 
         if (trajectoryRenderer != null)
         {
-            trajectoryRenderer.positionCount = 0; // Ukryj trajektorię na początku
+            trajectoryRenderer.positionCount = 0; 
         }
     }
 
     void Update()
     {
-        // Rozpoczęcie celowania i ładowanie siły strzału
+        if (!IsOwner) return;
+
         if (Input.GetButton("Fire1"))
         {
             handArrow.SetActive(true);
@@ -42,36 +44,48 @@ public class ArrowShoot : MonoBehaviour
             DrawTrajectory();
         }
 
-        // Wystrzał po puszczeniu przycisku i sprawdzeniu cooldownu
         if (Input.GetButtonUp("Fire1") && animationController.IsDrawing && Time.time >= lastShootTime + shootCooldown)
         {
-            Shoot(currentShootForce);
+            ShootServerRpc(currentShootForce);
             lastShootTime = Time.time;
-            currentShootForce = baseShootForce; // Reset siły strzału do bazowej wartości
+            currentShootForce = baseShootForce; 
         }
 
-        // Ukrywanie trajektorii, gdy nie celujesz
         if (!Input.GetButton("Fire1") && trajectoryRenderer != null)
         {
             trajectoryRenderer.positionCount = 0;
         }
     }
+    [ServerRpc]
+    private void ShootServerRpc(float force)
+    {
+        ShootClientRpc(force);
+    }
 
-    private void Shoot(float force)
+    [ClientRpc]
+    private void ShootClientRpc(float force)
     {
         handArrow.SetActive(false);
 
         GameObject arrow = Instantiate(arrowPrefab, arrowSpawnPoint.position, arrowSpawnPoint.rotation);
+        NetworkObject networkObject = arrow.GetComponent<NetworkObject>();
+
+        if (networkObject != null)
+        {
+            networkObject.Spawn();  // Spawnowanie obiektu na sieci
+        }
         Rigidbody rb = arrow.GetComponent<Rigidbody>();
 
         if (rb != null)
         {
-            // Dodaj siłę z lekkim kątem w górę dla lepszego celowania
             Vector3 shootDirection = arrowSpawnPoint.forward + arrowSpawnPoint.up * 0.05f;
             rb.AddForce(shootDirection.normalized * force, ForceMode.Impulse);
         }
-
-        // Zniszcz strzałę po 10 sekundach, aby nie zaśmiecała sceny
+        ArrowHit arrowHit = arrow.GetComponent<ArrowHit>();
+        if (arrowHit != null)
+        {
+            arrowHit.SetAttacker(gameObject);
+        }
         Destroy(arrow, 10f);
     }
 
