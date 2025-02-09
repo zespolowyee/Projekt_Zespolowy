@@ -7,7 +7,6 @@ public class SwordAttack : MonoBehaviour
     private float attackRange;  // Range of the sword attack
     private Animator animator;
     private bool isAttacking = false;
-    private bool isDead;
 
     void Start()
     {
@@ -18,18 +17,18 @@ public class SwordAttack : MonoBehaviour
             damage = playerClass.damage;
             attackRange = playerClass.attackRange;
         }
-        HPSystem hpSystem = GetComponent<HPSystem>();
-        if (hpSystem != null)
-        {
-            isDead = hpSystem.isDead;
-        }
     }
 
     void Update()
     {
-        if(isDead) return;
+        // If the player is dead, don't attack
+        HPSystem hpSystem = GetComponent<HPSystem>();
+        if (hpSystem != null && hpSystem.isDead)
+        {
+            return;
+        }
         
-        // Trigger attack animation on mouse1 press
+        // Trigger attack on mouse1 press
         if (Input.GetButtonDown("Fire1") && !isAttacking)
         {
             Attack();

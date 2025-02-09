@@ -3,21 +3,20 @@ using UnityEngine;
 public class KnightController : MonoBehaviour
 {
     private Animator animator;
-    private bool isDead;
 
     void Start()
     {
         animator = GetComponent<Animator>();
-        HPSystem hpSystem = GetComponent<HPSystem>();
-        if (hpSystem != null)
-        {
-            isDead = hpSystem.isDead;
-        }
     }
 
     void Update()
     {
-        if(isDead) return;
+        // If the player is dead, stop the player animations
+        HPSystem hpSystem = GetComponent<HPSystem>();
+        if (hpSystem != null && hpSystem.isDead)
+        {
+            return;
+        }
         
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
