@@ -43,13 +43,10 @@ public class SwordAttack : MonoBehaviour
 
         // Detect all colliders in range of the attack
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange);
-        Debug.Log("colliders: " + hitColliders.Length);
-
         // Damage each collider that has an EnemyHP component
         foreach (Collider collider in hitColliders)
         {
             EnemyHp enemyHp = collider.GetComponent<EnemyHp>();
-            Debug.Log("Trying to damage: " + collider.gameObject.name);
             if (enemyHp != null)
             {
                 enemyHp.TakeDamage(damage);
@@ -66,7 +63,6 @@ public class SwordAttack : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
         isAttacking = false;
-        Debug.Log("Setting isAttacking to false");
     }
 
     void OnDrawGizmosSelected()

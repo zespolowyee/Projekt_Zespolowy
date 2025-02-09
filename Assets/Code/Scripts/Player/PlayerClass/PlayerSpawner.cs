@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject knightPrefab;
-    [SerializeField] private GameObject hunterPrefab;
+    [SerializeField] private GameObject paladinPrefab;
 
     private void Start()
     {
@@ -20,16 +20,12 @@ public class PlayerSpawner : MonoBehaviour
 
     private void OnClassSelected(string className)
     {
-        Debug.Log("Selected caught");
-        
         if (NetworkManager.Singleton.IsClient && NetworkManager.Singleton.IsHost)
         {
-            Debug.Log("Host");
             SpawnPlayer(className, NetworkManager.Singleton.LocalClientId);
         }
         else if (NetworkManager.Singleton.IsClient)
         {
-            Debug.Log("Client");
             // Tell the server to spawn the selected class
             SpawnPlayerServerRpc(className);
         }
@@ -50,10 +46,9 @@ public class PlayerSpawner : MonoBehaviour
         {
             case "Knight":
                 playerPrefab = knightPrefab;
-                Debug.Log(playerPrefab);
                 break;
-            case "Hunter":
-                playerPrefab = hunterPrefab;
+            case "Paladin":
+                playerPrefab = paladinPrefab;
                 break;
         }
 
