@@ -1,13 +1,15 @@
 using UnityEngine;
 
-public class NetStatTest : MonoBehaviour
+public class NetStatTest : MonoBehaviour, IInteractable
 {
 
     public NetStatModifier modifier;
-    private void OnTriggerEnter(Collider other)
+
+    public void Interact(GameObject interactingPlayer)
     {
-        NetStatController controller = other.GetComponentInParent<NetStatController>();
-        controller.AddModifierServerRPC(modifier);
+        NetStatController statController = interactingPlayer.GetComponent<NetStatController>();
+        statController.AddModifierServerRPC(modifier);
     }
+
 
 }

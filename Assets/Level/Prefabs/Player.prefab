@@ -122,9 +122,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d88903ac39611e418411469e84df20a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   lookDistance: 5
   interactionDistance: 5
   playerPublicPreferences: {fileID: 11400000, guid: 8523793f66d24b54c9d23dadd41565aa, type: 2}
+  playerRef: {fileID: 1834764613449308951}
 --- !u!1 &5177022834069235977
 GameObject:
   m_ObjectHideFlags: 0
