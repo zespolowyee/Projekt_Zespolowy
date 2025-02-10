@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 public enum NetStatType
 {
     Damage,
-    Health,
+    MaxHp,
     MoveSpeed,
-    AttackSpeed
+    AttackSpeed,
+    Armor
 
 
 }

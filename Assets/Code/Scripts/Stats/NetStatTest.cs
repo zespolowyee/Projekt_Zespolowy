@@ -7,7 +7,7 @@ public class NetStatTest : MonoBehaviour, IInteractable
 
     public void Interact(GameObject interactingPlayer)
     {
-        NetStatController statController = interactingPlayer.GetComponent<NetStatController>();
+        INetStatController statController = interactingPlayer.GetComponent<INetStatController>();
         statController.AddModifierServerRPC(modifier);
     }
 

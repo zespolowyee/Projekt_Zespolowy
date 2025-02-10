@@ -3,24 +3,24 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class NetStatController : NetworkBehaviour
+public class NetStatController : NetworkBehaviour, INetStatController
 {
     [SerializeField] private List<NetStat> statList;
 
-    [ServerRpc(RequireOwnership = true)]
-    public void AddModifierServerRPC(NetStatModifier modifier)
+    [Rpc(SendTo.Server)]
+    public virtual void AddModifierServerRPC(NetStatModifier modifier)
     {
         AddModifierClientRPC(modifier);
     }
 
-    [ServerRpc(RequireOwnership = true)]
-    public void RemoveModifierServerRPC(NetStatModifier modifier)
+    [Rpc(SendTo.Server)]
+    public virtual void RemoveModifierServerRPC(NetStatModifier modifier)
     {
         RemoveModifierClientRPC(modifier);
     }
 
-    [ClientRpc]
-    public void RemoveModifierClientRPC(NetStatModifier modifier)
+    [Rpc(SendTo.ClientsAndHost)]
+    protected virtual void RemoveModifierClientRPC(NetStatModifier modifier)
     {
 
         foreach (NetStat stat in statList)
@@ -32,11 +32,9 @@ public class NetStatController : NetworkBehaviour
         }
     }
 
-    [ClientRpc]
-    public void AddModifierClientRPC(NetStatModifier modifier)
+    [Rpc(SendTo.ClientsAndHost)]
+    protected virtual void AddModifierClientRPC(NetStatModifier modifier)
     {
-
-        Debug.Log(modifier.Value);
         foreach (NetStat stat in statList)
         {
             if (stat.Type == modifier.StatType)
@@ -44,22 +42,19 @@ public class NetStatController : NetworkBehaviour
                 stat.AddModifier(modifier);
             }
         }
+
     }
 
     public float GetNetStatValue(NetStatType type)
     {
         foreach (NetStat stat in statList)
         {
-            Debug.Log("lelele");
             if (type == stat.Type)
             {
-                Debug.Log("");
                 return stat.Value;
             }
         }
 
-
-        Debug.LogError("not found stat of type:" + type);
         return 0f;
     }
 
