@@ -7,7 +7,12 @@ using UnityEngine;
 public class EnemyAttackState : EnemyState
 {
     [SerializeField] private List<EnemyAttack> attacks;
-    private int attackToPerformId;
+
+    private float delay;
+    private float timeToExit;
+    private int attackToPerformIndex;
+    private bool alreadyPerformed = false;
+    private float timeSinceEnter = 0f;
 
     public override void Setup(EnemyNavigation controller)
     {
@@ -20,8 +25,16 @@ public class EnemyAttackState : EnemyState
     public override void Enter()
     {
         Debug.Log("entered attackState");
-        attacks[attackToPerformId].PerformAttack();
-        controller.animator.Animator.SetBool("IsAttacking", true);
+        CanExit = false;
+        alreadyPerformed = false;
+        timeSinceEnter = 0f;
+
+        controller.Agent.speed = attacks[attackToPerformIndex].MoveSpeedWhileAttacking;
+        controller.animator.Animator.CrossFadeInFixedTime(attacks[attackToPerformIndex].AttackAnimation.name, 0.1f);
+
+        timeToExit = attacks[attackToPerformIndex].AttackAnimation.length;
+        delay = attacks[attackToPerformIndex].AttackDelay;
+
         base.Enter();
     }
 
@@ -37,11 +50,27 @@ public class EnemyAttackState : EnemyState
             EnemyAttack attack = attacks[i];
             if (attack.CheckAttackConditon())
             {
-                attackToPerformId = i;
+                attackToPerformIndex = i;
                 return true;
             }
         }
         return false;
         
+    }
+
+    public override void Handle()
+    {
+        timeSinceEnter += Time.deltaTime;
+        if (timeSinceEnter > timeToExit)
+        {
+            CanExit = true;
+        }
+        if (timeSinceEnter > delay && !alreadyPerformed)
+        {
+            Debug.Log("performing attack");
+            alreadyPerformed = true;
+            attacks[attackToPerformIndex].PerformAttack();
+        }
+        base.Handle();
     }
 }

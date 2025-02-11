@@ -78,12 +78,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 10
   cooldown: 3.5
-  attackPos1: {x: 0, y: 0, z: 0}
-  attackPos2: {x: 0, y: 0, z: 0}
+  attackPos: {fileID: 2123092061443345375}
   attackRadius: 3
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 128
+  moveSpeedWhileAttacking: 0
+  attackAnimation: {fileID: 7400000, guid: 359a380300ad99741b5ad6dccc3f6598, type: 2}
+  attackDelay: 1
 --- !u!1 &4419481995502041677
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,7 +280,7 @@ MonoBehaviour:
     CanEnterToItself: 0
     moveSpeed: 8
   attackState:
-    CanEnterToItself: 0
+    CanEnterToItself: 1
     attacks:
     - {fileID: 6808727731668019023}
 --- !u!114 &7757419091549784017
@@ -384,7 +386,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4937000288322380538}
   m_Layer: 8
-  m_Name: AttackObjects
+  m_Name: AttackDefinitions
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
