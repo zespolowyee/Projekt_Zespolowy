@@ -40,7 +40,6 @@ public class EnemyAttack : MonoBehaviour
     {
 
 		lastPerformedTime = Time.time;
-		Debug.Log("performedAttack");
 		Collider[] targets = Physics.OverlapSphere(attackPos.position, attackRadius, whatIsTarget);
 		foreach (Collider target in targets)
 		{

@@ -24,7 +24,6 @@ public class EnemyAttackState : EnemyState
     }
     public override void Enter()
     {
-        Debug.Log("entered attackState");
         CanExit = false;
         alreadyPerformed = false;
         timeSinceEnter = 0f;
@@ -40,7 +39,6 @@ public class EnemyAttackState : EnemyState
 
 	public override void Exit()
 	{
-        Debug.Log("exited attack state");
 		controller.animator.Animator.SetBool("IsAttacking", false);
 	}
 	public bool CheckAllConditions()
@@ -67,7 +65,6 @@ public class EnemyAttackState : EnemyState
         }
         if (timeSinceEnter > delay && !alreadyPerformed)
         {
-            Debug.Log("performing attack");
             alreadyPerformed = true;
             attacks[attackToPerformIndex].PerformAttack();
         }

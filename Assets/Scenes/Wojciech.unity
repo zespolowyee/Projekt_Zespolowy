@@ -4021,7 +4021,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   enemyPrefab: {fileID: 4419481995502041677, guid: f9886c5bc56a1a54fb5e6a1afe241561, type: 3}
-  enemyAmount: 0
+  enemyAmount: 1
   enemyPath:
     Waypoints:
     - {fileID: 782076758}
@@ -4058,7 +4058,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   enemyPrefab: {fileID: 4419481995502041677, guid: f9886c5bc56a1a54fb5e6a1afe241561, type: 3}
-  enemyAmount: 0
+  enemyAmount: 2
   enemyPath:
     Waypoints: []
   useCustomPath: 0
@@ -5210,7 +5210,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   enemyPrefab: {fileID: 4419481995502041677, guid: f9886c5bc56a1a54fb5e6a1afe241561, type: 3}
-  enemyAmount: 0
+  enemyAmount: 1
   enemyPath:
     Waypoints: []
   useCustomPath: 0
