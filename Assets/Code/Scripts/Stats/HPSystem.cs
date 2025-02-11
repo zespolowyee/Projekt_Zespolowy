@@ -6,7 +6,7 @@ public class HPSystem : NetworkBehaviour
 {
 	NetworkVariable<int> currentHP = new NetworkVariable<int>(100);
 	public int maxHP = 100;
-	private bool isDead = false;
+	public bool isDead = false;
 
 	public Animator animator;
 	//private int currentHP;

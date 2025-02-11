@@ -19,12 +19,15 @@ public class BasicInteraction : NetworkBehaviour, IInteractable
 		OnInteraction?.Invoke();
 
 	}
-	public virtual void Interact()
+	public virtual void Interact(GameObject interactingPlayer)
 	{
-		OnInteraction?.Invoke();
 		if (shouldInteractionBeSyncedOnNet)
 		{
 			TriggerInteractionServerRpc();
+		}
+		else
+		{
+			OnInteraction?.Invoke();
 		}
 	}
 }

@@ -107,6 +107,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Show Turret Grid"",
+                    ""type"": ""Button"",
+                    ""id"": ""f3d80d9e-34cb-4ce8-859f-0025cc280e4f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -481,6 +490,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3ef01ed5-326a-4399-b88f-dc0c90c8b81a"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Show Turret Grid"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1077,6 +1097,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Next = m_Player.FindAction("Next", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Player_ShowTurretGrid = m_Player.FindAction("Show Turret Grid", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1165,6 +1186,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Next;
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_Interact;
+    private readonly InputAction m_Player_ShowTurretGrid;
     public struct PlayerActions
     {
         private @InputSystem_Actions m_Wrapper;
@@ -1178,6 +1200,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         public InputAction @Next => m_Wrapper.m_Player_Next;
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
+        public InputAction @ShowTurretGrid => m_Wrapper.m_Player_ShowTurretGrid;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1214,6 +1237,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @ShowTurretGrid.started += instance.OnShowTurretGrid;
+            @ShowTurretGrid.performed += instance.OnShowTurretGrid;
+            @ShowTurretGrid.canceled += instance.OnShowTurretGrid;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1245,6 +1271,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @ShowTurretGrid.started -= instance.OnShowTurretGrid;
+            @ShowTurretGrid.performed -= instance.OnShowTurretGrid;
+            @ShowTurretGrid.canceled -= instance.OnShowTurretGrid;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1436,6 +1465,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         void OnNext(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnShowTurretGrid(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

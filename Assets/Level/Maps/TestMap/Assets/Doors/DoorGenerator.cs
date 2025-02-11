@@ -59,7 +59,8 @@ public class Door : MonoBehaviour
                 door.transform.localPosition = new Vector3(totalWidth * i, 0, 0);
                 var stepHeightString = doorHeight.ToString("F3", CultureInfo.InvariantCulture);
                 door.name = $"Door_h{stepHeightString}";
-                door.SetMaterial(door.faces, material);
+                // clear the material
+                door.GetComponent<MeshRenderer>().sharedMaterial = material;
                 var text = new GameObject("Text").AddComponent<TextMesh>();
                 text.text = $"Door: {stepHeightString}u";
                 text.characterSize = 0.05f;
@@ -80,8 +81,8 @@ public class Door : MonoBehaviour
             {
                 casing[i].name = $"Casing_{i}";
                 casing[i].transform.SetParent(transform);
-                casing[i].SetMaterial(casing[i].faces, material);
                 casing[i].AddComponent<MeshCollider>();
+                casing[i].GetComponent<MeshRenderer>().sharedMaterial = material;
             }
             casing[0].transform.localPosition = new Vector3(-1, 0, 0);
             casing[1].transform.localPosition = new Vector3(totalWidth * (numberOfDoors + 1), 0, 0);
