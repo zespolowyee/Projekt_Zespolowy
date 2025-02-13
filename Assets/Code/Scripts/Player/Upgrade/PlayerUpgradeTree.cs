@@ -36,12 +36,6 @@ public class UpgradeNode
 [Serializable]
 public class UpgradeEffects
 {
-    [Tooltip("Additional health points.")]
-    public int healthBonus;
-
-    [Tooltip("Additional damage.")]
-    public int damageBonus;
-
-    [Tooltip("Additional speed.")]
-    public float speedBonus;
+    [Tooltip("List of stat modifiers applied by this upgrade.")]
+    public List<NetStatModifier> modifiers;
 }

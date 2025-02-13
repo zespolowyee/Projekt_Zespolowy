@@ -1,9 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class PlayerUpgradeUI : MonoBehaviour
 {
     [SerializeField] private PlayerUpgradeManager upgradeManager;
+    [SerializeField] private PlayerUpgradeTree upgradeTree;
     [SerializeField] private Text upgradeDetailsText;
     [SerializeField] private Button upgradeButton;
 
@@ -11,14 +13,15 @@ public class PlayerUpgradeUI : MonoBehaviour
 
     public void DisplayUpgradeDetails(UpgradeNode node)
     {
-        selectedNode = node;
+        string effectsText = "Effects:\n";
+        foreach (var modifier in node.effects.modifiers)
+        {
+            effectsText += $"- {modifier.StatType}: {modifier.Value} ({modifier.ModType})\n";
+        }
 
         upgradeDetailsText.text = $"{node.description}\n" +
                                   $"Cost: {node.cost} EXP\n" +
-                                  $"Effects:\n" +
-                                  $"- Health Bonus: {node.effects.healthBonus}\n" +
-                                  $"- Damage Bonus: {node.effects.damageBonus}\n" +
-                                  $"- Speed Bonus: {node.effects.speedBonus}\n";
+                                  effectsText;
 
         upgradeButton.interactable = !node.isUnlocked;
     }

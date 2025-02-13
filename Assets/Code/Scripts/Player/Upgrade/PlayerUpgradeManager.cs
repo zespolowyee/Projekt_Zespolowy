@@ -13,11 +13,13 @@ public class PlayerUpgradeManager : MonoBehaviour
     {
         foreach (var node in upgradeTree.nodes)
         {
-            node.isUnlocked = false;
-            Debug.Log($"Node {node.id} ({node.description}) set to isUnlocked = false.");
+            if (!node.isUnlocked)
+            {
+                node.isUnlocked = false;
+                Debug.Log($"Node {node.id} ({node.description}) set to isUnlocked = false.");
+            }
         }
     }
-
 
 
     public void UnlockUpgrade(string nodeId)

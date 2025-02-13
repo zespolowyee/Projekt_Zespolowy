@@ -1,22 +1,23 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStats : MonoBehaviour, IPlayerStats
+public class PlayerStats : NetStatController
 {
-    [Header("Player Stats")]
-    [SerializeField] private int health = 100;
-    [SerializeField] private int damage = 10;
-    [SerializeField] private float speed = 5f;
-
+   
     [Header("Experience Points")]
     [SerializeField] private int currentEXP = 1000;
 
+    public Dictionary<NetStatType, float> stats = new Dictionary<NetStatType, float>();
+    [SerializeField] private PlayerUpgradeTree upgradeTree;
+
+
     public void ApplyUpgrade(UpgradeEffects effects)
     {
-        health += effects.healthBonus;
-        damage += effects.damageBonus;
-        speed += effects.speedBonus;
-
-        Debug.Log($"Upgrade applied! New stats: Health={health}, Damage={damage}, Speed={speed}");
+        foreach (var modifier in effects.modifiers)
+        {
+            AddModifierServerRPC(modifier);
+        }
+        
     }
 
     public int GetCurrentEXP()
@@ -35,4 +36,25 @@ public class PlayerStats : MonoBehaviour, IPlayerStats
         currentEXP -= amount;
         Debug.Log($"EXP deducted: {amount}. Remaining EXP: {currentEXP}");
     }
+
+    public void AddEXP(int amount)
+    {
+        currentEXP += amount;
+        Debug.Log($"EXP added: {amount}. Current EXP: {currentEXP}");
+    }
+
+    public void PurchaseUpgrade(UpgradeNode node)
+    {
+        if (GetCurrentEXP() >= node.cost && !node.isUnlocked)
+        {
+            DeductEXP(node.cost);
+            ApplyUpgrade(node.effects);
+            node.isUnlocked = true;
+        }
+        else
+        {
+            Debug.LogError("Not enough EXP or upgrade already purchased!");
+        }
+    }
+
 }
