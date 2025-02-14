@@ -137,12 +137,6 @@ public class EnemyNavigation : NetworkBehaviour
         return closestPlayer.gameObject.transform;
     }
 
-    //public void SwitchState(EnemyState newState)
-    //{
-    //    CurrentState?.Exit();
-    //    CurrentState = newState;
-    //    CurrentState.Enter();
-    //}
 
     public void SwitchState(EnemyState newState, bool ignoreCanExitClause = false)
     {

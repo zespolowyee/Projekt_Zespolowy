@@ -7,7 +7,8 @@ public class EnemyAttackProjectile : EnemyAttack
 
     public override void PerformAttack()
     {
-       
-        base.PerformAttack();
+        GameObject projectile = Instantiate(projectilePrefab, attackPos.transform.position, Quaternion.identity);
+        projectile.transform.forward = attackPos.transform.forward;
+
     }
 }
