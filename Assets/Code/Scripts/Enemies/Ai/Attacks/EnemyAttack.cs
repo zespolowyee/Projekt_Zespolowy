@@ -2,24 +2,27 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
-    [SerializeField] private int damage;
-    [SerializeField] private float minDistanceToPlayer;
-    [SerializeField] private float maxDistanceToPlayer;
-    [SerializeField] public float cooldown;
+    [Header("Basic settings")]
+    [SerializeField] protected int damage;
+    [SerializeField] protected float cooldown;
+    [SerializeField] protected LayerMask whatIsTarget;
+    [SerializeField] protected float minDistanceToPlayer;     
+    [SerializeField] protected float maxDistanceToPlayer;     
 
+
+    [Tooltip("Position of attack, if left null, defaults to gameObject.transform")]
     [SerializeField] protected Transform attackPos;
-    [SerializeField] private float attackRadius;
-
-    [SerializeField] LayerMask whatIsTarget;
-
-    [SerializeField] private float moveSpeedWhileAttacking = 0f;
-
-    [SerializeField] private AnimationClip attackAnimation;
-    [SerializeField] private float attackDelay = 0.1f;
 
 
-    private float lastPerformedTime;
-    private EnemyNavigation controller;
+    [Header("Attack animation settings")]
+    [SerializeField] protected AnimationClip attackAnimation;
+    [SerializeField] protected float moveSpeedWhileAttacking = 0f;
+    [Tooltip("Time ofter starting animation and activating attack hitbox")]
+    [SerializeField] protected float attackDelay = 0f;
+
+
+    protected float lastPerformedTime;
+    protected EnemyNavigation controller;
     
     public AnimationClip AttackAnimation { get => attackAnimation; set => attackAnimation = value; }
     public float MoveSpeedWhileAttacking { get => moveSpeedWhileAttacking; set => moveSpeedWhileAttacking = value; }
@@ -29,6 +32,10 @@ public class EnemyAttack : MonoBehaviour
     {
         this.controller = controller;
         lastPerformedTime = Time.time;
+        if(attackPos == null)
+        {
+            attackPos = gameObject.transform;
+        }
     }
     public virtual bool CheckAttackConditon()
     {
@@ -58,16 +65,7 @@ public class EnemyAttack : MonoBehaviour
 
     public virtual void PerformAttack()
     {
-
 		lastPerformedTime = Time.time;
-		Collider[] targets = Physics.OverlapSphere(attackPos.position, attackRadius, whatIsTarget);
-		foreach (Collider target in targets)
-		{
-			if (target.gameObject.TryGetComponent<HPSystem>(out var targetHp))
-			{
-				targetHp.TakeDamage(damage);
-			}
-		}
 	}
 
 }

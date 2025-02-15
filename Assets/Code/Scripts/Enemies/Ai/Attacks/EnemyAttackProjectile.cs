@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class EnemyAttackProjectile : EnemyAttack
 {
-    [SerializeField] private GameObject projectilePrefab;
-    [SerializeField] private float projectileSpeed;
+    [SerializeField] protected GameObject projectilePrefab;
+    [SerializeField] protected float projectileSpeed;
 
     public override void PerformAttack()
     {
+        base.PerformAttack();
         GameObject projectile = Instantiate(projectilePrefab, attackPos.transform.position, Quaternion.identity);
         projectile.transform.forward = attackPos.transform.forward;
 

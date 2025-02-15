@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2123092061443345375}
-  - component: {fileID: 6808727731668019023}
+  - component: {fileID: 8395334935823932905}
   m_Layer: 8
   m_Name: AttackTest
   m_TagString: Untagged
@@ -64,7 +64,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4937000288322380538}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6808727731668019023
+--- !u!114 &8395334935823932905
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -73,21 +73,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 4222908448532340315}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e1bcdb6433d90347a6b94520c1e6596, type: 3}
+  m_Script: {fileID: 11500000, guid: 50ff535e3855ef94eb506e013d8e0396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  minDistanceToPlayer: 0
-  maxDistanceToPlayer: 9
   cooldown: 3.5
-  attackPos: {fileID: 2123092061443345375}
-  attackRadius: 3
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 128
-  moveSpeedWhileAttacking: 0
+  minDistanceToPlayer: 0
+  maxDistanceToPlayer: 9
+  attackPos: {fileID: 0}
   attackAnimation: {fileID: 7400000, guid: 359a380300ad99741b5ad6dccc3f6598, type: 2}
+  moveSpeedWhileAttacking: 0
   attackDelay: 1
+  attackRadius: 2
 --- !u!1 &4419481995502041677
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,7 +285,7 @@ MonoBehaviour:
     CanEnterToItself: 1
     attacks:
     - {fileID: 7737614984865443053}
-    - {fileID: 6808727731668019023}
+    - {fileID: 8395334935823932905}
 --- !u!114 &7757419091549784017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -424,16 +424,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
-  minDistanceToPlayer: 12
-  maxDistanceToPlayer: 49
   cooldown: 0.5
-  attackPos: {fileID: 4862286251223118704}
-  attackRadius: 0
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 1152
-  moveSpeedWhileAttacking: 0.1
+  minDistanceToPlayer: 12
+  maxDistanceToPlayer: 49
+  attackPos: {fileID: 4862286251223118704}
   attackAnimation: {fileID: 7400000, guid: a5b036f4cf11b91479ba818f68b7f8aa, type: 2}
+  moveSpeedWhileAttacking: 0.1
   attackDelay: 1
   projectilePrefab: {fileID: 6520589255799809080, guid: 57be46110713f1e48a2276f23b44198f, type: 3}
   projectileSpeed: 10
