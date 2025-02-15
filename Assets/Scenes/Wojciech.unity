@@ -5686,6 +5686,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6281200686474694107, guid: 57be46110713f1e48a2276f23b44198f, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1248867258
+      objectReference: {fileID: 0}
+    - target: {fileID: 6281200686474694107, guid: 57be46110713f1e48a2276f23b44198f, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 2109646186
+      objectReference: {fileID: 0}
     - target: {fileID: 6520589255799809080, guid: 57be46110713f1e48a2276f23b44198f, type: 3}
       propertyPath: m_Name
       value: TheBall

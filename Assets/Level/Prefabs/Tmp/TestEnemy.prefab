@@ -76,6 +76,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50ff535e3855ef94eb506e013d8e0396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   damage: 10
   cooldown: 3.5
   whatIsTarget:
@@ -423,6 +424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69fc76d96af1b83478c08991f24cc536, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   damage: 1
   cooldown: 0.5
   whatIsTarget:
@@ -436,6 +438,7 @@ MonoBehaviour:
   attackDelay: 1
   projectilePrefab: {fileID: 6520589255799809080, guid: 57be46110713f1e48a2276f23b44198f, type: 3}
   projectileSpeed: 10
+  projectileLifetime: 5
 --- !u!1 &5385371975331830272
 GameObject:
   m_ObjectHideFlags: 0
