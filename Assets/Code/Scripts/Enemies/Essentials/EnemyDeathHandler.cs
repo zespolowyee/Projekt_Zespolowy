@@ -38,6 +38,11 @@ public class EnemyDeathHandler : NetworkBehaviour
                 DistributeXPAmongAll(expReward);
             }
         }
+        else
+        {
+            Debug.LogError("LastAttacker not found! Must be turret");
+            DistributeXPAmongAll(expReward);
+        }
         if (gameObject != null && IsServer) 
         {
             Debug.Log($"Destroying {gameObject.name} after death.");
@@ -49,7 +54,7 @@ public class EnemyDeathHandler : NetworkBehaviour
         XPSystem[] allXPSystems = FindObjectsByType<XPSystem>(FindObjectsSortMode.None);
         if (allXPSystems.Length > 0)
         {
-            int expPerPlayer = totalExp / allXPSystems.Length; // Podział doświadczenia
+            int expPerPlayer = totalExp / allXPSystems.Length;
             foreach (var xp in allXPSystems)
             {
                 xp.AddEXP(expPerPlayer);

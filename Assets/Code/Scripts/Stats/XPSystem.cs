@@ -5,15 +5,24 @@ using UnityEngine.UI;
 using TMPro;
 public class XPSystem : NetworkBehaviour
 {
-    NetworkVariable<int> currentEXP = new NetworkVariable<int>(1000);
+    private NetworkVariable<int> currentEXP = new NetworkVariable<int>(
+        1000, 
+        NetworkVariableReadPermission.Everyone,
+        NetworkVariableWritePermission.Server 
+    );
+
     public TextMeshProUGUI xpText;
 
     private void Start()
     {
-        if (IsOwner) // Każdy gracz widzi tylko swoje XP
+        if (IsClient)
         {
             currentEXP.OnValueChanged += UpdateUI;
-            UpdateUI(0, currentEXP.Value); // Zaktualizuj na starcie
+        }
+
+        if (IsOwner)
+        {
+            UpdateUI(0, currentEXP.Value);
         }
     }
 
