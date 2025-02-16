@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5628163060577913161}
   - component: {fileID: 1134099450243446242}
-  - component: {fileID: 2272347581629907838}
+  - component: {fileID: 8400586745246484208}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -59,7 +59,7 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
---- !u!114 &2272347581629907838
+--- !u!114 &8400586745246484208
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -68,25 +68,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 1834764613449308951}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f696b3856271d9c4daadff5c9377a921, type: 3}
+  m_Script: {fileID: 11500000, guid: 0b0a54585737d644cbf423ba692afecb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TestStat:
+  ShowTopMostFoldoutHeaderGroup: 1
+  statList:
+  - type: 1
     baseValue: 100
     maxValue: 1000
+    minValue: 1
+  - type: 0
+    baseValue: 1
+    maxValue: 100
     minValue: 0
-  statModifier1:
-    modType: 100
-    value: 20
-    order: 100
-  statModifier2:
-    modType: 200
-    value: 0.2
-    order: 200
-  statModifier3:
-    modType: 300
-    value: 0.2
-    order: 300
+  - type: 3
+    baseValue: 0
+    maxValue: 100
+    minValue: 0
 --- !u!1 &3425112624825140561
 GameObject:
   m_ObjectHideFlags: 0
@@ -132,8 +130,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d88903ac39611e418411469e84df20a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   lookDistance: 5
   interactionDistance: 5
+  playerPublicPreferences: {fileID: 11400000, guid: 8523793f66d24b54c9d23dadd41565aa, type: 2}
+  playerRef: {fileID: 1834764613449308951}
 --- !u!1 &5177022834069235977
 GameObject:
   m_ObjectHideFlags: 0

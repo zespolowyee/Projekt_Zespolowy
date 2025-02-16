@@ -1,59 +1,75 @@
+using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerInteract : MonoBehaviour
+public class PlayerInteract : NetworkBehaviour
 {
-	[SerializeField] private float lookDistance;
-	[SerializeField] private float interactionDistance;
-	private InputSystem_Actions inputActions;
+    [SerializeField] private float lookDistance;
+    [SerializeField] private float interactionDistance;
+    [SerializeField] private PlayerPublicPreferences playerPublicPreferences;
+    [SerializeField] private GameObject playerRef;
+    private InputSystem_Actions inputActions;
 
-	private void Awake()
-	{
-		inputActions = new InputSystem_Actions();
-		inputActions.Enable();
-	}
+    private void Awake()
+    {
+        inputActions = new InputSystem_Actions();
+        inputActions.Enable();
+    }
 
-	private void OnEnable()
-	{
-		inputActions.Player.Interact.performed += CastInteractionBeam;
-	}
+    private void OnEnable()
+    {
+        if (!IsOwner)
+        {
+            enabled = false;
+            return;
+        }
+        inputActions.Player.Interact.performed += CastInteractionBeam;
+    }
 
-	private void OnDisable()
-	{
-		inputActions.Player.Interact.performed += CastInteractionBeam;
-	}
+    private void OnDisable()
+    {
 
-	private void Update()
-	{
-		CastLookBeam();
-	}
+        inputActions.Player.Interact.performed += CastInteractionBeam;
+    }
+
+    private void Update()
+    {
+        CastLookBeam();
+    }
 
 
-	private void CastInteractionBeam(InputAction.CallbackContext context)
-	{
+    private void CastInteractionBeam(InputAction.CallbackContext context)
+    {
 
-		RaycastHit hit;
-		if (Physics.Raycast(transform.position, transform.forward, out hit, interactionDistance))
-		{
-			IInteractable target = hit.transform.GetComponent<IInteractable>();
-			if (target != null)
-			{
-				target.Interact();
-			}
-		}
-	}
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.forward, out hit, interactionDistance))
+        {
+            IInteractable targetInteractable = hit.transform.GetComponent<IInteractable>();
+            if (targetInteractable != null)
+            {
+                targetInteractable.Interact(playerRef);
+                return;
+            }
 
-	private void CastLookBeam()
-	{
-		RaycastHit hit;
-		if (Physics.Raycast(transform.position, transform.forward, out hit, lookDistance))
-		{
-			ILookable target = hit.transform.GetComponent<ILookable>();
-			if (target != null)
-			{
-				target.DoWhenLookedAt();
-			}
-		}
-	}
+            IInteractableTwoWay targetInteractableTwoWay = hit.transform.GetComponent<IInteractableTwoWay>();
+            if (targetInteractableTwoWay != null)
+            {
+                targetInteractableTwoWay.Interact(playerPublicPreferences);
+            }
+        }
+    }
+
+    private void CastLookBeam()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.forward, out hit, lookDistance))
+        {
+            ILookable target = hit.transform.GetComponent<ILookable>();
+            if (target != null)
+            {
+                target.DoWhenLookedAt();
+            }
+        }
+    }
 }
