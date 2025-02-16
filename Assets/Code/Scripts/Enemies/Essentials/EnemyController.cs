@@ -4,11 +4,9 @@ using UnityEngine;
 public class EnemyController : NetworkBehaviour
 {
 	private Wave wave;
-	private int inWaveId;
 
 	public void SetWaveData(Wave wave, int inWaveId)
 	{
-		this.inWaveId = inWaveId;
 		this.wave = wave;
 	}
 
