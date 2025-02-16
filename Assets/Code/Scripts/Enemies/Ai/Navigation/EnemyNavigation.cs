@@ -16,6 +16,7 @@ public class EnemyNavigation : NetworkBehaviour
     [SerializeField] private LayerMask whatIsPlayer;
     private float lastPlayerCheckTime;
     public NetworkAnimator animator;
+    private NetStatController statController;
 
     [Header("State Setup")]
     [SerializeField] private ENS_FollowPath followPathState;
@@ -37,11 +38,13 @@ public class EnemyNavigation : NetworkBehaviour
     public Transform Target { get { return target; } }
 
     public float DistanceToTarget { get; set; }
+    public NetStatController StatController { get => statController; set => statController = value; }
 
     void Start()
     {
 
         navMeshAgent = GetComponent<NavMeshAgent>();
+        statController = GetComponent<NetStatController>();
 
         if (!IsServer)
         {

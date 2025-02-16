@@ -108,6 +108,7 @@ GameObject:
   - component: {fileID: 4879317355843050419}
   - component: {fileID: -7654976172407188664}
   - component: {fileID: 3408971277430171573}
+  - component: {fileID: 482700076323827697}
   m_Layer: 8
   m_Name: TestEnemy
   m_TagString: Untagged
@@ -242,7 +243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2749786327
+  GlobalObjectIdHash: 2709979368
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -272,7 +273,7 @@ MonoBehaviour:
   checkForPlayerDistance: 9
   whatIsPlayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 1152
   animator: {fileID: 0}
   followPathState:
     CanEnterToItself: 0
@@ -380,6 +381,28 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   TransitionStateInfoList: []
   m_Animator: {fileID: 2271054351084170317}
+--- !u!114 &482700076323827697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4419481995502041677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26935e32645c3564f98e834c25887f14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  statList:
+  - type: 6
+    baseValue: 1
+    maxValue: 2
+    minValue: 0.1
+  - type: 5
+    baseValue: 4
+    maxValue: 10
+    minValue: 0.1
 --- !u!1 &4516786315157042161
 GameObject:
   m_ObjectHideFlags: 0
@@ -439,6 +462,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 6520589255799809080, guid: 57be46110713f1e48a2276f23b44198f, type: 3}
   projectileSpeed: 10
   projectileLifetime: 5
+  aimStyle: 0
 --- !u!1 &5385371975331830272
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,7 +21,7 @@ public class EnemyAttack : NetworkBehaviour
     [Tooltip("Time ofter starting animation and activating attack hitbox")]
     [SerializeField] protected float attackDelay = 0f;
 
-
+    protected int finalDamage;
     protected float lastPerformedTime;
     protected EnemyNavigation controller;
     
@@ -33,6 +33,7 @@ public class EnemyAttack : NetworkBehaviour
     {
         this.controller = controller;
         lastPerformedTime = Time.time;
+        finalDamage = damage;
         if(attackPos == null)
         {
             attackPos = gameObject.transform;
@@ -67,6 +68,11 @@ public class EnemyAttack : NetworkBehaviour
     public virtual void PerformAttack()
     {
 		lastPerformedTime = Time.time;
+        CalculateFinalDamage();
 	}
 
+    protected virtual void CalculateFinalDamage()
+    {
+        finalDamage = damage * (int)controller.StatController.GetNetStatValue(NetStatType.DamageMultipier);
+    }
 }

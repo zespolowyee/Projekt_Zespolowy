@@ -40,7 +40,7 @@ public class EnemyAttackProjectile : EnemyAttack
         Projectile projectileScript = projectile.GetComponent<Projectile>();
 
         projectileScript.WhatIsTarget = whatIsTarget;
-        projectileScript.Damage = damage;
+        projectileScript.Damage = finalDamage;
         projectileScript.Speed = projectileSpeed;
         projectileScript.Lifetime = projectileLifetime;
 

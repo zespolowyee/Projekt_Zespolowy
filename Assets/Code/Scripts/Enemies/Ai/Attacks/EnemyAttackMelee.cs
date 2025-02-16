@@ -14,7 +14,7 @@ public class EnemyAttackMelee : EnemyAttack
         {
             if (target.gameObject.TryGetComponent<HPSystem>(out var targetHp))
             {
-                targetHp.TakeDamage(damage);
+                targetHp.TakeDamage(finalDamage);
             }
         }
     }
