@@ -3,9 +3,11 @@ using UnityEngine;
 
 public class EnemyAttackProjectile : EnemyAttack
 {
+    [Header("Projectile attack settings")]
     [SerializeField] protected GameObject projectilePrefab;
     [SerializeField] protected float projectileSpeed;
     [SerializeField] protected float projectileLifetime;
+    [SerializeField] protected AimStyle aimStyle;
 
     public override void PerformAttack()
     {
@@ -20,7 +22,21 @@ public class EnemyAttackProjectile : EnemyAttack
     void ShootAtTarget()
     {
         GameObject projectile = Instantiate(projectilePrefab, attackPos.position, Quaternion.identity);
-        projectile.transform.forward = attackPos.transform.forward;
+
+        switch (aimStyle)
+        {
+            case AimStyle.DirectlyAtPlayer:
+                Vector3 shootDirection = (controller.Target.transform.position - attackPos.position).normalized;
+                projectile.transform.forward = shootDirection;
+
+                break;
+            default:
+                projectile.transform.forward = attackPos.transform.forward;
+                break;
+        }
+
+
+
         Projectile projectileScript = projectile.GetComponent<Projectile>();
 
         projectileScript.WhatIsTarget = whatIsTarget;
@@ -36,4 +52,11 @@ public class EnemyAttackProjectile : EnemyAttack
     {
         ShootAtTarget();
     }
+}
+
+
+public enum AimStyle
+{
+    DirectlyAtPlayer,
+    InFrontOfAttackPos
 }
