@@ -440,7 +440,7 @@ MonoBehaviour:
   NetworkConfig:
     ProtocolVersion: 0
     NetworkTransport: {fileID: 176325070}
-    PlayerPrefab: {fileID: 661236070342234390, guid: 3de8d03cf81dc47269e78b2f51457a0c, type: 3}
+    PlayerPrefab: {fileID: 977076010543325541, guid: 720003cc4617f72dd888021a022ac6d7, type: 3}
     Prefabs:
       NetworkPrefabsLists:
       - {fileID: 11400000, guid: 75107c54dc7720447a42cda299f691fd, type: 2}
@@ -941,6 +941,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8689778495084230099, guid: 9b1449466d05f3256ad95c5c36e27085, type: 3}
       insertIndex: -1
       addedObject: {fileID: 921160035}
+    - targetCorrespondingSourceObject: {fileID: 8689778495084230099, guid: 9b1449466d05f3256ad95c5c36e27085, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 921160036}
   m_SourcePrefab: {fileID: 100100000, guid: 9b1449466d05f3256ad95c5c36e27085, type: 3}
 --- !u!4 &921160029 stripped
 Transform:
@@ -1014,7 +1017,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   maxHP: 100
+  isDead: 0
   animator: {fileID: 0}
+--- !u!114 &921160036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 921160030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07306def6a2cb49ad83c13c7ec2868ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   expReward: 50
 --- !u!1 &1132877429
 GameObject:

@@ -35,9 +35,4 @@ public class PlayerStats : MonoBehaviour, IPlayerStats
         currentEXP -= amount;
         Debug.Log($"EXP deducted: {amount}. Remaining EXP: {currentEXP}");
     }
-    public void AddEXP(int amount)
-    {
-        currentEXP += amount;
-        Debug.Log($"Gained {amount} EXP! Total EXP: {currentEXP}");
-    }
 }
