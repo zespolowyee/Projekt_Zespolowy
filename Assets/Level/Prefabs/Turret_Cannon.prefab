@@ -156,19 +156,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   OnInteraction:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: -1306846499251793394}
-        m_TargetAssemblyTypeName: UpgradeTurret, Assembly-CSharp
-        m_MethodName: DisplayUpgradeUI
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   shouldInteractionBeSyncedOnNet: 0
 --- !u!1 &4120021555661350502
 GameObject:
@@ -296,19 +284,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   OnInteraction:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: -1306846499251793394}
-        m_TargetAssemblyTypeName: UpgradeTurret, Assembly-CSharp
-        m_MethodName: DisplayUpgradeUI
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   shouldInteractionBeSyncedOnNet: 0
 --- !u!1 &5583137535391971165
 GameObject:
@@ -466,19 +442,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   OnInteraction:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: -1306846499251793394}
-        m_TargetAssemblyTypeName: UpgradeTurret, Assembly-CSharp
-        m_MethodName: DisplayUpgradeUI
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   shouldInteractionBeSyncedOnNet: 0
 --- !u!1 &7192314731763593794
 GameObject:
@@ -605,19 +569,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   OnInteraction:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: -1306846499251793394}
-        m_TargetAssemblyTypeName: UpgradeTurret, Assembly-CSharp
-        m_MethodName: DisplayUpgradeUI
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   shouldInteractionBeSyncedOnNet: 0
 --- !u!1 &7412517421880371501
 GameObject:
@@ -744,19 +696,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   OnInteraction:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: -1306846499251793394}
-        m_TargetAssemblyTypeName: UpgradeTurret, Assembly-CSharp
-        m_MethodName: DisplayUpgradeUI
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   shouldInteractionBeSyncedOnNet: 0
 --- !u!1 &8527545519523951861
 GameObject:
@@ -843,9 +783,6 @@ MonoBehaviour:
     m_Bits: 128
   maxUpRotation: -10
   maxDownRotation: 20
-  detectionRange: 5
-  shootingInterval: 3
-  damage: 5
 --- !u!114 &-1306846499251793394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -858,8 +795,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b837b942cd4794b8cde366735331b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  statList:
+  - type: 0
+    baseValue: 5
+    maxValue: 100
+    minValue: 0
+  - type: 5
+    baseValue: 5
+    maxValue: 100
+    minValue: 0
+  - type: 6
+    baseValue: 5
+    maxValue: 100
+    minValue: 0
   upgradeUI: {fileID: 2345384520125782939, guid: f7bd249fc3badfb4d80f15a7f961b534, type: 3}
-  turretLevels: {fileID: 11400000, guid: 4bb9592fb4473e046a851f2dd53559e4, type: 2}
+  turretLevels: {fileID: 11400000, guid: 832b9569e3625ce40aaefe8eff2f0f19, type: 2}
 --- !u!1 &9214457764781702272
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class TurretScript : NetworkBehaviour, ITurretScript
+public class TurretScript : NetworkBehaviour
 {
 	[Header("Rotation objects")]
 	[SerializeField] private Transform barrelObject;
@@ -23,28 +23,13 @@ public class TurretScript : NetworkBehaviour, ITurretScript
 	[SerializeField] private float maxUpRotation = -10;
 	[SerializeField] private float maxDownRotation = 20;
 	
-	
-	private NetworkVariable<TurretLevel> currentTurretLevel = new NetworkVariable<TurretLevel>(
-		new TurretLevel
-		{
-			level = 0,
-			damage = 0,
-			shootingInterval = 0,
-			range = 0,
-			upgradeCost = 0
-		});
 	private Collider _currentTarget;
-	private float timeElapsed = 0f;
-
-	[ServerRpc]
-	public void SetTurretLevelServerRpc(TurretLevel turretLevel)
-	{
-		currentTurretLevel.Value = turretLevel;
-	}
+	private float _timeElapsed = 0f;
+	private NetStatController _turretStats;
 
 	bool FindClosestTarget()
 	{
-		Collider[] targets = Physics.OverlapSphere(transform.position, currentTurretLevel.Value.range, targetLayer);
+		Collider[] targets = Physics.OverlapSphere(transform.position, _turretStats.GetNetStatValue(NetStatType.Range), targetLayer);
 		if (targets.Length > 0)
 		{
 
@@ -101,7 +86,7 @@ public class TurretScript : NetworkBehaviour, ITurretScript
 		var ball = Instantiate(cannonball, barrelShootingPoint.position, barrelShootingPoint.rotation);
 		ball.GetComponent<CannonballScript>()
 			.SetTargetLayer(targetLayer)
-			.SetBallDamage(currentTurretLevel.Value.damage);
+			.SetBallDamage((int) _turretStats.GetNetStatValue(NetStatType.Damage));
 		ball.GetComponent<Rigidbody>().linearVelocity = barrelShootingPoint.transform.forward * cannonballVelocity;
 	}
 
@@ -125,9 +110,14 @@ public class TurretScript : NetworkBehaviour, ITurretScript
 		ShootAtTarget();
 	}
 
+	void Awake()
+	{
+		_turretStats = GetComponent<TurretStats>();
+	}
+
 	void Update()
 	{
-		timeElapsed += Time.deltaTime;
+		_timeElapsed += Time.deltaTime;
 
 		var found = FindClosestTarget();
 		if (!found)
@@ -137,14 +127,14 @@ public class TurretScript : NetworkBehaviour, ITurretScript
 
 		LookAtTarget();
 
-		if (timeElapsed >= currentTurretLevel.Value.shootingInterval)
+		if (_timeElapsed >= _turretStats.GetNetStatValue(NetStatType.ShootingInterval))
 		{
 			if (IsServer)
 			{
 				ShootAtTargetServerRpc();
 			}
 
-			timeElapsed = 0f;
+			_timeElapsed = 0f;
 		}
 
 	}
