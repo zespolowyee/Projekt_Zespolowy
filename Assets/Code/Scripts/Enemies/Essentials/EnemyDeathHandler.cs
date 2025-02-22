@@ -3,20 +3,35 @@ using System.Linq;
 using Unity.Netcode;
 public class EnemyDeathHandler : NetworkBehaviour
 {
-	public int expReward = 50;
+	[SerializeField] private int expReward = 50;
+    [SerializeField] private int goldReward = 50;
+    [SerializeField] private GameObject goldPickupPrefab;
     private GameObject lastAttacker;
     private EnemyHp enemyHp;
-    public void Start()
+    public void OnEnable()
     {
         enemyHp = GetComponent<EnemyHp>();
-    }
-    public void Update()
-    {
-        if (enemyHp.isDead)
+        if (enemyHp != null){
+            enemyHp.OnEnemyDeath.AddListener(Die);
+        }
+        else
         {
-            Die();
+            Debug.LogError($"enemyHp component not found on enemy instance {gameObject.GetInstanceID()}");
         }
     }
+
+    private void OnDisable()
+    {
+        if (enemyHp != null)
+        {
+            enemyHp.OnEnemyDeath.RemoveListener(Die);
+        }
+        else
+        {
+            Debug.LogError($"enemyHp component not found on enemy instance {gameObject.GetInstanceID()}");
+        }
+    }
+
     public void SetAttacker(GameObject attacker)
     {
         lastAttacker = attacker;
@@ -24,9 +39,11 @@ public class EnemyDeathHandler : NetworkBehaviour
 
     public void Die()
     {
+        DropGold();
+
         if (lastAttacker != null)
         {
-            XPSystem xpsystem = lastAttacker.GetComponent<XPSystem>();
+            PlayerStatsDemo xpsystem = lastAttacker.GetComponent<PlayerStatsDemo>();
             if (xpsystem != null)
             {
                 xpsystem.AddEXP(expReward);
@@ -34,24 +51,19 @@ public class EnemyDeathHandler : NetworkBehaviour
             }
             else
             {
-                Debug.LogError("XPSystem not found on attacker! Must be turret");
+                Debug.LogWarning("XPSystem not found on attacker! Must be turret");
                 DistributeXPAmongAll(expReward);
             }
         }
         else
         {
-            Debug.LogError("LastAttacker not found! Must be turret");
+            Debug.LogWarning("LastAttacker not found! Must be turret");
             DistributeXPAmongAll(expReward);
-        }
-        if (gameObject != null && IsServer) 
-        {
-            Debug.Log($"Destroying {gameObject.name} after death.");
-            Destroy(gameObject);
         }
     }
     private void DistributeXPAmongAll(int totalExp)
     {
-        XPSystem[] allXPSystems = FindObjectsByType<XPSystem>(FindObjectsSortMode.None);
+        PlayerStatsDemo[] allXPSystems = FindObjectsByType<PlayerStatsDemo>(FindObjectsSortMode.None);
         if (allXPSystems.Length > 0)
         {
             int expPerPlayer = totalExp / allXPSystems.Length;
@@ -63,7 +75,13 @@ public class EnemyDeathHandler : NetworkBehaviour
         }
         else
         {
-            Debug.LogWarning("No XPSystem instances found to distribute XP.");
+            Debug.LogWarning("No PlayerStats instances found to distribute XP.");
         }
+    }
+
+    private void DropGold()
+    {
+        var ball = Instantiate(goldPickupPrefab, transform.position, Quaternion.identity);
+        ball.GetComponent<GoldPickup>().SetAmount(goldReward);
     }
 }

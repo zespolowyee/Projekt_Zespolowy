@@ -51,7 +51,7 @@ public class SwordAttack : MonoBehaviour
             EnemyHp enemyHp = collider.GetComponent<EnemyHp>();
             if (enemyHp != null)
             {
-                enemyHp.TakeDamageFromAttacker(damage, gameObject);
+                enemyHp.TakeDamageFromSource(damage, gameObject);
                 Debug.Log($"Damaged enemy: {collider.gameObject.name}");
             }
         }

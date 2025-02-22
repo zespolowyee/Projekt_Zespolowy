@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5628163060577913161}
   - component: {fileID: 1134099450243446242}
-  - component: {fileID: 8400586745246484208}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -59,32 +58,6 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
---- !u!114 &8400586745246484208
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1834764613449308951}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b0a54585737d644cbf423ba692afecb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  statList:
-  - type: 1
-    baseValue: 100
-    maxValue: 1000
-    minValue: 1
-  - type: 0
-    baseValue: 1
-    maxValue: 100
-    minValue: 0
-  - type: 3
-    baseValue: 0
-    maxValue: 100
-    minValue: 0
 --- !u!1 &3425112624825140561
 GameObject:
   m_ObjectHideFlags: 0
@@ -268,6 +241,7 @@ GameObject:
   - component: {fileID: 3962796167191777835}
   - component: {fileID: 8305784777722334483}
   - component: {fileID: 7279186434539353556}
+  - component: {fileID: 5148675825142251753}
   m_Layer: 7
   m_Name: PlayerBody
   m_TagString: Untagged
@@ -449,6 +423,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   maxHP: 100
+  isDead: 0
   animator: {fileID: 0}
 --- !u!114 &7279186434539353556
 MonoBehaviour:
@@ -486,6 +461,32 @@ MonoBehaviour:
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!114 &5148675825142251753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5891105665328763567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b0a54585737d644cbf423ba692afecb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  statList:
+  - type: 1
+    baseValue: 100
+    maxValue: 1000
+    minValue: 1
+  - type: 0
+    baseValue: 1
+    maxValue: 100
+    minValue: 0
+  - type: 3
+    baseValue: 0
+    maxValue: 100
+    minValue: 0
 --- !u!1 &6051199826509307895
 GameObject:
   m_ObjectHideFlags: 0
