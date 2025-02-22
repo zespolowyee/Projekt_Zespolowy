@@ -1122,7 +1122,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   expReward: 50
   goldReward: 50
-  goldPickupPrefab: {fileID: 0}
+  goldPickupPrefab: {fileID: 1137087183027860791, guid: 8cfd947b9a4491e4cb0e62776aae273b, type: 3}
 --- !u!1 &1132877429
 GameObject:
   m_ObjectHideFlags: 0
