@@ -39,7 +39,11 @@ public class EnemyDeathHandler : NetworkBehaviour
 
     public void Die()
     {
-        DropGold();
+        if (IsServer)
+        {
+            DropGold();
+        }
+
 
         if (lastAttacker != null)
         {
@@ -81,7 +85,18 @@ public class EnemyDeathHandler : NetworkBehaviour
 
     private void DropGold()
     {
-        var ball = Instantiate(goldPickupPrefab, transform.position, Quaternion.identity);
-        ball.GetComponent<GoldPickup>().SetAmount(goldReward);
+        var pickup = Instantiate(goldPickupPrefab, transform.position, Quaternion.identity);
+
+        var networkObject = pickup.GetComponent<NetworkObject>();
+        if (networkObject != null)
+        {
+            networkObject.Spawn();
+
+            pickup.GetComponent<GoldPickup>().SetAmount(goldReward);
+        }
+        else
+        {
+            Debug.LogError("GoldPickup prefab must have a NetworkObject component!");
+        }
     }
 }

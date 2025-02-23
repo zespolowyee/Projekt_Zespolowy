@@ -5318,7 +5318,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1366742646}
   - component: {fileID: 1366742645}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PostProcessing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6045,10 +6045,6 @@ PrefabInstance:
     - target: {fileID: 2617987181076177480, guid: 8cfd947b9a4491e4cb0e62776aae273b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7866301898431661031, guid: 8cfd947b9a4491e4cb0e62776aae273b, type: 3}
-      propertyPath: animationForce
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
