@@ -46,6 +46,11 @@ public class PlayerUpgradeUI : MonoBehaviour
             // Add listener for the button click to select this node
             newButton.GetComponent<Button>().onClick.AddListener(() => SelectUpgradeNode(localNode));
             newButton.GetComponent<Button>().onClick.AddListener(() => OnUpgradeButtonClick());
+
+
+            // Set the position of the button based on the node's position
+            //RectTransform rectTransform = newButton.GetComponent<RectTransform>();
+            //rectTransform.anchoredPosition = new Vector2(node.positionX, node.positionY);
         }
     }
 

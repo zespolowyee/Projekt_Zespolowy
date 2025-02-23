@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class PlayerUpgradeManager : MonoBehaviour
@@ -11,16 +12,19 @@ public class PlayerUpgradeManager : MonoBehaviour
 
     private void Start()
     {
-        foreach (var node in upgradeTree.nodes)
-        {
-            if (!node.isUnlocked)
-            {
-                node.isUnlocked = false;
-                Debug.Log($"Node {node.id} ({node.description}) set to isUnlocked = false.");
-            }
-        }
+        ResetUpgrades();
     }
 
+    private void ResetUpgrades()
+    {
+        foreach (var node in upgradeTree.nodes)
+        {
+            node.isUnlocked = false;
+            Debug.Log($"Node {node.id} ({node.description}) set to isUnlocked = false.");
+
+        }
+
+    }
 
     public void UnlockUpgrade(string nodeId)
     {
@@ -34,10 +38,15 @@ public class PlayerUpgradeManager : MonoBehaviour
 
         Debug.Log($"Attempting to unlock: {node.description}, Cost: {node.cost} EXP");
 
-
         if (node.isUnlocked)
         {
             Debug.Log("Upgrade already unlocked!");
+            return;
+        }
+
+        if(!IsParentUnlocked(node))
+        {
+            Debug.Log("Parent node is not unlocked. Cannot unlock this upgrade.");
             return;
         }
 
@@ -71,7 +80,20 @@ public class PlayerUpgradeManager : MonoBehaviour
         }
     }
 
-    
+    private bool IsParentUnlocked(UpgradeNode node)
+    {
+        foreach (var potentialParent in upgradeTree.nodes)
+        {
+            if (potentialParent.childNodes.Contains(node.id) && !potentialParent.isUnlocked)
+            {
+                Debug.Log($"Parent node {potentialParent.id} is not unlocked.");
+                return false;
+            }
+        }
+        return true;
+    }
+
+
 
 
 }
