@@ -40,10 +40,12 @@ public class PlayerUpgradeUI : MonoBehaviour
             GameObject newButton = Instantiate(buttonPrefab, buttonParent);
 
             // Set the text of the button to the node's description
-            newButton.GetComponentInChildren<Text>().text = node.description;
+            newButton.GetComponentInChildren<TextMeshProUGUI>().text = node.description;
 
+            var localNode = node;
             // Add listener for the button click to select this node
-            newButton.GetComponent<Button>().onClick.AddListener(() => SelectUpgradeNode(node));
+            newButton.GetComponent<Button>().onClick.AddListener(() => SelectUpgradeNode(localNode));
+            newButton.GetComponent<Button>().onClick.AddListener(() => OnUpgradeButtonClick());
         }
     }
 

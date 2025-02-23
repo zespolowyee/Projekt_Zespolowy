@@ -24,7 +24,7 @@ MonoBehaviour:
         Order: 0
     childNodes:
     - knight_health_2
-    isUnlocked: 1
+    isUnlocked: 0
   - id: knight_damage_1
     description: Increase Damage
     cost: 100
@@ -36,7 +36,7 @@ MonoBehaviour:
         Order: 0
     childNodes:
     - knight_damage_2
-    isUnlocked: 1
+    isUnlocked: 0
   - id: knight_damage_2
     description: Increase Damage 2
     cost: 120
@@ -60,4 +60,4 @@ MonoBehaviour:
         Order: 0
     childNodes:
     - knight_health_3
-    isUnlocked: 0
+    isUnlocked: 1
