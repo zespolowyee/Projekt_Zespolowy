@@ -3,6 +3,12 @@ using UnityEngine;
 
 public class PlayerStatsDemo : NetStatController
 {
+    public  delegate void GoldChangedUpHandler(ulong clientId, int goldAmount);
+    public static event GoldChangedUpHandler OnGoldChanged;
+
+    public delegate void ExpChangedHandler(ulong clientId, int expAmount);
+    public static event ExpChangedHandler OnExpChanged;
+
     private NetworkVariable<int> gold = new NetworkVariable<int>(0);
 
     private NetworkVariable<int> currentEXP = new NetworkVariable<int>(
@@ -15,6 +21,11 @@ public class PlayerStatsDemo : NetStatController
     {
         if (!IsServer) return;
         gold.Value += amount;
+
+        if (OnGoldChanged != null)
+        {
+            OnGoldChanged(OwnerClientId, gold.Value);
+        }
     }
 
     public void SetGold( int amount)
@@ -22,6 +33,11 @@ public class PlayerStatsDemo : NetStatController
         if (!IsServer)
             return;
         gold.Value = amount;
+
+        if (OnGoldChanged != null)
+        {
+            OnGoldChanged(OwnerClientId, gold.Value);
+        }
     }
 
     public int GetGold()
@@ -43,12 +59,22 @@ public class PlayerStatsDemo : NetStatController
         else
         {
             currentEXP.Value += amount;
+
+            if (OnExpChanged != null)
+            {
+                OnExpChanged(OwnerClientId, currentEXP.Value);
+            }
         }
     }
 
     public void SetEXP(int amount)
     {
         currentEXP.Value = amount;
+
+        if (OnExpChanged != null)
+        {
+            OnExpChanged(OwnerClientId, currentEXP.Value);
+        }
     }
     public int GetCurrentEXP()
     {

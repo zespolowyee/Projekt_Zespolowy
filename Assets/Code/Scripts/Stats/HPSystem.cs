@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HPSystem : NetworkBehaviour
 {
-	NetworkVariable<int> currentHP = new NetworkVariable<int>(100);
+	protected NetworkVariable<int> currentHP = new NetworkVariable<int>(100);
 	public int maxHP = 100;
 	public bool isDead = false;
 
