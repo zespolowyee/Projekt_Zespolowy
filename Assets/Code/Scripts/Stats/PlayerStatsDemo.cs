@@ -19,25 +19,25 @@ public class PlayerStatsDemo : NetStatController
 
     public void AddGold(int amount)
     {
-        if (!IsServer) return;
+        if (!IsServer)
+        {
+            return;
+        }
         gold.Value += amount;
 
-        if (OnGoldChanged != null)
-        {
-            OnGoldChanged(OwnerClientId, gold.Value);
-        }
+        InvokeOnGoldChangedClientRpc();
+        
     }
 
     public void SetGold( int amount)
     {
         if (!IsServer)
+        {
             return;
+        }
         gold.Value = amount;
 
-        if (OnGoldChanged != null)
-        {
-            OnGoldChanged(OwnerClientId, gold.Value);
-        }
+        InvokeOnGoldChangedClientRpc();
     }
 
     public int GetGold()
@@ -60,24 +60,40 @@ public class PlayerStatsDemo : NetStatController
         {
             currentEXP.Value += amount;
 
-            if (OnExpChanged != null)
-            {
-                OnExpChanged(OwnerClientId, currentEXP.Value);
-            }
+            InvokeOnExpChangedClientRpc();
         }
     }
 
     public void SetEXP(int amount)
     {
-        currentEXP.Value = amount;
-
-        if (OnExpChanged != null)
+        if (!IsServer)
         {
-            OnExpChanged(OwnerClientId, currentEXP.Value);
+            return;
         }
+
+        currentEXP.Value = amount;
+        InvokeOnExpChangedClientRpc();
     }
     public int GetCurrentEXP()
     {
         return currentEXP.Value;
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    void InvokeOnGoldChangedClientRpc()
+    {
+        if (OnGoldChanged != null)
+        {
+            OnGoldChanged(OwnerClientId, gold.Value);
+        }
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    void InvokeOnExpChangedClientRpc()
+    {
+        if (OnExpChanged != null)
+        {
+            OnExpChanged(OwnerClientId, currentEXP.Value);
+        }
     }
 }
