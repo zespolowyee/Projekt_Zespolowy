@@ -1,30 +1,22 @@
-using Unity.Netcode;
 using UnityEngine;
 
-public class EnemyAttack : NetworkBehaviour
+public class EnemyAttack : MonoBehaviour
 {
-    [Header("Basic settings")]
-    [SerializeField] protected int damage;
-    [SerializeField] protected float cooldown;
-    [SerializeField] protected LayerMask whatIsTarget;
-    [SerializeField] protected float minDistanceToPlayer;     
-    [SerializeField] protected float maxDistanceToPlayer;     
+    [SerializeField] private int damage;
+    [SerializeField] float cooldown;
 
+    [SerializeField] private Transform attackPos;
+    [SerializeField] private float attackRadius;
 
-    [Tooltip("Position of attack, if left null, defaults to gameObject.transform")]
-    [SerializeField] protected Transform attackPos;
+    [SerializeField] LayerMask whatIsTarget;
 
+    [SerializeField] private float moveSpeedWhileAttacking = 0f;
 
-    [Header("Attack animation settings")]
-    [SerializeField] protected AnimationClip attackAnimation;
-    [SerializeField] protected float moveSpeedWhileAttacking = 0f;
-    [Tooltip("Time ofter starting animation and activating attack hitbox")]
-    [SerializeField] protected float attackDelay = 0f;
+    [SerializeField] private AnimationClip attackAnimation;
+    [SerializeField] private float attackDelay = 0.1f;
+    private float lastPerformedTime;
+    private EnemyNavigation controller;
 
-    protected int finalDamage;
-    protected float lastPerformedTime;
-    protected EnemyNavigation controller;
-    
     public AnimationClip AttackAnimation { get => attackAnimation; set => attackAnimation = value; }
     public float MoveSpeedWhileAttacking { get => moveSpeedWhileAttacking; set => moveSpeedWhileAttacking = value; }
     public float AttackDelay { get => attackDelay; set => attackDelay = value; }
@@ -33,46 +25,29 @@ public class EnemyAttack : NetworkBehaviour
     {
         this.controller = controller;
         lastPerformedTime = Time.time;
-        finalDamage = damage;
-        if(attackPos == null)
-        {
-            attackPos = gameObject.transform;
-        }
     }
     public virtual bool CheckAttackConditon()
     {
-        if (Time.time < lastPerformedTime + cooldown)
+        if (Time.time >= lastPerformedTime + cooldown && controller.DistanceToTarget < 9 && controller.IsTargetPlayer)
         {
-            return false;
+            return true;
         }
 
-        if (!controller.IsTargetPlayer)
-        {
-            return false;
-        }
-
-        if (controller.DistanceToTarget >= maxDistanceToPlayer)
-        {
-            return false;
-        }
-
-        if (controller.DistanceToTarget <= minDistanceToPlayer)
-        {
-            return false;
-        }
-
-        return true;
-
+        return false;
     }
 
     public virtual void PerformAttack()
     {
+
 		lastPerformedTime = Time.time;
-        CalculateFinalDamage();
+		Collider[] targets = Physics.OverlapSphere(attackPos.position, attackRadius, whatIsTarget);
+		foreach (Collider target in targets)
+		{
+			if (target.gameObject.TryGetComponent<HPSystem>(out var targetHp))
+			{
+				targetHp.TakeDamage(damage);
+			}
+		}
 	}
 
-    protected virtual void CalculateFinalDamage()
-    {
-        finalDamage = damage * (int)controller.StatController.GetNetStatValue(NetStatType.DamageMultipier);
-    }
 }

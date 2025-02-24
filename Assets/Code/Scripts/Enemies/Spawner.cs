@@ -7,6 +7,9 @@ using UnityEngine;
 
 public class Spawner : NetworkBehaviour
 {
+	//For now only for testing purposes, we would need to add real enemy spawn logic in here
+
+	[SerializeField] private GameObject enemyPrefab;
 	[SerializeField] private EnemyPath defaultPath;
 
 	[SerializeField] private Wave[] waves;
@@ -40,11 +43,6 @@ public class Spawner : NetworkBehaviour
 
 	private void OnDrawGizmosSelected()
 	{
-		if (defaultPath.Waypoints.Count < 2)
-		{
-			return;
-		}
-
 		Gizmos.color = Color.red;
 
 		for (int i = 1; i < defaultPath.Waypoints.Count; i++)
