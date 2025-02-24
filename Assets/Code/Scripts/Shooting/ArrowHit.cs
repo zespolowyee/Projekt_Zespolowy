@@ -27,7 +27,7 @@ public class ArrowHit : NetworkBehaviour
             EnemyHp enemyHP = enemyNetworkObject.GetComponent<EnemyHp>();
             if (enemyHP != null)
             {
-                enemyHP.TakeDamageFromAttacker(damage, attacker);
+                enemyHP.TakeDamageFromSource(damage, attacker);
             }
         }
     }
@@ -49,7 +49,7 @@ public class ArrowHit : NetworkBehaviour
         {
             if (IsServer)
             {
-                enemyHP.TakeDamageFromAttacker(damage, attacker);
+                enemyHP.TakeDamageFromSource(damage, attacker);
             }
             else
             {

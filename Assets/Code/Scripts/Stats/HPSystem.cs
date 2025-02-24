@@ -51,5 +51,6 @@ public class HPSystem : NetworkBehaviour
 			animator.Play("Die", -1, 0f);
 			Debug.Log($"{gameObject.name} has died.");
 		}
+
 	}
 }
