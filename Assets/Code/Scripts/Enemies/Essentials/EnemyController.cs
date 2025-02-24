@@ -18,11 +18,8 @@ public class EnemyController : NetworkBehaviour
 	[ServerRpc(RequireOwnership = false)]
 	public void DespawnEnemyServerRpc()
 	{
-
 		DeleteFromActiveEnemiesInWave();
 		GetComponent<NetworkObject>().Despawn(true);
-
-
 	}
 
 	public void DoDespawn()

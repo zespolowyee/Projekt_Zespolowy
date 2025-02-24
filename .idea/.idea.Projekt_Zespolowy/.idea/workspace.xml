@@ -5,13 +5,63 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="007df3f7-77fe-4944-bf04-124c32e90e40" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/Code/Scripts/Player/Interaction/BasicInteraction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Code/Scripts/Player/Interaction/BasicInteraction.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/Scripts/Turret/TurretStats.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Code/Scripts/Turret/TurretStats.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/Scripts/Turret/UpgradeUIScript.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/Scripts/Turret/UpgradeUIScript.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Level/Prefabs/Turret_Cannon.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Level/Prefabs/Turret_Cannon.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Level/Prefabs/UpgradeUI.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Level/Prefabs/UpgradeUI.prefab.meta" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Art/Animations/Test_Character/SpellCast.anim" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Art/Animations/Test_Character/SpellCast.anim.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Art/Materials/Solid Colors/YellowGlow.mat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Art/Materials/Solid Colors/YellowGlow.mat.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Code/Scripts/Enemies/Ai/Attacks/EnemyAttackMelee.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Code/Scripts/Enemies/Ai/Attacks/EnemyAttackMelee.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Code/Scripts/Enemies/Essentials/EnemyDeathHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Code/Scripts/Enemies/Essentials/EnemyDeathHandler.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Code/Scripts/Enemies/Projectile.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Code/Scripts/Enemies/Projectile.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Code/Scripts/Environment/Pickups.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Code/Scripts/Environment/Pickups/GoldPickup.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Code/Scripts/Environment/Pickups/GoldPickup.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Code/Scripts/Stats/XPSystem.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Code/Scripts/Stats/XPSystem.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Level/Prefabs/TheBall.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Level/Prefabs/TheBall.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/GoldPickup.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/GoldPickup.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scenes/Wojciech/PostProcessing Profile.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scenes/Wojciech/PostProcessing Profile.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Projekt_Zespolowy/.idea/indexLayout.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Projekt_Zespolowy/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Projekt_Zespolowy/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/extensions.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/launch.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Animations/TsetEnemy/TestEnemy.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Animations/TsetEnemy/TestEnemy.controller" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Models/Knight/Knight.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Models/Knight/Knight.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Code/Scripts/Enemies/Ai/Attacks/EnemyAttack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Code/Scripts/Enemies/Ai/Attacks/EnemyAttack.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Code/Scripts/Enemies/Ai/Attacks/EnemyAttackProjectile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Code/Scripts/Enemies/Ai/Attacks/EnemyAttackProjectile.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Code/Scripts/Enemies/Ai/Navigation/EnemyNavigation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Code/Scripts/Enemies/Ai/Navigation/EnemyNavigation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Code/Scripts/Enemies/Ai/Navigation/EnemyNavigationState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Code/Scripts/Enemies/Ai/Navigation/EnemyNavigationState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Code/Scripts/Enemies/Essentials/EnemyController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Code/Scripts/Enemies/Essentials/EnemyController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Code/Scripts/Enemies/Essentials/EnemyHp.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Code/Scripts/Enemies/Essentials/EnemyHp.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Code/Scripts/Enemies/Spawner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Code/Scripts/Enemies/Spawner.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Code/Scripts/Shooting/ArrowHit.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Code/Scripts/Shooting/ArrowHit.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Code/Scripts/Shooting/ArrowShoot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Code/Scripts/Shooting/ArrowShoot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Code/Scripts/Shooting/BowShooterAnimationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Code/Scripts/Shooting/BowShooterAnimationController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Code/Scripts/Stats/HPSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Code/Scripts/Stats/HPSystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Code/Scripts/Stats/NetStatController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Code/Scripts/Stats/NetStatController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Code/Scripts/Stats/NetStatType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Code/Scripts/Stats/NetStatType.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Code/Scripts/Stats/PlayerStatsDemo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Code/Scripts/Stats/PlayerStatsDemo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Code/Scripts/SwordAttack/SwordAttack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Code/Scripts/SwordAttack/SwordAttack.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DefaultNetworkPrefabs.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/DefaultNetworkPrefabs.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Level/Prefabs/Bow_And_Arrow_Prefabs/ArrowPrefab.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Level/Prefabs/Bow_And_Arrow_Prefabs/ArrowPrefab.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Level/Prefabs/Paladin.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Level/Prefabs/Paladin.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Level/Prefabs/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Level/Prefabs/Player.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Level/Prefabs/Tmp/TestEnemy.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Level/Prefabs/Tmp/TestEnemy.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BaseHP.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BaseHP.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Wojciech.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Wojciech.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Zuzanna.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Zuzanna.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/UniversalRenderPipelineGlobalSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/UniversalRenderPipelineGlobalSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/Physics2DSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Physics2DSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,8 +72,10 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock://C:/Users/marcin/Desktop/Projekt_Zespolowy/Projekt_Zespolowy/Assets/Code/Scripts/Player/Interaction/BasicInteraction.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Code/Scripts/Player/Interaction/TurretInteraction.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/marcin/Desktop/Projekt_Zespolowy/Projekt_Zespolowy/Assets/Code/Scripts/Stats/NetStatType.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/marcin/Desktop/Projekt_Zespolowy/Projekt_Zespolowy/Assets/Code/Scripts/Stats/NetStatType.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/marcin/Desktop/Projekt_Zespolowy/Projekt_Zespolowy/Assets/Code/Scripts/Stats/NetStatType.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="KubernetesApiPersistence">{}</component>
   <component name="KubernetesApiProvider">{
@@ -39,19 +91,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;20-feature/System-Ulepszen-Wiezyczek&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "Merging 20-feature/System-Ulepszen-Wiezyczek",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Standalone Player" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="$PROJECT_DIR$/../Proj_zesp_build\Projekt_Zespolowy.exe" />

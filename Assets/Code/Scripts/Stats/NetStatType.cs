@@ -11,6 +11,8 @@ public enum NetStatType
     MoveSpeed,
     AttackSpeed,
     Armor,
+    DamageMultipier,
+    SpeedMultiplier,
     Range,
     ShootingInterval
 }
