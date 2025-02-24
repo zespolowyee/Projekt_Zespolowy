@@ -1,3 +1,4 @@
+using Unity.Netcode;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerStatsDemo))]
@@ -5,24 +6,26 @@ public class PlayerHp : HPSystem
 {
     PlayerStatsDemo playerStats;
 
-    public delegate void HpChangedHandler(ulong clientId, int currentHp);
+    public delegate void HpChangedHandler(ulong clientId, int currentHp, int maxHp);
     public static event HpChangedHandler OnHpChanged;
 
     protected override void Start()
     {
-        if (IsServer)
-        {
 
-            if (TryGetComponent<PlayerStatsDemo>(out playerStats))
+        if (TryGetComponent<PlayerStatsDemo>(out playerStats))
+        {
+            if (IsServer)
             {
-                currentHP.Value = (int)playerStats.GetNetStatValue(NetStatType.MaxHp);
-            }
-            else
-            {
+                maxHP = (int)playerStats.GetNetStatValue(NetStatType.MaxHp);
                 currentHP.Value = maxHP;
             }
-
         }
+        else
+        {
+            Debug.LogError("player does not have maxHp statistic");
+        }
+
+
         animator = GetComponent<Animator>();
     }
 
@@ -32,16 +35,22 @@ public class PlayerHp : HPSystem
         {
             currentHP.Value -= damage;
 
-            if (OnHpChanged != null)
-            {
-                OnHpChanged(OwnerClientId, currentHP.Value);
-            }
+            InvokeOnHpChangedClientRpc();
 
             if (currentHP.Value <= 0)
             {
                 currentHP.Value = 0;
                 Die();
             }
+        }
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    void InvokeOnHpChangedClientRpc()
+    {
+        if (OnHpChanged != null)
+        {
+            OnHpChanged(OwnerClientId, currentHP.Value, (int)playerStats.GetNetStatValue(NetStatType.MaxHp));
         }
     }
 }
