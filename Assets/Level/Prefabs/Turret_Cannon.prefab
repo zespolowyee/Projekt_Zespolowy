@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 7497229020472913593}
   - component: {fileID: 6118203584681520488}
   - component: {fileID: 1466397108706588722}
-  - component: {fileID: 8595004595852668274}
+  - component: {fileID: 3783488227877882542}
   m_Layer: 6
   m_Name: BackWheels
   m_TagString: Untagged
@@ -141,7 +141,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -8782119142174837459, guid: 125b14fbccfdc6a468ed0990a7c30e98, type: 3}
---- !u!114 &8595004595852668274
+--- !u!114 &3783488227877882542
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -150,14 +150,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 3736553185631510164}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3f996a492693944db039e18e07bdb50, type: 3}
+  m_Script: {fileID: 11500000, guid: 6e25af59ad669cc46876c9cf03d4fd64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   OnInteraction:
     m_PersistentCalls:
       m_Calls: []
-  shouldInteractionBeSyncedOnNet: 0
 --- !u!1 &4120021555661350502
 GameObject:
   m_ObjectHideFlags: 0
@@ -170,7 +169,7 @@ GameObject:
   - component: {fileID: 7479150336794217363}
   - component: {fileID: 2625863106709586402}
   - component: {fileID: 8498548581956892054}
-  - component: {fileID: 832704206201442860}
+  - component: {fileID: 4725870934111350665}
   m_Layer: 6
   m_Name: Barrel
   m_TagString: Untagged
@@ -269,7 +268,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 8108563764783910780, guid: 125b14fbccfdc6a468ed0990a7c30e98, type: 3}
---- !u!114 &832704206201442860
+--- !u!114 &4725870934111350665
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -278,14 +277,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4120021555661350502}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3f996a492693944db039e18e07bdb50, type: 3}
+  m_Script: {fileID: 11500000, guid: 6e25af59ad669cc46876c9cf03d4fd64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   OnInteraction:
     m_PersistentCalls:
       m_Calls: []
-  shouldInteractionBeSyncedOnNet: 0
 --- !u!1 &5583137535391971165
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,7 +327,7 @@ GameObject:
   - component: {fileID: 2743218974856197670}
   - component: {fileID: 8952650211035999368}
   - component: {fileID: 2585527795974306440}
-  - component: {fileID: 3162130142232283993}
+  - component: {fileID: 1009172644787919461}
   m_Layer: 6
   m_Name: BarrelCart
   m_TagString: Untagged
@@ -427,7 +425,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 8993710757797625901, guid: 125b14fbccfdc6a468ed0990a7c30e98, type: 3}
---- !u!114 &3162130142232283993
+--- !u!114 &1009172644787919461
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -436,14 +434,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6243985681929906498}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3f996a492693944db039e18e07bdb50, type: 3}
+  m_Script: {fileID: 11500000, guid: 6e25af59ad669cc46876c9cf03d4fd64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   OnInteraction:
     m_PersistentCalls:
       m_Calls: []
-  shouldInteractionBeSyncedOnNet: 0
 --- !u!1 &7192314731763593794
 GameObject:
   m_ObjectHideFlags: 0
@@ -456,7 +453,7 @@ GameObject:
   - component: {fileID: 7603007638498357690}
   - component: {fileID: 4545147170538415228}
   - component: {fileID: 4961145671085864435}
-  - component: {fileID: 2101488605394793839}
+  - component: {fileID: 2299820123648365366}
   m_Layer: 6
   m_Name: Base
   m_TagString: Untagged
@@ -554,7 +551,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3909233067320746374, guid: 125b14fbccfdc6a468ed0990a7c30e98, type: 3}
---- !u!114 &2101488605394793839
+--- !u!114 &2299820123648365366
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -563,14 +560,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 7192314731763593794}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3f996a492693944db039e18e07bdb50, type: 3}
+  m_Script: {fileID: 11500000, guid: 6e25af59ad669cc46876c9cf03d4fd64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   OnInteraction:
     m_PersistentCalls:
       m_Calls: []
-  shouldInteractionBeSyncedOnNet: 0
 --- !u!1 &7412517421880371501
 GameObject:
   m_ObjectHideFlags: 0
@@ -583,7 +579,7 @@ GameObject:
   - component: {fileID: 3043205048979549493}
   - component: {fileID: 847588391975049552}
   - component: {fileID: 3184253505277566279}
-  - component: {fileID: 575960277676729023}
+  - component: {fileID: 8384598138838771921}
   m_Layer: 6
   m_Name: FrontWheels
   m_TagString: Untagged
@@ -681,7 +677,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4164666299690521892, guid: 125b14fbccfdc6a468ed0990a7c30e98, type: 3}
---- !u!114 &575960277676729023
+--- !u!114 &8384598138838771921
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -690,14 +686,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 7412517421880371501}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3f996a492693944db039e18e07bdb50, type: 3}
+  m_Script: {fileID: 11500000, guid: 6e25af59ad669cc46876c9cf03d4fd64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   OnInteraction:
     m_PersistentCalls:
       m_Calls: []
-  shouldInteractionBeSyncedOnNet: 0
 --- !u!1 &8527545519523951861
 GameObject:
   m_ObjectHideFlags: 0
@@ -709,7 +704,7 @@ GameObject:
   - component: {fileID: 7316587107335967141}
   - component: {fileID: 906083672528512081}
   - component: {fileID: 5009007113466822775}
-  - component: {fileID: -1306846499251793394}
+  - component: {fileID: -7567155755070255452}
   m_Layer: 6
   m_Name: Turret_Cannon
   m_TagString: Untagged
@@ -783,7 +778,7 @@ MonoBehaviour:
     m_Bits: 128
   maxUpRotation: -10
   maxDownRotation: 20
---- !u!114 &-1306846499251793394
+--- !u!114 &-7567155755070255452
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -24,7 +24,7 @@ public class TurretStats : NetStatController
     {
         maxLevelIndex = turretLevels.levels.Count - 1;
         
-        BasicInteraction[] interactions = GetComponentsInChildren<BasicInteraction>();
+        TurretInteraction[] interactions = GetComponentsInChildren<TurretInteraction>();
 
         foreach (var interaction in interactions)
         {

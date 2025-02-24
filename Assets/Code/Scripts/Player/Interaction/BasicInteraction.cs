@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 public class BasicInteraction : NetworkBehaviour, IInteractable
 {
-    public UnityEvent<GameObject> OnInteraction;
+    public UnityEvent OnInteraction;
 	[SerializeField] private bool shouldInteractionBeSyncedOnNet = true;
 
 	[ServerRpc(RequireOwnership = false)]
@@ -16,7 +16,7 @@ public class BasicInteraction : NetworkBehaviour, IInteractable
 	[ClientRpc]
 	protected virtual void TriggerInteractionClientRpc()
 	{
-		OnInteraction?.Invoke(null);
+		OnInteraction?.Invoke();
 
 	}
 	public virtual void Interact(GameObject interactingPlayer)
@@ -27,7 +27,7 @@ public class BasicInteraction : NetworkBehaviour, IInteractable
 		}
 		else
 		{
-			OnInteraction?.Invoke(interactingPlayer);
+			OnInteraction?.Invoke();
 		}
 	}
 }

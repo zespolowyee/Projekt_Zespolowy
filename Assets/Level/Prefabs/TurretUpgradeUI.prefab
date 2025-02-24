@@ -633,7 +633,7 @@ GameObject:
   - component: {fileID: 2980399190799014666}
   - component: {fileID: 5130431766575241995}
   m_Layer: 5
-  m_Name: UpgradeUI
+  m_Name: TurretUpgradeUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
