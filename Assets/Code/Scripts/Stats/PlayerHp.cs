@@ -33,10 +33,8 @@ public class PlayerHp : HPSystem
     {
         if (IsServer)
         {
+            InvokeOnHpChangedClientRpc(currentHP.Value - damage);
             currentHP.Value -= damage;
-
-            InvokeOnHpChangedClientRpc();
-
             if (currentHP.Value <= 0)
             {
                 currentHP.Value = 0;
@@ -46,11 +44,11 @@ public class PlayerHp : HPSystem
     }
 
     [Rpc(SendTo.ClientsAndHost)]
-    void InvokeOnHpChangedClientRpc()
+    void InvokeOnHpChangedClientRpc(int currentValue)
     {
         if (OnHpChanged != null)
         {
-            OnHpChanged(OwnerClientId, currentHP.Value, (int)playerStats.GetNetStatValue(NetStatType.MaxHp));
+            OnHpChanged(OwnerClientId, currentValue, (int)playerStats.GetNetStatValue(NetStatType.MaxHp));
         }
     }
 }

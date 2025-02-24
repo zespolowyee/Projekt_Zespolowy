@@ -23,10 +23,10 @@ public class PlayerStatsDemo : NetStatController
         {
             return;
         }
-        gold.Value += amount;
 
-        InvokeOnGoldChangedClientRpc();
-        
+
+        InvokeOnGoldChangedClientRpc(gold.Value + amount);
+        gold.Value += amount;
     }
 
     public void SetGold( int amount)
@@ -37,7 +37,7 @@ public class PlayerStatsDemo : NetStatController
         }
         gold.Value = amount;
 
-        InvokeOnGoldChangedClientRpc();
+        InvokeOnGoldChangedClientRpc(amount);
     }
 
     public int GetGold()
@@ -58,9 +58,10 @@ public class PlayerStatsDemo : NetStatController
         }
         else
         {
-            currentEXP.Value += amount;
 
-            InvokeOnExpChangedClientRpc();
+
+            InvokeOnExpChangedClientRpc(currentEXP.Value + amount);
+            currentEXP.Value += amount;
         }
     }
 
@@ -72,7 +73,7 @@ public class PlayerStatsDemo : NetStatController
         }
 
         currentEXP.Value = amount;
-        InvokeOnExpChangedClientRpc();
+        InvokeOnExpChangedClientRpc(amount);
     }
     public int GetCurrentEXP()
     {
@@ -80,20 +81,20 @@ public class PlayerStatsDemo : NetStatController
     }
 
     [Rpc(SendTo.ClientsAndHost)]
-    void InvokeOnGoldChangedClientRpc()
+    void InvokeOnGoldChangedClientRpc(int currentValue)
     {
         if (OnGoldChanged != null)
         {
-            OnGoldChanged(OwnerClientId, gold.Value);
+            OnGoldChanged(OwnerClientId, currentValue);
         }
     }
 
     [Rpc(SendTo.ClientsAndHost)]
-    void InvokeOnExpChangedClientRpc()
+    void InvokeOnExpChangedClientRpc(int currentValue)
     {
         if (OnExpChanged != null)
         {
-            OnExpChanged(OwnerClientId, currentEXP.Value);
+            OnExpChanged(OwnerClientId, currentValue);
         }
     }
 }
