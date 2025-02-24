@@ -28,8 +28,10 @@ public class NetStatController : NetworkBehaviour, INetStatController
             if (stat.Type == modifier.StatType)
             {
                 stat.RemoveModifier(modifier);
+                return;
             }
         }
+        Debug.LogError("No stat of type" + modifier.StatType + " in controller");
     }
 
     [Rpc(SendTo.ClientsAndHost)]
@@ -40,9 +42,10 @@ public class NetStatController : NetworkBehaviour, INetStatController
             if (stat.Type == modifier.StatType)
             {
                 stat.AddModifier(modifier);
+                return;
             }
         }
-
+        Debug.LogError("No stat of type" + modifier.StatType + " in controller");
     }
 
     public float GetNetStatValue(NetStatType type)
@@ -54,7 +57,7 @@ public class NetStatController : NetworkBehaviour, INetStatController
                 return stat.Value;
             }
         }
-
+        Debug.LogError("No stat of type" + type + " in controller");
         return 0f;
     }
 
