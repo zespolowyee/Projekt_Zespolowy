@@ -11,6 +11,9 @@ public class HudController : NetworkBehaviour
 
     [SerializeField] private TextMeshProUGUI currentHpText;
 
+    [SerializeField] private PlayerHp playerHp;
+    [SerializeField] private PlayerStatsDemo playerStats;
+
     private void Start()
     {
         if (!IsOwner)
@@ -22,6 +25,16 @@ public class HudController : NetworkBehaviour
             PlayerHp.OnHpChanged += UpdateHealthBarData;
             PlayerStatsDemo.OnGoldChanged += UpdateGoldData;
             PlayerStatsDemo.OnExpChanged += UpdateExpData;
+            if (playerHp != null)
+            {
+                health.fillAmount = ((float)playerHp.GetCurrentHP() / (float)playerHp.GetMaxHp());
+                currentHpText.text = playerHp.GetCurrentHP().ToString();
+            }
+            if (playerStats != null)
+            {
+                UpdateGoldData(OwnerClientId, playerStats.GetGold());
+                UpdateExpData(OwnerClientId, playerStats.GetCurrentEXP());
+            }
         }
 
 

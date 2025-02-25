@@ -51,4 +51,14 @@ public class PlayerHp : HPSystem
             OnHpChanged(OwnerClientId, currentValue, (int)playerStats.GetNetStatValue(NetStatType.MaxHp));
         }
     }
+
+    public int GetCurrentHP()
+    {
+        return currentHP.Value; 
+    }
+
+    public int GetMaxHp()
+    {
+        return (int)playerStats.GetNetStatValue(NetStatType.MaxHp);
+    }
 }

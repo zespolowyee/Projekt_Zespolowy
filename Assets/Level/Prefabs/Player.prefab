@@ -1663,6 +1663,8 @@ MonoBehaviour:
   goldText: {fileID: 6210462143256077439}
   expText: {fileID: 1802199802092004278}
   currentHpText: {fileID: 2057724576143299785}
+  playerHp: {fileID: 2707839444710914203}
+  playerStats: {fileID: 5148675825142251753}
 --- !u!1 &8653025118762136800
 GameObject:
   m_ObjectHideFlags: 0

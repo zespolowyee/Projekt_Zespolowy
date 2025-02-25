@@ -9,7 +9,7 @@ public class PlayerStatsDemo : NetStatController
     public delegate void ExpChangedHandler(ulong clientId, int expAmount);
     public static event ExpChangedHandler OnExpChanged;
 
-    private NetworkVariable<int> gold = new NetworkVariable<int>(0);
+    private NetworkVariable<int> gold = new NetworkVariable<int>(2137);
 
     private NetworkVariable<int> currentEXP = new NetworkVariable<int>(
     0,
