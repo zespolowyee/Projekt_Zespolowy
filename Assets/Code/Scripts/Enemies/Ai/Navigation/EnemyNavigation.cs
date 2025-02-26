@@ -16,6 +16,7 @@ public class EnemyNavigation : NetworkBehaviour
     [SerializeField] private LayerMask whatIsPlayer;
     private float lastPlayerCheckTime;
     public NetworkAnimator animator;
+    private NetStatController statController;
 
     [Header("State Setup")]
     [SerializeField] private ENS_FollowPath followPathState;
@@ -37,18 +38,17 @@ public class EnemyNavigation : NetworkBehaviour
     public Transform Target { get { return target; } }
 
     public float DistanceToTarget { get; set; }
+    public NetStatController StatController { get => statController; set => statController = value; }
 
     void Start()
     {
-
-        navMeshAgent = GetComponent<NavMeshAgent>();
-
         if (!IsServer)
         {
-            navMeshAgent.enabled = false;
-            this.enabled = false;
             return;
         }
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        statController = GetComponent<NetStatController>();
+
         animator = GetComponent<NetworkAnimator>();
         playerCheckFrequency += Random.Range(-0.1f, 0.1f);
 
@@ -76,6 +76,10 @@ public class EnemyNavigation : NetworkBehaviour
     }
     void Update()
     {
+        if (!IsServer)
+        {
+            return;
+        }
         CurrentState.Handle();
 
         if (lastPlayerCheckTime + playerCheckFrequency < Time.time)
@@ -137,12 +141,6 @@ public class EnemyNavigation : NetworkBehaviour
         return closestPlayer.gameObject.transform;
     }
 
-    //public void SwitchState(EnemyState newState)
-    //{
-    //    CurrentState?.Exit();
-    //    CurrentState = newState;
-    //    CurrentState.Enter();
-    //}
 
     public void SwitchState(EnemyState newState, bool ignoreCanExitClause = false)
     {
