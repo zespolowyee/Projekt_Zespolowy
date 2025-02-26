@@ -49,6 +49,10 @@ public class HudController : NetworkBehaviour
 
     public void UpdateHealthBarData(ulong clientId, int currentHp, int maxHp)
     {
+        if (currentHp < 0)
+        {
+            currentHp = 0;
+        }
         if (clientId != OwnerClientId)
         {
             return;
