@@ -42,16 +42,13 @@ public class EnemyNavigation : NetworkBehaviour
 
     void Start()
     {
-
+        if (!IsServer)
+        {
+            return;
+        }
         navMeshAgent = GetComponent<NavMeshAgent>();
         statController = GetComponent<NetStatController>();
 
-        if (!IsServer)
-        {
-            navMeshAgent.enabled = false;
-            this.enabled = false;
-            return;
-        }
         animator = GetComponent<NetworkAnimator>();
         playerCheckFrequency += Random.Range(-0.1f, 0.1f);
 
@@ -79,6 +76,10 @@ public class EnemyNavigation : NetworkBehaviour
     }
     void Update()
     {
+        if (!IsServer)
+        {
+            return;
+        }
         CurrentState.Handle();
 
         if (lastPlayerCheckTime + playerCheckFrequency < Time.time)
