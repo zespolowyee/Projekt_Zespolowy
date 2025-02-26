@@ -1,11 +1,12 @@
 using System;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class TurretStats : NetStatController
 {
-    [SerializeField] private GameObject upgradeUI;
-    
+    public UnityEvent OnLevelChanged;
+
     [SerializeField] private TurretLevels turretLevels;
     private GameObject upgradeUIObject;
     private NetworkVariable<int> currentLevelIndex = new NetworkVariable<int>(0);
@@ -23,18 +24,17 @@ public class TurretStats : NetStatController
     private void Awake()
     {
         maxLevelIndex = turretLevels.levels.Count - 1;
-        
-        TurretInteraction[] interactions = GetComponentsInChildren<TurretInteraction>();
-
-        foreach (var interaction in interactions)
-        {
-            interaction.OnInteraction.AddListener(DisplayUpgradeUI);
-        }
+        OnLevelChanged = new UnityEvent();
     }
 
-    public Boolean CanUpgrade()
+    public Boolean NextLevelExists()
     {
         return currentLevelIndex.Value < maxLevelIndex;
+    }
+
+    public Boolean HasEnoughGold(GameObject player)
+    {
+        return GetNextLevel().upgradeCost <= player.GetComponent<PlayerStatsDemo>().GetGold();
     }
 
     private void AddLevelModifiers(TurretLevel level)
@@ -44,24 +44,33 @@ public class TurretStats : NetStatController
             AddModifierServerRPC(modifier);
         }
     }
-    
-    private void RemoveLevelModifiers(TurretLevel level)
-    {
-        foreach (NetStatModifier modifier in level.modifiers)
-        {
-            RemoveModifierServerRPC(modifier);
-        }
-    }
 
-    [ServerRpc(RequireOwnership = false)]
-    public void UpgradeServerRPC()
+    [Rpc(SendTo.Server, RequireOwnership = false)]
+    public void UpgradeServerRPC(ulong playerObjectId)
     {
-        if (!CanUpgrade())
+        if (!NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(playerObjectId,
+                out NetworkObject playerNetworkObject))
             return;
-            
-        RemoveLevelModifiers(GetCurrentLevel());
+        
+        GameObject player = playerNetworkObject.gameObject;
+        player.GetComponentInChildren<PlayerStatsDemo>().AddGold(-GetNextLevel().upgradeCost);
+        
         AddLevelModifiers(GetNextLevel());
         currentLevelIndex.Value++;
+    }
+    
+    public bool Upgrade(GameObject upgradingPlayer)
+    {
+        if (!NextLevelExists())
+            return false;
+        
+        if (!HasEnoughGold(upgradingPlayer))
+            return false;
+        
+        ulong playerId = upgradingPlayer.GetComponentInParent<NetworkObject>().NetworkObjectId;
+        
+        UpgradeServerRPC(playerId);
+        return true;
     }
 
     public TurretLevel GetCurrentLevel()
@@ -74,22 +83,8 @@ public class TurretStats : NetStatController
         return turretLevels.levels[currentLevelIndex.Value+1];
     }
 
-    public void DisplayUpgradeUI(GameObject interactingPlayer)
-    {
-        if(upgradeUIObject == null)
-            upgradeUIObject = Instantiate(upgradeUI);
-            upgradeUIObject.GetComponent<UpgradeUIScript>().turretStats = this;
-            upgradeUIObject.GetComponent<UpgradeUIScript>().player = interactingPlayer;
-            
-        interactingPlayer.GetComponentInChildren<RBController>().enabled = false;
-        Cursor.lockState = CursorLockMode.None;
-        
-        upgradeUIObject.GetComponent<UpgradeUIScript>().UpdateUi();
-    }
-
     private void HandleLevelChanged(int oldValue, int newValue)
     {
-        upgradeUIObject.GetComponent<UpgradeUIScript>().UpdateUi();
-        Debug.Log($"Level changed from {turretLevels.levels[oldValue].level} to {turretLevels.levels[newValue].level}");
+        OnLevelChanged.Invoke();
     }
 }

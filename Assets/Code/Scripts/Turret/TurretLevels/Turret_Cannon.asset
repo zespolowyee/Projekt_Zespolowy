@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f453462f614ddd249aafb11912a970ff, type: 3}
   m_Name: Turret_Cannon
   m_EditorClassIdentifier: 
-  usedTypes: 000000000500000006000000
+  usedTypes: 000000000700000008000000
   levels:
   - level: 1
     modifiers:
     - StatType: 0
       ModType: 100
       Value: 0
-    - StatType: 5
+    - StatType: 7
       ModType: 100
       Value: 0
-    - StatType: 6
+    - StatType: 8
       ModType: 100
       Value: 0
     upgradeCost: 0
@@ -31,10 +31,10 @@ MonoBehaviour:
     - StatType: 0
       ModType: 100
       Value: 5
-    - StatType: 5
+    - StatType: 7
       ModType: 100
       Value: 5
-    - StatType: 6
+    - StatType: 8
       ModType: 100
       Value: -1
     upgradeCost: 50
@@ -42,11 +42,23 @@ MonoBehaviour:
     modifiers:
     - StatType: 0
       ModType: 100
-      Value: 10
-    - StatType: 5
+      Value: 5
+    - StatType: 7
       ModType: 100
-      Value: 10
-    - StatType: 6
+      Value: 5
+    - StatType: 8
       ModType: 100
-      Value: -2
+      Value: -1
     upgradeCost: 100
+  - level: 4
+    modifiers:
+    - StatType: 0
+      ModType: 100
+      Value: 85
+    - StatType: 7
+      ModType: 100
+      Value: 5
+    - StatType: 8
+      ModType: 100
+      Value: -2.9
+    upgradeCost: 1000

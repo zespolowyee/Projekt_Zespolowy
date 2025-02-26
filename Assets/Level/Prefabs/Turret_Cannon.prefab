@@ -796,11 +796,11 @@ MonoBehaviour:
     baseValue: 5
     maxValue: 100
     minValue: 0
-  - type: 5
+  - type: 7
     baseValue: 5
     maxValue: 100
     minValue: 0
-  - type: 6
+  - type: 8
     baseValue: 5
     maxValue: 100
     minValue: 0
