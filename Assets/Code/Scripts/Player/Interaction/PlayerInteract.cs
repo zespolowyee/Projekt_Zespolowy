@@ -17,20 +17,24 @@ public class PlayerInteract : NetworkBehaviour
         inputActions.Enable();
     }
 
-    private void OnEnable()
+    public override void OnNetworkSpawn()
     {
+        base.OnNetworkSpawn();
         if (!IsOwner)
         {
             enabled = false;
-            return;
         }
+    }
+
+    private void OnEnable()
+    {
         inputActions.Player.Interact.performed += CastInteractionBeam;
     }
 
     private void OnDisable()
     {
 
-        inputActions.Player.Interact.performed += CastInteractionBeam;
+        inputActions.Player.Interact.performed -= CastInteractionBeam;
     }
 
     private void Update()

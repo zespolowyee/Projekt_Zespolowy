@@ -14,29 +14,26 @@ public class EnemyAttackProjectile : EnemyAttack
         base.PerformAttack();
         if (IsServer)
         {
-            ShootAtTargetClientRpc();
+            Vector3 shootDirection;
+            switch (aimStyle)
+            {
+                case AimStyle.DirectlyAtPlayer:
+                    shootDirection = (controller.Target.transform.position - attackPos.position).normalized;
+
+                    break;
+                default:
+                    shootDirection = attackPos.transform.forward;
+                    break;
+            }
+            ShootAtTargetClientRpc(shootDirection);
         }
 
     }
 
-    void ShootAtTarget()
+    void ShootAtTarget(Vector3 direction)
     {
         GameObject projectile = Instantiate(projectilePrefab, attackPos.position, Quaternion.identity);
-
-        switch (aimStyle)
-        {
-            case AimStyle.DirectlyAtPlayer:
-                Vector3 shootDirection = (controller.Target.transform.position - attackPos.position).normalized;
-                projectile.transform.forward = shootDirection;
-
-                break;
-            default:
-                projectile.transform.forward = attackPos.transform.forward;
-                break;
-        }
-
-
-
+        projectile.transform.forward = direction;
         Projectile projectileScript = projectile.GetComponent<Projectile>();
 
         projectileScript.WhatIsTarget = whatIsTarget;
@@ -48,9 +45,10 @@ public class EnemyAttackProjectile : EnemyAttack
     }
 
     [Rpc(SendTo.ClientsAndHost)]
-    void ShootAtTargetClientRpc()
+    void ShootAtTargetClientRpc(Vector3 shootDirection)
     {
-        ShootAtTarget();
+        
+        ShootAtTarget(shootDirection);
     }
 }
 
