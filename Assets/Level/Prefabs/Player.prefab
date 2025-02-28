@@ -843,6 +843,7 @@ GameObject:
   - component: {fileID: 3962796167191777835}
   - component: {fileID: 7279186434539353556}
   - component: {fileID: 5148675825142251753}
+  - component: {fileID: 5597922004478806440}
   m_Layer: 7
   m_Name: PlayerBody
   m_TagString: Untagged
@@ -1088,6 +1089,19 @@ MonoBehaviour:
     baseValue: 0
     maxValue: 100
     minValue: 0
+--- !u!114 &5597922004478806440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5891105665328763567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af4e234b8d64e8f41a424d8316d91a5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turretUpgradeUI: {fileID: 2345384520125782939, guid: f7bd249fc3badfb4d80f15a7f961b534, type: 3}
 --- !u!1 &6051199826509307895
 GameObject:
   m_ObjectHideFlags: 0
