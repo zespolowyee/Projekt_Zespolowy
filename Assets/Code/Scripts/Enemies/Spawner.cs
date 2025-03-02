@@ -40,6 +40,10 @@ public class Spawner : NetworkBehaviour
 
 	private void OnDrawGizmosSelected()
 	{
+		if (defaultPath.Waypoints == null)
+		{
+			return;
+		}
 		if (defaultPath.Waypoints.Count < 2)
 		{
 			return;
