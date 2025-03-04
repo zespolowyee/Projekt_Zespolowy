@@ -154,9 +154,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  OnInteraction:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &4120021555661350502
 GameObject:
   m_ObjectHideFlags: 0
@@ -281,9 +278,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  OnInteraction:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &5583137535391971165
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,9 +432,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  OnInteraction:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &7192314731763593794
 GameObject:
   m_ObjectHideFlags: 0
@@ -564,9 +555,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  OnInteraction:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &7412517421880371501
 GameObject:
   m_ObjectHideFlags: 0
@@ -690,9 +678,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  OnInteraction:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &8527545519523951861
 GameObject:
   m_ObjectHideFlags: 0
@@ -775,7 +760,7 @@ MonoBehaviour:
   cannonballVelocity: 100
   targetLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 385
   maxUpRotation: -10
   maxDownRotation: 20
 --- !u!114 &-7567155755070255452
@@ -804,7 +789,9 @@ MonoBehaviour:
     baseValue: 5
     maxValue: 100
     minValue: 0
-  upgradeUI: {fileID: 2345384520125782939, guid: f7bd249fc3badfb4d80f15a7f961b534, type: 3}
+  OnLevelChanged:
+    m_PersistentCalls:
+      m_Calls: []
   turretLevels: {fileID: 11400000, guid: 832b9569e3625ce40aaefe8eff2f0f19, type: 2}
 --- !u!1 &9214457764781702272
 GameObject:
