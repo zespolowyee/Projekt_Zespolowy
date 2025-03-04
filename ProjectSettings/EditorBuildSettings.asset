@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Mikolaj.unity
     guid: d1735d21d7452c9449fa80ac741eb3c1
+  - enabled: 1
+    path: Assets/Level/Maps/MVP_2/MVP_2_scene.unity
+    guid: 363142f0977398548a5dea399649e845
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
