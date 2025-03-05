@@ -726,7 +726,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 835881319
+  GlobalObjectIdHash: 946429267
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -760,7 +760,7 @@ MonoBehaviour:
   cannonballVelocity: 100
   targetLayer:
     serializedVersion: 2
-    m_Bits: 385
+    m_Bits: 256
   maxUpRotation: -10
   maxDownRotation: 20
 --- !u!114 &-7567155755070255452
