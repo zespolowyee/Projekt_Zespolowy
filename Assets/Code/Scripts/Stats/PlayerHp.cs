@@ -5,9 +5,14 @@ using UnityEngine;
 public class PlayerHp : HPSystem
 {
     PlayerStatsDemo playerStats;
+    private GameObject deathScreenUI;
+    private RBController rbController;
 
     public delegate void HpChangedHandler(ulong clientId, int currentHp, int maxHp);
     public static event HpChangedHandler OnHpChanged;
+
+    public delegate void PlayerDiedHandler(ulong clientId);
+    public static event PlayerDiedHandler OnPlayerDied;
 
     protected override void Start()
     {
@@ -27,6 +32,12 @@ public class PlayerHp : HPSystem
 
 
         animator = GetComponent<Animator>();
+        deathScreenUI = GameObject.Find("DeathScreen");
+        rbController = GetComponent<RBController>();
+        if (deathScreenUI != null)
+        {
+            deathScreenUI.SetActive(false);
+        }
     }
 
     public override void TakeDamage(int damage)
@@ -51,7 +62,57 @@ public class PlayerHp : HPSystem
             OnHpChanged(OwnerClientId, currentValue, (int)playerStats.GetNetStatValue(NetStatType.MaxHp));
         }
     }
+    protected override void Die()
+    {
+        base.Die();
+        if (IsServer)
+        {
+            Debug.Log($"Player {OwnerClientId} died.");
+            OnPlayerDied?.Invoke(OwnerClientId);
+            DieClientRpc();
+        }
 
+    }
+    //[Rpc(SendTo.ClientsAndHost)]
+    private void DieClientRpc()
+    {
+        DisablePlayerControls();
+        ShowDeathScreen();
+    }
+
+    private void DisablePlayerControls()
+    {
+        if (rbController != null)
+        {
+            rbController.enabled = false;
+        }
+
+        // To do uogólnienia - sword attack nie będzie zawsze na tym obiekcie
+        var attack = GetComponent<SwordAttack>();
+        if (attack != null)
+        {
+            attack.enabled = false;
+        }
+        
+        var rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = true;
+        }
+        var capsuleCollider = GetComponent<CapsuleCollider>();
+        if (capsuleCollider != null)
+        {
+            capsuleCollider.enabled = false;
+        }
+    }
+
+    private void ShowDeathScreen()
+    {
+        if (deathScreenUI != null)
+        {
+            deathScreenUI.SetActive(true);
+        }
+    }
     public int GetCurrentHP()
     {
         return currentHP.Value; 
