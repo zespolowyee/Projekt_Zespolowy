@@ -549,8 +549,8 @@ MonoBehaviour:
   goldText: {fileID: 2336487348010926713}
   expText: {fileID: 1339890294473927021}
   currentHpText: {fileID: 8276136924633042522}
-  playerHp: {fileID: 1049454256551752714}
-  playerStats: {fileID: 2756703819582564122}
+  playerHp: {fileID: 5433757389669222950}
+  playerStats: {fileID: 1527519951145111852}
 --- !u!1 &661236070342234390
 GameObject:
   m_ObjectHideFlags: 0
@@ -562,6 +562,8 @@ GameObject:
   - component: {fileID: 690142728163902805}
   - component: {fileID: 8953077722320630384}
   - component: {fileID: 3599097894936963684}
+  - component: {fileID: 5433757389669222950}
+  - component: {fileID: 1527519951145111852}
   m_Layer: 0
   m_Name: Paladin
   m_TagString: Untagged
@@ -624,6 +626,48 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turretUpgradeUI: {fileID: 2345384520125782939, guid: f7bd249fc3badfb4d80f15a7f961b534, type: 3}
+--- !u!114 &5433757389669222950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 661236070342234390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42b54265ae16b8541a0fce364ad9a9f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  maxHP: 100
+  isDead: 0
+  animator: {fileID: 4898325958261134333}
+--- !u!114 &1527519951145111852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 661236070342234390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b0a54585737d644cbf423ba692afecb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  statList:
+  - type: 1
+    baseValue: 100
+    maxValue: 1000
+    minValue: 1
+  - type: 0
+    baseValue: 1
+    maxValue: 100
+    minValue: 0
+  - type: 3
+    baseValue: 0
+    maxValue: 100
+    minValue: 0
 --- !u!1 &687922934608293715
 GameObject:
   m_ObjectHideFlags: 0
@@ -5116,8 +5160,6 @@ GameObject:
   - component: {fileID: 5623855106788125647}
   - component: {fileID: 2115288395327622801}
   - component: {fileID: 8772735560775969004}
-  - component: {fileID: 2756703819582564122}
-  - component: {fileID: 1049454256551752714}
   m_Layer: 0
   m_Name: Paladin J Nordstrom
   m_TagString: Untagged
@@ -5343,48 +5385,6 @@ MonoBehaviour:
   StringIdlePos: {fileID: 2598292037813596740}
   StringPullPos: {fileID: 1610132588506190713}
   pullSpeed: 5
---- !u!114 &2756703819582564122
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8366909806467494178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b0a54585737d644cbf423ba692afecb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  statList:
-  - type: 1
-    baseValue: 100
-    maxValue: 1000
-    minValue: 1
-  - type: 0
-    baseValue: 1
-    maxValue: 100
-    minValue: 0
-  - type: 3
-    baseValue: 0
-    maxValue: 100
-    minValue: 0
---- !u!114 &1049454256551752714
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8366909806467494178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42b54265ae16b8541a0fce364ad9a9f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  maxHP: 100
-  isDead: 0
-  animator: {fileID: 4898325958261134333}
 --- !u!1 &8462858325339113138
 GameObject:
   m_ObjectHideFlags: 0
@@ -5604,7 +5604,7 @@ MonoBehaviour:
   lookDistance: 5
   interactionDistance: 5
   playerPublicPreferences: {fileID: 11400000, guid: 8523793f66d24b54c9d23dadd41565aa, type: 2}
-  playerRef: {fileID: 8366909806467494178}
+  playerRef: {fileID: 661236070342234390}
 --- !u!1 &9006908669535317665
 GameObject:
   m_ObjectHideFlags: 0
