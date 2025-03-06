@@ -9,12 +9,14 @@ public class TurretGridInteract : NetworkBehaviour, IInteractableTwoWay
     [ServerRpc(RequireOwnership = false)]
     protected virtual void TriggerInteractionServerRpc(TurretManager.TurretType turret)
     {
+        Debug.Log("Syncing turret placement on network");
         TriggerInteractionClientRpc(turret);
     }
 
     [ClientRpc]
     protected virtual void TriggerInteractionClientRpc(TurretManager.TurretType turret)
     {
+        Debug.Log("Placing turret on client");
         placeTurret(turret);
     }
 
@@ -39,7 +41,7 @@ public class TurretGridInteract : NetworkBehaviour, IInteractableTwoWay
         var turretPrefab = TurretManager.GetTurretPrefab(turret);
         if (turretPrefab != null)
         {
-            Instantiate(turretPrefab, transform.position, Quaternion.identity);
+            Instantiate(turretPrefab, transform.position, Quaternion.identity).GetComponent<NetworkObject>().Spawn();
         }
         else
         {
