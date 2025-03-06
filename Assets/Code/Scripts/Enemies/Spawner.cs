@@ -32,6 +32,7 @@ public class Spawner : NetworkBehaviour
 		activeWaveId++;
 		if (activeWaveId == waves.Length)
 		{
+			activeWaveId = -1;
 			return;
 		}
 		waves[activeWaveId].StartNextWaveServerRpc();
