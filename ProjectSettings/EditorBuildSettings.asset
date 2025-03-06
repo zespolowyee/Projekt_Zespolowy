@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Wojciech.unity
     guid: 80bd2b9b5b9c7304fac7f33e7fd66f40
   - enabled: 0

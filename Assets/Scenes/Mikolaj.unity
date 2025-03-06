@@ -255,6 +255,79 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 184132453}
   m_CullTransparentMesh: 1
+--- !u!1 &217500569
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 217500572}
+  - component: {fileID: 217500570}
+  - component: {fileID: 217500571}
+  m_Layer: 0
+  m_Name: PlayerSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &217500570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 217500569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 993520387
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
+--- !u!114 &217500571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 217500569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb23ec795ad0414eaf579d6f0d82ac86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  knightPrefab: {fileID: 977076010543325541, guid: 720003cc4617f72dd888021a022ac6d7, type: 3}
+  paladinPrefab: {fileID: 661236070342234390, guid: 3de8d03cf81dc47269e78b2f51457a0c, type: 3}
+--- !u!4 &217500572
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 217500569}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 164.5, y: 72.6, z: 72.4649}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &253923870
 GameObject:
   m_ObjectHideFlags: 0
@@ -790,6 +863,12 @@ MonoBehaviour:
   maxHP: 100
   isDead: 0
   animator: {fileID: 0}
+  OnEnemyDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEnemyTakeDamage:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1058961675
 GameObject:
   m_ObjectHideFlags: 0
@@ -1473,7 +1552,6 @@ GameObject:
   - component: {fileID: 1635041257}
   - component: {fileID: 1635041256}
   - component: {fileID: 1635041255}
-  - component: {fileID: 1635041258}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -1568,20 +1646,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1635041258
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1635041254}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb23ec795ad0414eaf579d6f0d82ac86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  knightPrefab: {fileID: 977076010543325541, guid: 720003cc4617f72dd888021a022ac6d7, type: 3}
-  paladinPrefab: {fileID: 661236070342234390, guid: 3de8d03cf81dc47269e78b2f51457a0c, type: 3}
 --- !u!1 &1636885101
 GameObject:
   m_ObjectHideFlags: 0
@@ -2199,3 +2263,4 @@ SceneRoots:
   - {fileID: 1866084137}
   - {fileID: 690370151}
   - {fileID: 1859249476}
+  - {fileID: 217500572}
