@@ -42,6 +42,7 @@ public class EnemyDeathHandler : NetworkBehaviour
         if (IsServer)
         {
             DropGold();
+            GetComponent<EnemyController>().DoDespawn();
         }
 
 
