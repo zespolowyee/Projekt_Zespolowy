@@ -5,9 +5,7 @@ using UnityEngine;
 public class PlayerHp : HPSystem
 {
     PlayerStatsDemo playerStats;
-    private GameObject deathScreenUI;
-    private RBController rbController;
-
+    private PlayerDeathHandler deathHandler;
     public delegate void HpChangedHandler(ulong clientId, int currentHp, int maxHp);
     public static event HpChangedHandler OnHpChanged;
 
@@ -16,6 +14,7 @@ public class PlayerHp : HPSystem
 
     protected override void Start()
     {
+        deathHandler = GetComponent<PlayerDeathHandler>();
 
         if (TryGetComponent<PlayerStatsDemo>(out playerStats))
         {
@@ -30,14 +29,6 @@ public class PlayerHp : HPSystem
             Debug.LogError("player does not have maxHp statistic");
         }
 
-
-        animator = GetComponent<Animator>();
-        deathScreenUI = GameObject.Find("DeathScreen");
-        rbController = GetComponent<RBController>();
-        if (deathScreenUI != null)
-        {
-            deathScreenUI.SetActive(false);
-        }
     }
 
     public override void TakeDamage(int damage)
@@ -73,46 +64,12 @@ public class PlayerHp : HPSystem
         }
 
     }
-    //[Rpc(SendTo.ClientsAndHost)]
+    [ClientRpc]
     private void DieClientRpc()
     {
-        DisablePlayerControls();
-        ShowDeathScreen();
+        deathHandler.HandleDeath();
     }
 
-    private void DisablePlayerControls()
-    {
-        if (rbController != null)
-        {
-            rbController.enabled = false;
-        }
-
-        // To do uogólnienia - sword attack nie będzie zawsze na tym obiekcie
-        var attack = GetComponent<SwordAttack>();
-        if (attack != null)
-        {
-            attack.enabled = false;
-        }
-        
-        var rb = GetComponent<Rigidbody>();
-        if (rb != null)
-        {
-            rb.isKinematic = true;
-        }
-        var capsuleCollider = GetComponent<CapsuleCollider>();
-        if (capsuleCollider != null)
-        {
-            capsuleCollider.enabled = false;
-        }
-    }
-
-    private void ShowDeathScreen()
-    {
-        if (deathScreenUI != null)
-        {
-            deathScreenUI.SetActive(true);
-        }
-    }
     public int GetCurrentHP()
     {
         return currentHP.Value; 
