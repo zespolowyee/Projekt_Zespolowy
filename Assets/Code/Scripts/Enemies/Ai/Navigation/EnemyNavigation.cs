@@ -69,6 +69,11 @@ public class EnemyNavigation : NetworkBehaviour
         this.target = target;
         navMeshAgent.SetDestination(target.position);
     }
+    public void ClearTarget()
+    {
+        this.target = null; 
+        IsTargetPlayer = false;
+    }
 
     public void SetPath(EnemyPath enemyPath)
     {
@@ -160,7 +165,7 @@ public class EnemyNavigation : NetworkBehaviour
             return;
         }
 
-        //Wykonujemy metody na wyjœciu i wejœciu do nowego stanu jeœli on siê zmieni³
+        //Wykonujemy metody na wyjï¿½ciu i wejï¿½ciu do nowego stanu jeï¿½li on siï¿½ zmieniï¿½
 
         CurrentState.Exit();
         CurrentState = newState;
