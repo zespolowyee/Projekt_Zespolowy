@@ -10,8 +10,10 @@ public enum NetStatType
     MaxHp,
     MoveSpeed,
     AttackSpeed,
-    Armor
-
-
+    Armor,
+    DamageMultipier,
+    SpeedMultiplier,
+    Range,
+    ShootingInterval
 }
 

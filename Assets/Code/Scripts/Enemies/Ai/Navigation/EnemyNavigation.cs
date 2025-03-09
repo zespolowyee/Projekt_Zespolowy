@@ -1,124 +1,176 @@
 
+using System.ComponentModel.Design.Serialization;
 using System.IO;
 using Unity.Netcode;
-using Unity.VisualScripting;
+using Unity.Netcode.Components;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.InputSystem.LowLevel;
-using UnityEngine.InputSystem.XR.Haptics;
+
 
 public class EnemyNavigation : NetworkBehaviour
 {
-	[SerializeField] private EnemyPath path;
+    private EnemyPath path;
 
-	[SerializeField] private float playerCheckFrequency = 0.4f;
-	[SerializeField] private float checkForPlayerDistance = 9f;
-	[SerializeField] private LayerMask whatIsPlayer;
-	private float lastPlayerCheckTime;
+    [SerializeField] private float playerCheckFrequency = 0.4f;
+    [SerializeField] private float checkForPlayerDistance = 9f;
+    [SerializeField] private LayerMask whatIsPlayer;
+    private float lastPlayerCheckTime;
+    public NetworkAnimator animator;
+    private NetStatController statController;
 
+    [Header("State Setup")]
+    [SerializeField] private ENS_FollowPath followPathState;
+    [SerializeField] private ENS_FollowNearestPlayer followNearestPlayerState;
+    [SerializeField] private EnemyAttackState attackState;
+    private ENS_IdleState idleState;
+    public EnemyState CurrentState { get; private set; }
 
-	[Header("State Setup")]
-	[SerializeField] private ENS_FollowPath followPathState;
-	[SerializeField] private ENS_FollowNearestPlayer followNearestPlayer;
+    private Transform target;
+    public bool IsTargetPlayer { get; set; }
 
-	public EnemyNavigationState CurrentState { get; private set; }
+    private NavMeshAgent navMeshAgent;
+    public NavMeshAgent Agent { get { return navMeshAgent; } }
+    public EnemyPath EnemyPath
+    {
+        get { return path; }
+        private set { path = value; }
+    }
+    public Transform Target { get { return target; } }
 
-	private Transform target;
+    public float DistanceToTarget { get; set; }
+    public NetStatController StatController { get => statController; set => statController = value; }
 
-	private NavMeshAgent navMeshAgent;
-	public NavMeshAgent Agent { get { return navMeshAgent; }}
-	public EnemyPath EnemyPath
-	{
-		get { return path; }
-		private set { path = value; }
-	}
-	public Transform Target { get { return target; } }
-	
-	void Start()
-	{
+    void Start()
+    {
+        if (!IsServer)
+        {
+            return;
+        }
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        statController = GetComponent<NetStatController>();
 
-		navMeshAgent = GetComponent<NavMeshAgent>();
-		if (!IsServer)
-		{
-			navMeshAgent.enabled = false;
-			this.enabled = false;
-			return;
-		}
-
-		playerCheckFrequency += Random.Range(-0.1f, 0.1f);
-
-
-		followPathState.Setup(this);
-		followNearestPlayer.Setup(this);
-
-		lastPlayerCheckTime = Time.time;
-
-		SwitchState(followPathState);
-	}
-
-	public void SetTarget(Transform target)
-	{
-		this.target = target;
-		navMeshAgent.SetDestination(target.position);
-	}
-
-	public void SetPath(EnemyPath enemyPath)
-	{
-		EnemyPath = enemyPath.Copy(); 
-	}
-	void Update()
-	{
-		CurrentState.Handle();
-		if (lastPlayerCheckTime + playerCheckFrequency < Time.time)
-		{
-			SearchForPlayerInRange();
-		}
-	}
+        animator = GetComponent<NetworkAnimator>();
+        playerCheckFrequency += Random.Range(-0.1f, 0.1f);
 
 
-	public void SearchForPlayerInRange()
-	{
-		Collider[] playersInReach = Physics.OverlapSphere(transform.position, checkForPlayerDistance, whatIsPlayer);
+        followPathState.Setup(this);
+        followNearestPlayerState.Setup(this);
+        attackState.Setup(this);
+        idleState = new ENS_IdleState();
+        idleState.Setup(this);
 
-		if (playersInReach.Length == 0)
-		{
-			if (CurrentState != followPathState)
-			{
-				SwitchState(followPathState);
-			}
-			return;
-		}
+        lastPlayerCheckTime = Time.time;
 
-		Transform closestPlayerTransform = FindClosestPlayer(playersInReach);
-		SetTarget(closestPlayerTransform);
-		SwitchState(followNearestPlayer);
-	}
+        SwitchState(followPathState);
+    }
 
-	public Transform FindClosestPlayer(Collider[] playersInReach)
-	{
-		float minDistanceSqr = float.MaxValue;
-		Collider closestPlayer = playersInReach[0];
-		if (playersInReach.Length == 1)
-		{
-			return closestPlayer.gameObject.transform;
-		}
-		foreach (Collider player in playersInReach)
-		{
-			float distanceSquared = (player.gameObject.transform.position - transform.position).sqrMagnitude;
+    public void SetTarget(Transform target)
+    {
+        this.target = target;
+        navMeshAgent.SetDestination(target.position);
+    }
+    public void ClearTarget()
+    {
+        this.target = null; 
+        IsTargetPlayer = false;
+    }
 
-			if (distanceSquared < minDistanceSqr)
-			{
-				closestPlayer = player;
-				minDistanceSqr = distanceSquared;
-			}
-		}
-		return closestPlayer.gameObject.transform;
-	}
+    public void SetPath(EnemyPath enemyPath)
+    {
+        EnemyPath = enemyPath.Copy();
+    }
+    void Update()
+    {
+        if (!IsServer)
+        {
+            return;
+        }
+        CurrentState.Handle();
 
-	public void SwitchState(EnemyNavigationState newState)
-	{
-		CurrentState?.Exit();
-		CurrentState = newState;
-		CurrentState.Enter();
-	}
+        if (lastPlayerCheckTime + playerCheckFrequency < Time.time)
+        {
+            SearchForPlayerInRange();
+        }
+
+        if (attackState.CheckAllConditions())
+        {
+            SwitchState(attackState);
+        }
+
+
+
+    }
+
+    public void CalculateDistanceToTarget()
+    {
+        DistanceToTarget = Vector3.SqrMagnitude(transform.position - target.position);
+    }
+
+    public void SearchForPlayerInRange()
+    {
+        Collider[] playersInReach = Physics.OverlapSphere(transform.position, checkForPlayerDistance, whatIsPlayer);
+
+        if (playersInReach.Length == 0)
+        {
+            if (CurrentState != followPathState)
+            {
+                SwitchState(followPathState);
+            }
+            return;
+        }
+        CalculateDistanceToTarget();
+        Transform closestPlayerTransform = FindClosestPlayer(playersInReach);
+        SetTarget(closestPlayerTransform);
+
+        SwitchState(followNearestPlayerState);
+    }
+
+    public Transform FindClosestPlayer(Collider[] playersInReach)
+    {
+        float minDistanceSqr = float.MaxValue;
+        Collider closestPlayer = playersInReach[0];
+        if (playersInReach.Length == 1)
+        {
+            return closestPlayer.gameObject.transform;
+        }
+        foreach (Collider player in playersInReach)
+        {
+            float distanceSquared = (player.gameObject.transform.position - transform.position).sqrMagnitude;
+
+            if (distanceSquared < minDistanceSqr)
+            {
+                closestPlayer = player;
+                minDistanceSqr = distanceSquared;
+            }
+        }
+        return closestPlayer.gameObject.transform;
+    }
+
+
+    public void SwitchState(EnemyState newState, bool ignoreCanExitClause = false)
+    {
+        if(CurrentState == null){
+            CurrentState = newState;
+            CurrentState.Enter();
+            return;
+        }
+
+        if (!CurrentState.CanExit && !ignoreCanExitClause)
+        {
+            return;
+        }
+
+        if (!newState.CanEnterToItself && CurrentState == newState)
+        {
+            return;
+        }
+
+        //Wykonujemy metody na wyj�ciu i wej�ciu do nowego stanu je�li on si� zmieni�
+
+        CurrentState.Exit();
+        CurrentState = newState;
+        CurrentState.Enter();
+        return;
+    }
+
 }

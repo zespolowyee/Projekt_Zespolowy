@@ -48,7 +48,17 @@ public class NetStat
 
         statModifiers.Add(modifier);
         isDirty = true;
+        statModifiers.Sort(CompareModifierOrder);
 
+    }
+
+    private int CompareModifierOrder(NetStatModifier a, NetStatModifier b)
+    {
+        if (a.ModType < b.ModType)
+            return -1;
+        else if (a.ModType > b.ModType)
+            return 1;
+        return 0;
     }
 
     public bool RemoveModifier(NetStatModifier modifier)

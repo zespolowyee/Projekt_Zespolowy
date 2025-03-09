@@ -1,14 +1,40 @@
 using UnityEngine;
-
-public class ArrowHit : MonoBehaviour
+using Unity.Netcode;
+public class ArrowHit : NetworkBehaviour
 {
     public int damage = 25;  // Ilość obrażeń zadawanych przez strzałę
     private Rigidbody rb;
     private bool hasHit = false;  // Flaga, aby upewnić się, że strzała zatrzymuje się tylko raz
+    private GameObject attacker;
 
+    public void SetAttacker(GameObject attackerObject)
+    {
+        attacker = attackerObject;
+    }
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void ServerTakeDamageServerRpc(ulong enemyNetworkObjectId)
+    {
+        // Szukamy obiektu po jego NetworkObjectId
+        NetworkObject enemyNetworkObject = NetworkManager.Singleton.SpawnManager.SpawnedObjects[enemyNetworkObjectId];
+        
+        if (enemyNetworkObject != null)
+        {
+            EnemyHp enemyHP = enemyNetworkObject.GetComponent<EnemyHp>();
+            if (enemyHP != null)
+            {
+                enemyHP.TakeDamageFromSource(damage, attacker);
+            }
+        }
+    }
+    [ServerRpc(RequireOwnership = false)]
+    private void ServerSetHitStateServerRpc(bool state)
+    {
+        hasHit = state;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -16,27 +42,38 @@ public class ArrowHit : MonoBehaviour
          if (hasHit) return;  // Jeśli już trafiono, zakończ funkcję
 
         hasHit = true;  // Ustaw flagę na true po pierwszym trafieniu
+        ServerSetHitStateServerRpc(true);
 
-        // Sprawdź, czy trafiono obiekt z systemem HP
-        HPSystem hpSystem = collision.gameObject.GetComponent<HPSystem>();
-        if (hpSystem != null)
+        EnemyHp enemyHP = collision.gameObject.GetComponent<EnemyHp>();
+        if (enemyHP != null)
         {
-            hpSystem.TakeDamage(damage);  // Zadaj obrażenia przeciwnikowi
-            Debug.Log($"Zadano obrazenia obiektowi {collision.gameObject.name}");
+            if (IsServer)
+            {
+                enemyHP.TakeDamageFromSource(damage, attacker);
+            }
+            else
+            {
+                NetworkObject enemyNetworkObject = collision.gameObject.GetComponent<NetworkObject>();
+                if (enemyNetworkObject != null)
+                {
+                    ServerTakeDamageServerRpc(enemyNetworkObject.NetworkObjectId);
+                }
+            }
         }
         else
         {
             Debug.Log($"Trafiono w {gameObject.name}");
         }
 
-        // Zatrzymaj strzałę na trafionym obiekcie
-        rb.isKinematic = true;  // Dezaktywuj fizykę, aby strzała zatrzymała się
+        rb.isKinematic = true;  
 
-        // Przytwierdź strzałę do trafionego obiektu
-        transform.parent = collision.transform;
+        NetworkObject networkObject = collision.gameObject.GetComponent<NetworkObject>();
+        if (networkObject != null)
+        {
+            transform.parent = collision.transform;
+        }
 
-        // Opcjonalnie: zniszcz strzałę po pewnym czasie, aby nie zaśmiecała sceny
-        Destroy(gameObject, 20f);
+        Destroy(gameObject, 1f);
     }
 }
 
