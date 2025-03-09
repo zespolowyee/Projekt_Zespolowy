@@ -5,7 +5,7 @@ public class AxemanClass : PlayerClass
     public AxemanClass()
     {
         className = "Axeman";
-        attackRange = 5.0f;
+        attackRange = 3.5f;
         damage = 50;
     }
 }
