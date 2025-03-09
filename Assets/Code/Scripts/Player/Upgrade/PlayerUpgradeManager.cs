@@ -7,7 +7,7 @@ public class PlayerUpgradeManager : MonoBehaviour
     [SerializeField] private PlayerUpgradeTree upgradeTree;
 
     [Header("Player Reference")]
-    [SerializeField] private PlayerStats playerStats;
+    [SerializeField] private PlayerStatsDemo playerStats;
 
 
     private void Start()
@@ -57,7 +57,7 @@ public class PlayerUpgradeManager : MonoBehaviour
         }
 
         // Deduct EXP and unlock upgrade
-        playerStats.DeductEXP(node.cost);
+        playerStats.AddEXP(-node.cost);
         node.isUnlocked = true;
         playerStats.ApplyUpgrade(node.effects);
 

@@ -6,7 +6,8 @@ using UnityEngine;
 public class UIController : MonoBehaviour
 {
     [SerializeField] private GameObject turretUpgradeUI;
-    
+    [SerializeField] private GameObject playerUpgradeUI;
+
     private List<GameObject> openedWindows;
     private bool isInputLocked = false;
 
@@ -62,5 +63,11 @@ public class UIController : MonoBehaviour
     {
         GameObject upgradeUIWindow = OpenWindow(turretUpgradeUI);
         upgradeUIWindow.GetComponent<TurretUpgradeUIWindow>().turretStats = turretStats;
+    }
+
+    public void DisplayPlayerUpgradeUI()
+    {
+        GameObject upgradeUIWindow = OpenWindow(playerUpgradeUI);
+
     }
 }
