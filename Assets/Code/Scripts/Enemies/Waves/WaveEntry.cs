@@ -6,7 +6,7 @@ public class WaveEntry: NetworkBehaviour
 	[SerializeField] private GameObject enemyPrefab;
 	[SerializeField] private int enemyAmount;
 	[SerializeField] private EnemyPath enemyPath;
-	[SerializeField] private bool useCustomPath = true;
+	[SerializeField] private bool useCustomPath = false;
 
 	public EnemyPath EnemyPath { get => enemyPath; set => enemyPath = value; }
 	public int EnemyAmount { get => enemyAmount; set => enemyAmount = value; }
