@@ -9,6 +9,7 @@ public class PlayerUpgradeManager : MonoBehaviour
     [Header("Player Reference")]
     [SerializeField] private PlayerStatsDemo playerStats;
 
+    public PlayerUpgradeTree UpgradeTree { get => upgradeTree; set => upgradeTree = value; }
 
     private void Start()
     {

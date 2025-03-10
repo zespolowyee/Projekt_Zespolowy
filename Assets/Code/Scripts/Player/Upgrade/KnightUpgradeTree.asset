@@ -13,6 +13,15 @@ MonoBehaviour:
   m_Name: KnightUpgradeTree
   m_EditorClassIdentifier: 
   nodes:
+  - id: root
+    description: root
+    cost: 0
+    effects:
+      modifiers: []
+    childNodes:
+    - knight_health_1
+    - knight_damage_1
+    isUnlocked: 0
   - id: knight_health_1
     description: Increase Health
     cost: 100
@@ -21,9 +30,10 @@ MonoBehaviour:
       - StatType: 1
         ModType: 100
         Value: 50
-        Order: 0
     childNodes:
     - knight_health_2
+    - test
+    - test2
     isUnlocked: 0
   - id: knight_damage_1
     description: Increase Damage
@@ -33,7 +43,6 @@ MonoBehaviour:
       - StatType: 0
         ModType: 200
         Value: 50
-        Order: 0
     childNodes:
     - knight_damage_2
     isUnlocked: 0
@@ -45,7 +54,6 @@ MonoBehaviour:
       - StatType: 0
         ModType: 200
         Value: 50
-        Order: 0
     childNodes:
     - knight_damage_3
     isUnlocked: 0
@@ -57,7 +65,26 @@ MonoBehaviour:
       - StatType: 0
         ModType: 200
         Value: 50
-        Order: 0
     childNodes:
     - knight_health_3
-    isUnlocked: 1
+    isUnlocked: 0
+  - id: test
+    description: test
+    cost: 120
+    effects:
+      modifiers:
+      - StatType: 0
+        ModType: 200
+        Value: 50
+    childNodes: []
+    isUnlocked: 0
+  - id: test2
+    description: test2
+    cost: 120
+    effects:
+      modifiers:
+      - StatType: 0
+        ModType: 200
+        Value: 50
+    childNodes: []
+    isUnlocked: 0
