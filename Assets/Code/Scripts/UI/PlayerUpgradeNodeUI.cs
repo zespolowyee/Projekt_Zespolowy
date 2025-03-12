@@ -14,4 +14,9 @@ public class PlayerUpgradeNodeUI : MonoBehaviour
     public Transform ParentTransform { get => parentTransform; set => parentTransform = value; }
     public GameObject LineOutPoint { get => lineOutPoint; set => lineOutPoint = value; }
     public GameObject LineInPoint { get => lineInPoint; set => lineInPoint = value; }
+
+    public void SayMayName()
+    {
+        Debug.Log(node.description);
+    }
 }
