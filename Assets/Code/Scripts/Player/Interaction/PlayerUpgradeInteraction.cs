@@ -6,7 +6,7 @@ public class PlayerUpgradeInteraction : MonoBehaviour, IInteractable
     {
         UIController uiController = interactingPlayer.GetComponentInChildren<UIController>();
         PlayerUpgradeManager upgradeManager = uiController.GetComponent<PlayerUpgradeManager>();
-        uiController.DisplayPlayerUpgradeUI(upgradeManager.UpgradeTree);
+        uiController.DisplayPlayerUpgradeUI(upgradeManager.UpgradeTree, interactingPlayer);
     }
 
 }

@@ -31,6 +31,9 @@ public class UpgradeNode
     [Header("State")]
     [Tooltip("Is this upgrade unlocked?")]
     public bool isUnlocked;
+
+    [Tooltip("Is this upgrade unlocked?")]
+    public bool isRoot;
 }
 
 [Serializable]

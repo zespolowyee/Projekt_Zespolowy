@@ -65,11 +65,13 @@ public class UIController : MonoBehaviour
         upgradeUIWindow.GetComponent<TurretUpgradeUIWindow>().turretStats = turretStats;
     }
 
-    public void DisplayPlayerUpgradeUI(PlayerUpgradeTree tree)
+    public void DisplayPlayerUpgradeUI(PlayerUpgradeTree tree, GameObject player)
     {
         GameObject upgradeUIWindow = OpenWindow(playerUpgradeUI);
-        upgradeUIWindow.GetComponent<PlayerUpgradeUIWindow>().UpgradeTree = tree;
-        upgradeUIWindow.GetComponent<PlayerUpgradeUIWindow>().DisplayUpgradeTree();
+        PlayerUpgradeUIWindow script = upgradeUIWindow.GetComponent<PlayerUpgradeUIWindow>();
+        script.GetComponent<PlayerUpgradeUIWindow>().UpgradeTree = tree;
+        script.player = player;
+        script.GetComponent<PlayerUpgradeUIWindow>().DisplayUpgradeTree();
 
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
@@ -11,6 +12,8 @@ public class PlayerUpgradeManager : MonoBehaviour
 
     public PlayerUpgradeTree UpgradeTree { get => upgradeTree; set => upgradeTree = value; }
 
+    public delegate void UpgradeBoughtHandler();
+    public static UpgradeBoughtHandler OnUpgradeBought;
     private void Start()
     {
         ResetUpgrades();
@@ -20,7 +23,10 @@ public class PlayerUpgradeManager : MonoBehaviour
     {
         foreach (var node in upgradeTree.nodes)
         {
-            node.isUnlocked = false;
+            if (!node.isRoot)
+            {
+                node.isUnlocked = false;
+            }
             Debug.Log($"Node {node.id} ({node.description}) set to isUnlocked = false.");
 
         }
@@ -61,6 +67,11 @@ public class PlayerUpgradeManager : MonoBehaviour
         playerStats.AddEXP(-node.cost);
         node.isUnlocked = true;
         playerStats.ApplyUpgrade(node.effects);
+        
+        if (OnUpgradeBought!= null)
+        {
+            OnUpgradeBought();
+        }
 
         Debug.Log($"Upgrade {node.description} unlocked!");
 

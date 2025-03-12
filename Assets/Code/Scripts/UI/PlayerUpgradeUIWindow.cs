@@ -1,15 +1,16 @@
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class PlayerUpgradeUIWindow : Window
 {
     PlayerUpgradeTree upgradeTree;
+    [SerializeField] PlayerUpgradeDetailsUI detailsUI;
     [SerializeField] GameObject ViewportContent;
     [SerializeField] GameObject nodePrefab;
     [SerializeField] GameObject treeRootPoint;
     int levelsSpacing = 150;
+
 
 
     [SerializeField] private float lineOffsetX = 0;
@@ -23,6 +24,8 @@ public class PlayerUpgradeUIWindow : Window
     {
         displayedNodes = new List<GameObject>();
         linePoints = new List<GameObject>();
+        detailsUI.UpgradeManager = player.GetComponentInChildren<PlayerUpgradeManager>();
+
         GameObject rootNode = Instantiate(nodePrefab, treeRootPoint.transform.position, Quaternion.identity, treeRootPoint.transform);
         PlayerUpgradeNodeUI nodeUIScript = rootNode.GetComponent<PlayerUpgradeNodeUI>();
         nodeUIScript.Node = upgradeTree.nodes[0];
@@ -47,10 +50,8 @@ public class PlayerUpgradeUIWindow : Window
             offset += 150;
             GameObject nodeUI = Instantiate(nodePrefab, position, Quaternion.identity, parent.transform);
             PlayerUpgradeNodeUI nodeUIScript = nodeUI.GetComponent<PlayerUpgradeNodeUI>();
-            nodeUIScript.Node = child;
-            nodeUIScript.UpgradeName.text = child.description;
-            nodeUIScript.ParentTransform = parent.transform;
-
+            nodeUIScript.DisplayData(child, parent.transform);
+            nodeUIScript.Buton.onClick.AddListener(delegate { detailsUI.DisplayNodeInfo(child); });
             while (!CorrectPlacement(nodeUI, parent.gameObject, offset))
             {
                 
