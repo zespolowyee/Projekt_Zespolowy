@@ -391,9 +391,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8689778495084230099, guid: 9b1449466d05f3256ad95c5c36e27085, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1843616031}
-    - targetCorrespondingSourceObject: {fileID: 8689778495084230099, guid: 9b1449466d05f3256ad95c5c36e27085, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1843616032}
   m_SourcePrefab: {fileID: 100100000, guid: 9b1449466d05f3256ad95c5c36e27085, type: 3}
 --- !u!1 &478962947
 GameObject:
@@ -1115,7 +1112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   upgradeTree: {fileID: 11400000, guid: e6f02cd7dba395f4198da9098b98910e, type: 2}
-  playerStats: {fileID: 1843616032}
+  playerStats: {fileID: 0}
 --- !u!4 &1466926193
 Transform:
   m_ObjectHideFlags: 0
@@ -1161,30 +1158,6 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
---- !u!114 &1843616032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1843616028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1362a4259e95435489c20ff15fa1cba5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  statList:
-  - type: 0
-    baseValue: 1
-    maxValue: 100
-    minValue: 0
-  - type: 1
-    baseValue: 100
-    maxValue: 1000
-    minValue: 0
-  currentEXP: 1000
-  upgradeTree: {fileID: 11400000, guid: c9a25bb786236fd4d8f4182bdf6a2ab3, type: 2}
 --- !u!1 &1897874529
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,9 +4,11 @@ using UnityEngine.UI;
 
 public class PlayerUpgradeNodeUI : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI upgradeName;
+
     private UpgradeNode node;
     private Transform parentTransform;
+
+    [SerializeField] private TextMeshProUGUI upgradeName;
     [SerializeField] private GameObject lineInPoint;
     [SerializeField] private GameObject lineOutPoint;
     [SerializeField] private Button button;
