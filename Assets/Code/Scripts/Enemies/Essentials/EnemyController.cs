@@ -4,8 +4,21 @@ using UnityEngine;
 public class EnemyController : NetworkBehaviour
 {
 	private Wave wave;
+    private EnemyHp enemyHp;
+    public void OnEnable()
+	{
 
-	public void SetWaveData(Wave wave, int inWaveId)
+        enemyHp = GetComponent<EnemyHp>();
+        if (enemyHp != null)
+        {
+            enemyHp.OnEnemyDeath.AddListener(DespawnEnemyServerRpc);
+        }
+        else
+        {
+            Debug.LogError($"enemyHp component not found on enemy instance {gameObject.GetInstanceID()}");
+        }
+    }
+    public void SetWaveData(Wave wave, int inWaveId)
 	{
 		this.wave = wave;
 	}
@@ -15,10 +28,14 @@ public class EnemyController : NetworkBehaviour
 		wave.MarkEnemyAsDefeated();
 	}
 
-	[ServerRpc(RequireOwnership = false)]
+	[ServerRpc(RequireOwnership = true)]
 	public void DespawnEnemyServerRpc()
 	{
-		DeleteFromActiveEnemiesInWave();
+        if (!IsServer)
+        {
+            return;
+        }
+        DeleteFromActiveEnemiesInWave();
 		GetComponent<NetworkObject>().Despawn(true);
 	}
 

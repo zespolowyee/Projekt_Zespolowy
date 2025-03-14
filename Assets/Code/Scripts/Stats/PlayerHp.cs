@@ -5,12 +5,16 @@ using UnityEngine;
 public class PlayerHp : HPSystem
 {
     PlayerStatsDemo playerStats;
-
+    private PlayerDeathHandler deathHandler;
     public delegate void HpChangedHandler(ulong clientId, int currentHp, int maxHp);
     public static event HpChangedHandler OnHpChanged;
 
+    public delegate void PlayerDiedHandler(ulong clientId);
+    public static event PlayerDiedHandler OnPlayerDied;
+
     protected override void Start()
     {
+        deathHandler = GetComponent<PlayerDeathHandler>();
 
         if (TryGetComponent<PlayerStatsDemo>(out playerStats))
         {
@@ -25,8 +29,6 @@ public class PlayerHp : HPSystem
             Debug.LogError("player does not have maxHp statistic");
         }
 
-
-        animator = GetComponent<Animator>();
     }
 
     public override void TakeDamage(int damage)
@@ -50,6 +52,22 @@ public class PlayerHp : HPSystem
         {
             OnHpChanged(OwnerClientId, currentValue, (int)playerStats.GetNetStatValue(NetStatType.MaxHp));
         }
+    }
+    protected override void Die()
+    {
+        base.Die();
+        if (IsServer)
+        {
+            Debug.Log($"Player {OwnerClientId} died.");
+            OnPlayerDied?.Invoke(OwnerClientId);
+            DieClientRpc();
+        }
+
+    }
+    [ClientRpc]
+    private void DieClientRpc()
+    {
+        deathHandler.HandleDeath();
     }
 
     public int GetCurrentHP()
