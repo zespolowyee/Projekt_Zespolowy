@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class PlayMenuUI : MonoBehaviour
 {
+    [SerializeField] private int codeLenght;
     [SerializeField] private Button backButton;
     [SerializeField] private Button createButton;
     [SerializeField] private Button findButton;
@@ -15,6 +16,24 @@ public class PlayMenuUI : MonoBehaviour
     {
         joinWithCodeButton.onClick.AddListener(OnJoinWithCodeClicked);
         backButton.onClick.AddListener(OnBackButtonClicked);
+        joinWithCodeInput.onValueChanged.AddListener(OnJoinWithCodeInputChanged);
+        createButton.onClick.AddListener(OnCreateButtonClicked);
+        findButton.onClick.AddListener(OnFindButtonClicked);
+    }
+
+    private void OnCreateButtonClicked()
+    {
+        mainMenuCanvasController.ShowCreateLobby();
+    }
+    
+    private void OnFindButtonClicked()
+    {
+        mainMenuCanvasController.ShowFindLobby();
+    }
+
+    private void OnJoinWithCodeInputChanged(string input)
+    {
+        joinWithCodeButton.interactable = !(input.Length < codeLenght);
     }
 
     private void OnJoinWithCodeClicked()
