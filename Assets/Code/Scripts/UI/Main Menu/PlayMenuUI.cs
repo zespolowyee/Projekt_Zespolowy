@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.Services.Lobbies;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,7 @@ public class PlayMenuUI : MonoBehaviour
     [SerializeField] private Button joinWithCodeButton;
     [SerializeField] private TMP_InputField joinWithCodeInput;
     [SerializeField] private MainMenuCanvasController mainMenuCanvasController;
+    [SerializeField] private LobbyController lobbyController;
     
     public void Awake()
     {

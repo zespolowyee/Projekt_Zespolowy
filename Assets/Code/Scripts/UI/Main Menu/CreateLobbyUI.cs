@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.Services.Lobbies;
 using UnityEngine;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.UI;
@@ -12,6 +13,7 @@ public class CreateLobbyUI : MonoBehaviour
     [SerializeField] private TMP_InputField maxPlayersInput;
     [SerializeField] private Toggle privateLobbyToggle;
     [SerializeField] private MainMenuCanvasController mainMenuCanvasController;
+    [SerializeField] private LobbyController lobbyController;
     
     public void Awake()
     {
@@ -42,9 +44,16 @@ public class CreateLobbyUI : MonoBehaviour
         }
     }
 
-    private void OnCreateButtonClicked()
+    private async void OnCreateButtonClicked()
     {
-        mainMenuCanvasController.ShowMessage(privateLobbyToggle.isOn.ToString());
+        try
+        { 
+            await lobbyController.CreateLobby(nameInput.text, int.Parse(maxPlayersInput.text));
+        }
+        catch
+        {
+            mainMenuCanvasController.ShowMessage("There was a problem creating the lobby. Please try again.");
+        }
     }
     
     private void OnBackButtonClicked()
