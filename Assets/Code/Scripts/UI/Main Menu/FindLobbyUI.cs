@@ -47,6 +47,19 @@ public class FindLobbyUI : MonoBehaviour
         }
     }
 
+    private async void JoinLobby(string lobbyId)
+    {
+        try
+        {
+            await lobbyController.JoinLobby(lobbyId);
+            mainMenuCanvasController.ShowLobby();
+        }
+        catch
+        {
+            mainMenuCanvasController.ShowMessage("There was a problem joining the lobby. Please try again.");
+        }
+    }
+
     private async void RefreshLobbyList()
     {
         try
@@ -61,7 +74,7 @@ public class FindLobbyUI : MonoBehaviour
                 lobbyButton.transform.GetChild(1).GetComponent<TMP_Text>().text = lobby.MaxPlayers - lobby.AvailableSlots + " / " + lobby.MaxPlayers;
                 lobbyButton.onClick.AddListener(() =>
                 {
-                    mainMenuCanvasController.ShowMessage(lobby.Id);
+                    JoinLobby(lobby.Id);
                 });
                 lobbyButton.gameObject.SetActive(true);
             }
