@@ -1,3 +1,5 @@
+using System;
+using System.Threading.Tasks;
 using TMPro;
 using Unity.Services.Lobbies.Models;
 using UnityEngine;
@@ -14,10 +16,13 @@ public class LobbyUI : MonoBehaviour
     [SerializeField] private MainMenuCanvasController mainMenuCanvasController;
     [SerializeField] private Button startButton;
     
+    private bool isQuitting = false;
+    
     public void Awake()
     {
         backButton.onClick.AddListener(OnBackButtonClicked);
         startButton.onClick.AddListener(OnStartButtonClicked);
+        Application.wantsToQuit += OnWantsToQuit;
     }
     
     public void OnEnable()
@@ -34,6 +39,24 @@ public class LobbyUI : MonoBehaviour
         lobbySlots.text = "";
     }
     
+    private bool OnWantsToQuit()
+    {
+        if (!isQuitting)
+        {
+            isQuitting = true;
+            LeaveLobbyAndQuit();
+            return false;
+        }
+
+        return true;
+    }
+    
+    private async void LeaveLobbyAndQuit()
+    {
+        await LeaveLobby();
+        Application.Quit();
+    }
+
     private void ClearPlayerList()
     {
         foreach (Transform playerButton in playerList.transform)
@@ -41,8 +64,20 @@ public class LobbyUI : MonoBehaviour
             Destroy(playerButton.gameObject);
         }
     }
-    
-    private async void RefreshLobbyInfo()
+
+    private async Task LeaveLobby()
+    {
+        try
+        {
+            await lobbyController.LeaveLobby();
+        }
+        catch
+        {
+            mainMenuCanvasController.ShowMessage("There was a problem leaving the lobby. Please try again.");
+        }
+    }
+
+    private void RefreshLobbyInfo()
     {
         int usedSlots = lobbyController.CurrentLobby.MaxPlayers - lobbyController.CurrentLobby.AvailableSlots;
         Button playerButton;
@@ -66,14 +101,7 @@ public class LobbyUI : MonoBehaviour
     
     private async void OnBackButtonClicked()
     {
-        try
-        {
-            await lobbyController.LeaveLobby();
-            gameObject.SetActive(false);
-        }
-        catch
-        {
-            mainMenuCanvasController.ShowMessage("There was a problem leaving the lobby. Please try again.");
-        }
+        await LeaveLobby();
+        gameObject.SetActive(false);
     }
 }
