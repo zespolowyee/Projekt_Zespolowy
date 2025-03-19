@@ -50,6 +50,12 @@ public class EnemyAttack : NetworkBehaviour
         {
             return false;
         }
+        PlayerHp targetHp = controller.Target.GetComponent<PlayerHp>();
+        if (targetHp != null && targetHp.GetCurrentHP() <= 0)
+        {
+            controller.ClearTarget();
+            return false;
+        }
 
         if (controller.DistanceToTarget >= maxDistanceToPlayer)
         {
