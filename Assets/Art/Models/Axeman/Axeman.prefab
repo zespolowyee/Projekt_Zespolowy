@@ -79,8 +79,8 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   lookDistance: 5
   interactionDistance: 5
-  playerPublicPreferences: {fileID: 0}
-  playerRef: {fileID: 0}
+  playerPublicPreferences: {fileID: 11400000, guid: 8523793f66d24b54c9d23dadd41565aa, type: 2}
+  playerRef: {fileID: 4064567944803448117}
 --- !u!1 &400342302362640764
 GameObject:
   m_ObjectHideFlags: 0
@@ -1579,7 +1579,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1953571299
+  GlobalObjectIdHash: 341560619
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
