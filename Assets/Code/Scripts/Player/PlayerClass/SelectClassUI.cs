@@ -5,6 +5,7 @@ public class SelectClassUI : MonoBehaviour
 {
     [SerializeField] private Button knightButton;
     [SerializeField] private Button paladinButton;
+    [SerializeField] private Button axemanButton;
 
     public delegate void ClassSelected(string className);
     public static event ClassSelected OnClassSelected;
@@ -21,6 +22,11 @@ public class SelectClassUI : MonoBehaviour
         paladinButton.onClick.AddListener(() =>
         {
             OnClassSelected?.Invoke("Paladin");
+        });
+
+        axemanButton.onClick.AddListener(() =>
+        {
+            OnClassSelected?.Invoke("Axeman");
         });
     }
 }

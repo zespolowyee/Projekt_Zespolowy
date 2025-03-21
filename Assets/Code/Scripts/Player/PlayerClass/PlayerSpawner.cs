@@ -7,7 +7,7 @@ public class PlayerSpawner : NetworkBehaviour
 {
     [SerializeField] private GameObject knightPrefab;
     [SerializeField] private GameObject paladinPrefab;
-
+    [SerializeField] private GameObject axemanPrefab;
     private void Start()
     {
         // Subscribe to class selection event
@@ -51,6 +51,9 @@ public class PlayerSpawner : NetworkBehaviour
                 break;
             case "Paladin":
                 playerPrefab = paladinPrefab;
+                break;
+            case "Axeman":
+                playerPrefab = axemanPrefab;
                 break;
         }
 
