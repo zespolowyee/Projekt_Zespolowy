@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using TMPro;
+using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using UnityEngine;
 using UnityEngine.UI;
@@ -37,6 +39,7 @@ public class FindLobbyUI : MonoBehaviour
     private void OnRefreshButtonClicked()
     {
         RefreshLobbyList();
+        StartCoroutine(ButtonCooldown(refreshButton, 1));
     }
 
     private void ClearLobbyList()
@@ -83,5 +86,12 @@ public class FindLobbyUI : MonoBehaviour
         {
             mainMenuCanvasController.ShowMessage("There was a problem refreshing the lobby list. Please try again.");
         }
+    }
+
+    private IEnumerator ButtonCooldown(Button button, float cooldownTime)
+    {
+        button.interactable = false;
+        yield return new WaitForSeconds(cooldownTime);
+        button.interactable = true;
     }
 }

@@ -38,9 +38,17 @@ public class PlayMenuUI : MonoBehaviour
         joinWithCodeButton.interactable = !(input.Length < codeLenght);
     }
 
-    private void OnJoinWithCodeClicked()
+    private async void OnJoinWithCodeClicked()
     {
-        mainMenuCanvasController.ShowMessage(joinWithCodeInput.text);
+        try
+        {
+            await lobbyController.JoinLobbyWithCode(joinWithCodeInput.text);
+            mainMenuCanvasController.ShowLobby();
+        }
+        catch
+        {
+            mainMenuCanvasController.ShowMessage("There was a problem joining the lobby. Please try again.");
+        }
     }
     
     private void OnBackButtonClicked()

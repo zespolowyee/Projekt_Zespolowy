@@ -48,7 +48,7 @@ public class CreateLobbyUI : MonoBehaviour
     {
         try
         { 
-            await lobbyController.CreateLobby(nameInput.text, int.Parse(maxPlayersInput.text));
+            await lobbyController.CreateLobby(nameInput.text, int.Parse(maxPlayersInput.text), privateLobbyToggle.isOn);
             mainMenuCanvasController.ShowLobby();
         }
         catch
