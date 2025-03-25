@@ -841,7 +841,7 @@ GameObject:
   - component: {fileID: 8464469752236948215}
   - component: {fileID: 2707839444710914203}
   - component: {fileID: 3962796167191777835}
-  - component: {fileID: 7279186434539353556}
+  - component: {fileID: 5180446297075860388}
   - component: {fileID: 5148675825142251753}
   - component: {fileID: 5597922004478806440}
   m_Layer: 7
@@ -1030,7 +1030,7 @@ MonoBehaviour:
     CanEnterToItself: 0
     croutchOffset: 0.249
     cellingCheckRadius: 0.4
---- !u!114 &7279186434539353556
+--- !u!114 &5180446297075860388
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1039,7 +1039,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5891105665328763567}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df2868252ab5c4d1da357e8f11f1b524, type: 3}
+  m_Script: {fileID: 11500000, guid: d6c0a902a73a404f8e5de5a296c8681e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
