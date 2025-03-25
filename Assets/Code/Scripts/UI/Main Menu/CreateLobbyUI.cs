@@ -54,6 +54,7 @@ public class CreateLobbyUI : MonoBehaviour
         catch
         {
             mainMenuCanvasController.ShowMessage("There was a problem creating the lobby. Please try again.");
+            throw;
         }
     }
     

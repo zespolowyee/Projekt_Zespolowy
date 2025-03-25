@@ -11,7 +11,6 @@ using UnityEngine;
 
 public class LobbyController : MonoBehaviour
 {
-    [SerializeField] private MainMenuCanvasController mainMenuCanvasController;
     public Lobby CurrentLobby;
     public bool isHost = false;
     public delegate void LobbyInfoRefresh();
@@ -22,8 +21,8 @@ public class LobbyController : MonoBehaviour
     
     public async void Start()
     {
+        DontDestroyOnLoad(this);
         await UnityServices.InitializeAsync();
-        AuthenticationService.Instance.SignOut(true);
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
         _lobbyEventCallbacks = new LobbyEventCallbacks();
         _lobbyEventCallbacks.LobbyChanged += OnLobbyChanged;
@@ -38,12 +37,26 @@ public class LobbyController : MonoBehaviour
     {
         CreateLobbyOptions options = new CreateLobbyOptions();
         options.IsPrivate = isPrivate;
-        
+        options.Data = new Dictionary<string, DataObject>
+        {
+            {"relayCode", new DataObject(DataObject.VisibilityOptions.Member, null, DataObject.IndexOptions.S1)}
+        };
         Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, options);
         CurrentLobby = lobby;
         isHost = true;
         await RegisterCallbacks(lobby.Id);
         StartCoroutine(Heartbeat());
+    }
+
+    public async Task AddRelayCodeToLobby(string relayCode)
+    {
+        UpdateLobbyOptions options = new UpdateLobbyOptions();
+        options.Data = new Dictionary<string, DataObject>
+        {
+            {"relayCode", new DataObject(DataObject.VisibilityOptions.Member, relayCode, DataObject.IndexOptions.S1)}
+        };
+        
+        await LobbyService.Instance.UpdateLobbyAsync(CurrentLobby.Id, options);
     }
 
     public async Task JoinLobby(string lobbyId)

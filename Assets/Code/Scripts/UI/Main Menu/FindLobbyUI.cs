@@ -60,6 +60,7 @@ public class FindLobbyUI : MonoBehaviour
         catch
         {
             mainMenuCanvasController.ShowMessage("There was a problem joining the lobby. Please try again.");
+            throw;
         }
     }
 

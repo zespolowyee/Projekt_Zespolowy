@@ -1,9 +1,14 @@
 using System;
 using System.Threading.Tasks;
 using TMPro;
+using Unity.Netcode;
+using Unity.Netcode.Transports.UTP;
+using Unity.Networking.Transport.Relay;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
+using Unity.Services.Relay.Models;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LobbyUI : MonoBehaviour
@@ -16,8 +21,11 @@ public class LobbyUI : MonoBehaviour
     [SerializeField] private RectTransform playerList;
     [SerializeField] private Button playerTemplate;
     [SerializeField] private LobbyController lobbyController;
+    [SerializeField] private RelayController relayController;
     [SerializeField] private MainMenuCanvasController mainMenuCanvasController;
     [SerializeField] private Button startButton;
+
+    [SerializeField] private Scene nextScene;
     
     private bool _isQuitting = false;
     
@@ -31,6 +39,7 @@ public class LobbyUI : MonoBehaviour
     {
         Application.wantsToQuit += OnWantsToQuit;
         lobbyController.OnLobbyInfoRefresh += RefreshLobbyInfo;
+        lobbyController.OnLobbyInfoRefresh += CheckIfGameStarted;
         RefreshLobbyInfo();
     }
 
@@ -38,6 +47,7 @@ public class LobbyUI : MonoBehaviour
     {
         Application.wantsToQuit -= OnWantsToQuit;
         lobbyController.OnLobbyInfoRefresh -= RefreshLobbyInfo;
+        lobbyController.OnLobbyInfoRefresh -= CheckIfGameStarted;
         ClearPlayerList();
         lobbyName.text = "";
         lobbySlots.text = "";
@@ -104,9 +114,45 @@ public class LobbyUI : MonoBehaviour
         }
     }
 
-    private void OnStartButtonClicked()
+    private async void CheckIfGameStarted()
     {
-        //RefreshLobbyList();
+        if (lobbyController.CurrentLobby.Data.TryGetValue("relayCode", out DataObject relayCode))
+        {
+            if (relayCode.Value == null) return;
+
+            if (!lobbyController.isHost)
+            {
+                JoinAllocation joinAllocation = await relayController.JoinAllocation(relayCode.Value);
+                NetworkManager.Singleton.GetComponent<UnityTransport>().SetHostRelayData(
+                    joinAllocation.RelayServer.IpV4,
+                    (ushort)joinAllocation.RelayServer.Port,
+                    joinAllocation.AllocationIdBytes,
+                    joinAllocation.Key,
+                    joinAllocation.ConnectionData);
+                SceneManager.LoadScene("Marcin K");
+            }
+        }
+    }
+
+    private async void OnStartButtonClicked()
+    {
+        try
+        {
+            await relayController.CreateAllocation(lobbyController.CurrentLobby.MaxPlayers);
+            string code = await relayController.GetJoinCode();
+            NetworkManager.Singleton.GetComponent<UnityTransport>().SetHostRelayData(
+                relayController.CurrentAllocation.RelayServer.IpV4,
+                (ushort)relayController.CurrentAllocation.RelayServer.Port,
+                relayController.CurrentAllocation.AllocationIdBytes,
+                relayController.CurrentAllocation.Key,
+                relayController.CurrentAllocation.ConnectionData);
+            SceneManager.LoadScene("Marcin K");
+            await lobbyController.AddRelayCodeToLobby(code);
+        }
+        catch
+        {
+            mainMenuCanvasController.ShowMessage("There was a problem starting the game. Please try again.");
+        }
     }
     
     private async void OnBackButtonClicked()
