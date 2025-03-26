@@ -45,9 +45,26 @@ public class PlayMenuUI : MonoBehaviour
             await lobbyController.JoinLobbyWithCode(joinWithCodeInput.text);
             mainMenuCanvasController.ShowLobby();
         }
-        catch
+        catch (LobbyServiceException ex)
         {
-            mainMenuCanvasController.ShowMessage("There was a problem joining the lobby. Please try again.");
+            switch (ex.Reason)
+            {
+                case LobbyExceptionReason.NetworkError:
+                    mainMenuCanvasController.ShowMessage("Check your internet connection.");
+                    break;
+                case LobbyExceptionReason.LobbyFull:
+                    mainMenuCanvasController.ShowMessage("This lobby is full.");
+                    break;
+                case LobbyExceptionReason.InvalidJoinCode:
+                    mainMenuCanvasController.ShowMessage("This join code is invalid.");
+                    break;
+                case LobbyExceptionReason.LobbyNotFound:
+                    mainMenuCanvasController.ShowMessage("This lobby cannot be found.");
+                    break;
+                default:
+                    mainMenuCanvasController.ShowMessage("There was an unknown problem while joining the lobby. Please try again.");
+                    break;
+            }
         }
     }
     

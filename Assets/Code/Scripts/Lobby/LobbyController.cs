@@ -19,11 +19,9 @@ public class LobbyController : MonoBehaviour
     private ILobbyEvents _lobbyEvents;
     private LobbyEventCallbacks _lobbyEventCallbacks;
     
-    public async void Start()
+    public void Start()
     {
         DontDestroyOnLoad(this);
-        await UnityServices.InitializeAsync();
-        await AuthenticationService.Instance.SignInAnonymouslyAsync();
         _lobbyEventCallbacks = new LobbyEventCallbacks();
         _lobbyEventCallbacks.LobbyChanged += OnLobbyChanged;
     }
@@ -35,11 +33,20 @@ public class LobbyController : MonoBehaviour
 
     public async Task CreateLobby(string lobbyName, int maxPlayers, bool isPrivate)
     {
-        CreateLobbyOptions options = new CreateLobbyOptions();
-        options.IsPrivate = isPrivate;
-        options.Data = new Dictionary<string, DataObject>
+        CreateLobbyOptions options = new CreateLobbyOptions
         {
-            {"relayCode", new DataObject(DataObject.VisibilityOptions.Member, null, DataObject.IndexOptions.S1)}
+            IsPrivate = isPrivate,
+            Player = new Player
+            {
+                Data = new Dictionary<string, PlayerDataObject>
+                {
+                    {"playerName", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, AuthenticationService.Instance.PlayerName)}
+                }
+            },
+            Data = new Dictionary<string, DataObject>
+            {
+                {"relayCode", new DataObject(DataObject.VisibilityOptions.Member, null, DataObject.IndexOptions.S1)}
+            }
         };
         Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, options);
         CurrentLobby = lobby;
@@ -50,18 +57,30 @@ public class LobbyController : MonoBehaviour
 
     public async Task AddRelayCodeToLobby(string relayCode)
     {
-        UpdateLobbyOptions options = new UpdateLobbyOptions();
-        options.Data = new Dictionary<string, DataObject>
+        UpdateLobbyOptions options = new UpdateLobbyOptions
         {
-            {"relayCode", new DataObject(DataObject.VisibilityOptions.Member, relayCode, DataObject.IndexOptions.S1)}
+            Data = new Dictionary<string, DataObject>
+            {
+                {"relayCode", new DataObject(DataObject.VisibilityOptions.Member, relayCode, DataObject.IndexOptions.S1)}
+            }
         };
-        
+
         await LobbyService.Instance.UpdateLobbyAsync(CurrentLobby.Id, options);
     }
 
     public async Task JoinLobby(string lobbyId)
     {
-        Lobby lobby = await LobbyService.Instance.JoinLobbyByIdAsync(lobbyId);
+        JoinLobbyByIdOptions options = new JoinLobbyByIdOptions
+        {
+            Player = new Player
+            {
+                Data = new Dictionary<string, PlayerDataObject>
+                {
+                    {"playerName", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, AuthenticationService.Instance.PlayerName)}
+                }
+            }
+        };
+        Lobby lobby = await LobbyService.Instance.JoinLobbyByIdAsync(lobbyId, options);
         CurrentLobby = lobby;
         isHost = lobby.HostId == GetMyPlayerId();
         await RegisterCallbacks(lobby.Id);
@@ -69,7 +88,17 @@ public class LobbyController : MonoBehaviour
     
     public async Task JoinLobbyWithCode(string lobbyCode)
     {
-        Lobby lobby = await LobbyService.Instance.JoinLobbyByCodeAsync(lobbyCode);
+        JoinLobbyByCodeOptions options = new JoinLobbyByCodeOptions
+        {
+            Player = new Player
+            {
+                Data = new Dictionary<string, PlayerDataObject>
+                {
+                    {"playerName", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, AuthenticationService.Instance.PlayerName)}
+                }
+            }
+        };
+        Lobby lobby = await LobbyService.Instance.JoinLobbyByCodeAsync(lobbyCode, options);
         CurrentLobby = lobby;
         isHost = lobby.HostId == GetMyPlayerId();
         await RegisterCallbacks(lobby.Id);

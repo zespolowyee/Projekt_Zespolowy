@@ -6,6 +6,7 @@ using Unity.Netcode.Transports.UTP;
 using Unity.Networking.Transport.Relay;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
+using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -21,7 +22,6 @@ public class LobbyUI : MonoBehaviour
     [SerializeField] private RectTransform playerList;
     [SerializeField] private Button playerTemplate;
     [SerializeField] private LobbyController lobbyController;
-    [SerializeField] private RelayController relayController;
     [SerializeField] private MainMenuCanvasController mainMenuCanvasController;
     [SerializeField] private Button startButton;
 
@@ -99,6 +99,7 @@ public class LobbyUI : MonoBehaviour
         
         int usedSlots = lobbyController.CurrentLobby.MaxPlayers - lobbyController.CurrentLobby.AvailableSlots;
         Button playerButton;
+        String playerName;
         
         lobbyName.text = lobbyController.CurrentLobby.Name;
         lobbySlots.text = usedSlots + " / " + lobbyController.CurrentLobby.MaxPlayers;
@@ -108,8 +109,11 @@ public class LobbyUI : MonoBehaviour
         ClearPlayerList();
         foreach (Player player in lobbyController.CurrentLobby.Players)
         {
+            playerName = player.Data.TryGetValue("playerName", out PlayerDataObject playerDataObject)
+                ? playerDataObject.Value
+                : "Nameless player";
             playerButton = Instantiate(playerTemplate, playerList);
-            playerButton.transform.GetChild(0).GetComponent<TMP_Text>().text = player.Id;
+            playerButton.transform.GetChild(0).GetComponent<TMP_Text>().text = playerName;
             playerButton.gameObject.SetActive(true);
         }
     }
@@ -122,7 +126,7 @@ public class LobbyUI : MonoBehaviour
 
             if (!lobbyController.isHost)
             {
-                JoinAllocation joinAllocation = await relayController.JoinAllocation(relayCode.Value);
+                JoinAllocation joinAllocation = await RelayService.Instance.JoinAllocationAsync(relayCode.Value);
                 NetworkManager.Singleton.GetComponent<UnityTransport>().SetClientRelayData(
                     joinAllocation.RelayServer.IpV4,
                     (ushort)joinAllocation.RelayServer.Port,
@@ -139,14 +143,14 @@ public class LobbyUI : MonoBehaviour
     {
         try
         {
-            await relayController.CreateAllocation(lobbyController.CurrentLobby.MaxPlayers);
-            string code = await relayController.GetJoinCode();
+            Allocation allocation = await RelayService.Instance.CreateAllocationAsync(lobbyController.CurrentLobby.MaxPlayers);
+            string code = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetHostRelayData(
-                relayController.CurrentAllocation.RelayServer.IpV4,
-                (ushort)relayController.CurrentAllocation.RelayServer.Port,
-                relayController.CurrentAllocation.AllocationIdBytes,
-                relayController.CurrentAllocation.Key,
-                relayController.CurrentAllocation.ConnectionData);
+                allocation.RelayServer.IpV4,
+                (ushort)allocation.RelayServer.Port,
+                allocation.AllocationIdBytes,
+                allocation.Key,
+                allocation.ConnectionData);
             SceneManager.LoadScene("Marcin K");
             await lobbyController.AddRelayCodeToLobby(code);
         }

@@ -25,6 +25,13 @@ public class CreateLobbyUI : MonoBehaviour
         maxPlayersInput.onValueChanged.AddListener(OnAnyValueChanged);
     }
 
+    private void OnDisable()
+    {
+        nameInput.text = "";
+        maxPlayersInput.text = "4";
+        privateLobbyToggle.isOn = false;
+    }
+
     private void OnAnyValueChanged(string newValue)
     {
         createButton.interactable = !string.IsNullOrEmpty(nameInput.text) && !string.IsNullOrEmpty(maxPlayersInput.text);
@@ -49,12 +56,24 @@ public class CreateLobbyUI : MonoBehaviour
         try
         { 
             await lobbyController.CreateLobby(nameInput.text, int.Parse(maxPlayersInput.text), privateLobbyToggle.isOn);
+            gameObject.SetActive(false);
             mainMenuCanvasController.ShowLobby();
         }
-        catch
+        catch(LobbyServiceException ex)
         {
-            mainMenuCanvasController.ShowMessage("There was a problem creating the lobby. Please try again.");
-            throw;
+            switch (ex.Reason)
+            {
+                case LobbyExceptionReason.NetworkError:
+                    mainMenuCanvasController.ShowMessage("Check your internet connection.");
+                    break;
+                case LobbyExceptionReason.InvalidArgument:
+                    mainMenuCanvasController.ShowMessage("This lobby name cannot be used.");
+                    break;
+                default:
+                    mainMenuCanvasController.ShowMessage("There was an unknown problem while creating the lobby. Please try again.");
+                    break;
+            }
+            Debug.LogException(ex);
         }
     }
     
