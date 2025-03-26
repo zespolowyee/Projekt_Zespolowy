@@ -483,6 +483,7 @@ MonoBehaviour:
   OnEnemyTakeDamage:
     m_PersistentCalls:
       m_Calls: []
+  DeathParticleEfect: {fileID: 8444890486622683456, guid: b0510bd690818c844a1acdc25f2045e7, type: 3}
 --- !u!114 &6962363589900281853
 MonoBehaviour:
   m_ObjectHideFlags: 0
