@@ -117,7 +117,14 @@ public class LobbyController : MonoBehaviour
 
     public async Task<QueryResponse> ListLobbies()
     {
-        QueryResponse queryResponse = await LobbyService.Instance.QueryLobbiesAsync();
+        QueryLobbiesOptions options = new QueryLobbiesOptions
+        {
+            Filters = new List<QueryFilter>
+            {
+                new QueryFilter(QueryFilter.FieldOptions.AvailableSlots, "0", QueryFilter.OpOptions.GT)
+            }
+        };
+        QueryResponse queryResponse = await LobbyService.Instance.QueryLobbiesAsync(options);
         return queryResponse;
     }
 
