@@ -97,4 +97,13 @@ public class PlayerStatsDemo : NetStatController
             OnExpChanged(OwnerClientId, currentValue);
         }
     }
+
+    public void ApplyUpgrade(UpgradeEffects effects)
+    {
+        foreach (var modifier in effects.modifiers)
+        {
+            AddModifierServerRPC(modifier);
+        }
+
+    }
 }

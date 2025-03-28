@@ -31,17 +31,14 @@ public class UpgradeNode
     [Header("State")]
     [Tooltip("Is this upgrade unlocked?")]
     public bool isUnlocked;
+
+    [Tooltip("Is this upgrade unlocked?")]
+    public bool isRoot;
 }
 
 [Serializable]
 public class UpgradeEffects
 {
-    [Tooltip("Additional health points.")]
-    public int healthBonus;
-
-    [Tooltip("Additional damage.")]
-    public int damageBonus;
-
-    [Tooltip("Additional speed.")]
-    public float speedBonus;
+    [Tooltip("List of stat modifiers applied by this upgrade.")]
+    public List<NetStatModifier> modifiers;
 }
