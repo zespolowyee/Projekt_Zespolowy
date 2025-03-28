@@ -1510,12 +1510,14 @@ GameObject:
   - component: {fileID: 404813553918837570}
   - component: {fileID: 2852356331713054065}
   - component: {fileID: 2420949097594639137}
-  - component: {fileID: 8747416996073633658}
   - component: {fileID: 7481337492159048783}
   - component: {fileID: 7047022229735846661}
   - component: {fileID: 7558553426013530316}
   - component: {fileID: 1311777105274411778}
   - component: {fileID: 3731110536014199524}
+  - component: {fileID: 8802472904790824818}
+  - component: {fileID: 5109594017326703602}
+  - component: {fileID: 7205449235754635509}
   m_Layer: 7
   m_Name: Axeman
   m_TagString: Untagged
@@ -1579,7 +1581,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1953571299
+  GlobalObjectIdHash: 341560619
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -1696,18 +1698,6 @@ MonoBehaviour:
   className: Axeman
   attackRange: 5
   damage: 50
---- !u!114 &8747416996073633658
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4064567944803448117}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5ab8454d07461e92856751ea27478e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7481337492159048783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1777,6 +1767,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 008ba0b0c9bc5eaedbd9c1a30d81d622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!114 &3731110536014199524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1790,6 +1781,70 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turretUpgradeUI: {fileID: 2345384520125782939, guid: f7bd249fc3badfb4d80f15a7f961b534, type: 3}
+--- !u!114 &8802472904790824818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4064567944803448117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad8deae8091111f4eb30a56c1f4e0d3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  TransitionStateInfoList: []
+  m_Animator: {fileID: 8251226931184058391}
+--- !u!114 &5109594017326703602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4064567944803448117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62703c8fee94ee1908376e740f5e9b96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+--- !u!114 &7205449235754635509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4064567944803448117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df2868252ab5c4d1da357e8f11f1b524, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  NetworkTransformExpanded: 1
+  AuthorityMode: 1
+  TickSyncChildren: 0
+  UseUnreliableDeltas: 0
+  SyncPositionX: 1
+  SyncPositionY: 1
+  SyncPositionZ: 1
+  SyncRotAngleX: 0
+  SyncRotAngleY: 1
+  SyncRotAngleZ: 0
+  SyncScaleX: 0
+  SyncScaleY: 1
+  SyncScaleZ: 0
+  PositionThreshold: 0.001
+  RotAngleThreshold: 0.01
+  ScaleThreshold: 0.01
+  UseQuaternionSynchronization: 0
+  UseQuaternionCompression: 0
+  UseHalfFloatPrecision: 0
+  InLocalSpace: 0
+  SwitchTransformSpaceWhenParented: 0
+  Interpolate: 1
+  SlerpPosition: 0
 --- !u!1 &4208008471921977874
 GameObject:
   m_ObjectHideFlags: 0
