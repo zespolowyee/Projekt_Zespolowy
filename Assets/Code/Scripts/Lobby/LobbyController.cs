@@ -6,24 +6,49 @@ using Unity.Services.Authentication;
 using Unity.Services.Core;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
+using Unity.Services.Multiplayer;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class LobbyController : MonoBehaviour
 {
     public Lobby CurrentLobby;
-    public bool isHost = false;
+    public bool IsHost{
+        get => _isHost;
+        internal set
+        {
+            if (_isHost == false && value == true)
+                _heartbeat = StartCoroutine(Heartbeat());
+            
+            if (_isHost == true && value == false)
+                if(_heartbeat != null)
+                    StopCoroutine(_heartbeat);
+            
+            _isHost = value;
+        }
+    }
     public delegate void LobbyInfoRefresh();
     public event LobbyInfoRefresh OnLobbyInfoRefresh;
     
+    public delegate void ConnectionLost();
+    public event ConnectionLost OnConnectionLost;
+    
+    public delegate void ConnectionRestored();
+    public event ConnectionRestored OnConnectionRestored;
+    
     private ILobbyEvents _lobbyEvents;
     private LobbyEventCallbacks _lobbyEventCallbacks;
+    private LobbyEventConnectionState? _lastConnectionState;
+    private bool _isConnected = false;
+    private Coroutine _heartbeat;
+    private bool _isHost = false;
     
     public void Start()
     {
         DontDestroyOnLoad(this);
         _lobbyEventCallbacks = new LobbyEventCallbacks();
         _lobbyEventCallbacks.LobbyChanged += OnLobbyChanged;
+        _lobbyEventCallbacks.LobbyEventConnectionStateChanged += OnConnectionStateChanged;
     }
 
     public string GetMyPlayerId()
@@ -50,9 +75,8 @@ public class LobbyController : MonoBehaviour
         };
         Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, options);
         CurrentLobby = lobby;
-        isHost = true;
+        IsHost = true;
         await RegisterCallbacks(lobby.Id);
-        StartCoroutine(Heartbeat());
     }
 
     public async Task AddRelayCodeToLobby(string relayCode)
@@ -82,7 +106,7 @@ public class LobbyController : MonoBehaviour
         };
         Lobby lobby = await LobbyService.Instance.JoinLobbyByIdAsync(lobbyId, options);
         CurrentLobby = lobby;
-        isHost = lobby.HostId == GetMyPlayerId();
+        IsHost = lobby.HostId == GetMyPlayerId();
         await RegisterCallbacks(lobby.Id);
     }
     
@@ -100,7 +124,7 @@ public class LobbyController : MonoBehaviour
         };
         Lobby lobby = await LobbyService.Instance.JoinLobbyByCodeAsync(lobbyCode, options);
         CurrentLobby = lobby;
-        isHost = lobby.HostId == GetMyPlayerId();
+        IsHost = lobby.HostId == GetMyPlayerId();
         await RegisterCallbacks(lobby.Id);
     }
     
@@ -110,9 +134,11 @@ public class LobbyController : MonoBehaviour
             return;
         
         await UnregisterCallbacks();
-        await LobbyService.Instance.RemovePlayerAsync(CurrentLobby.Id, GetMyPlayerId());
+        if(_isConnected)
+            await LobbyService.Instance.RemovePlayerAsync(CurrentLobby.Id, GetMyPlayerId());
         CurrentLobby = null;
-        isHost = false;
+        IsHost = false;
+        _isConnected = false;
     }
 
     public async Task<QueryResponse> ListLobbies()
@@ -141,12 +167,40 @@ public class LobbyController : MonoBehaviour
             _lobbyEvents = null;
         }
     }
-
-    public void OnLobbyChanged(ILobbyChanges lobbyChanges)
+    
+    private async void OnConnectionStateChanged(LobbyEventConnectionState state)
     {
-        if (CurrentLobby == null) return;
+        Debug.Log("OnConnectionStateChanged " + state);
+        
+        if (state == LobbyEventConnectionState.Unsynced){
+            OnConnectionLost?.Invoke();
+            _isConnected = false;
+        }
+        
+        if (state == LobbyEventConnectionState.Subscribed)
+            _isConnected = true;
+
+        if (state == LobbyEventConnectionState.Subscribed && _lastConnectionState is LobbyEventConnectionState.Unsynced){
+            CurrentLobby = await LobbyService.Instance.GetLobbyAsync(CurrentLobby.Id);
+            IsHost = CurrentLobby.HostId == GetMyPlayerId();
+            foreach (Player player in CurrentLobby.Players)
+            {
+                Debug.Log("Player status: " + player.AllocationId);
+            }
+            Debug.Log(IsHost);
+            OnConnectionRestored?.Invoke();
+        }
+        
+        _lastConnectionState = state;
+    }
+
+    private void OnLobbyChanged(ILobbyChanges lobbyChanges)
+    {
+        Debug.Log("updated lobby changes");
+        if (CurrentLobby == null)
+            return;
         lobbyChanges.ApplyToLobby(CurrentLobby);
-        isHost = CurrentLobby.HostId == GetMyPlayerId();
+        IsHost = CurrentLobby.HostId == GetMyPlayerId();
         OnLobbyInfoRefresh?.Invoke();
     }
 
@@ -156,7 +210,11 @@ public class LobbyController : MonoBehaviour
         
         while (CurrentLobby != null)
         {
-            LobbyService.Instance.SendHeartbeatPingAsync(CurrentLobby.Id);
+            if (_isConnected)
+            {
+                Debug.Log("heartbeat");
+                LobbyService.Instance.SendHeartbeatPingAsync(CurrentLobby.Id);
+            }
             yield return delay;
         }
     }

@@ -7,7 +7,7 @@ public class PlayerSpawn : MonoBehaviour
     void Start()
     {
         LobbyController lobbyController = FindFirstObjectByType<LobbyController>();
-        if (lobbyController.isHost)
+        if (lobbyController.IsHost)
         {
             NetworkManager.Singleton.StartHost();
         }
