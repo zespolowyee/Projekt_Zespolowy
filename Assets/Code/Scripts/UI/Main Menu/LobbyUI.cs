@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
 using Unity.Netcode;
@@ -9,6 +10,7 @@ using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -19,12 +21,15 @@ public class LobbyUI : MonoBehaviour
     [SerializeField] private TMP_Text lobbyName;
     [SerializeField] private TMP_Text lobbySlots;
     [SerializeField] private TMP_Text lobbyCode;
+    [SerializeField] private TMP_Text lobbyMap;
+    [SerializeField] private TMP_Dropdown lobbyMapHost;
     [SerializeField] private Toggle lobbyPrivate;
     [SerializeField] private RectTransform playerList;
     [SerializeField] private Button playerTemplate;
     [SerializeField] private LobbyController lobbyController;
     [SerializeField] private MainMenuCanvasController mainMenuCanvasController;
     [SerializeField] private Button startButton;
+    
 
     [SerializeField] private Scene nextScene;
     private Coroutine timeout;
@@ -34,6 +39,8 @@ public class LobbyUI : MonoBehaviour
     {
         backButton.onClick.AddListener(OnBackButtonClicked);
         startButton.onClick.AddListener(OnStartButtonClicked);
+        lobbyMapHost.onValueChanged.AddListener(OnMapChange);
+        FillMapDropdown();
     }
 
     public void OnEnable()
@@ -84,6 +91,18 @@ public class LobbyUI : MonoBehaviour
         }
     }
 
+    private void FillMapDropdown()
+    {
+        Array values = Enum.GetValues(typeof(Map));
+        lobbyMapHost.options = new List<TMP_Dropdown.OptionData>();
+        string map;
+        for (int i = 0; i < values.Length; i++)
+        {
+            map = MapExtensions.GetName((Map)values.GetValue(i));
+            lobbyMapHost.options.Add(new TMP_Dropdown.OptionData(map));
+        }
+    }
+
     private async Task<bool> LeaveLobby()
     {
         try
@@ -112,6 +131,31 @@ public class LobbyUI : MonoBehaviour
         lobbyCode.text = lobbyController.CurrentLobby.LobbyCode;
         lobbyPrivate.isOn = lobbyController.CurrentLobby.IsPrivate;
         startButton.gameObject.SetActive(lobbyController.IsHost);
+        
+        lobbyController.CurrentLobby.Data.TryGetValue("map", out DataObject dataObject);
+        string currentMap = dataObject.Value;
+        if (lobbyController.IsHost)
+        {
+            lobbyMap.gameObject.SetActive(false);
+            lobbyMapHost.gameObject.SetActive(true);
+            Array values = Enum.GetValues(typeof(Map));
+            string map;
+            for (int i = 0; i < values.Length; i++)
+            {
+                map = MapExtensions.GetName((Map)values.GetValue(i));
+                if (map == currentMap)
+                {
+                    lobbyMapHost.value = i;
+                }
+            }
+        }
+        else
+        {
+            lobbyMap.gameObject.SetActive(true);
+            lobbyMapHost.gameObject.SetActive(false);
+            lobbyMap.text = currentMap;
+        }
+
         ClearPlayerList();
         foreach (Player player in lobbyController.CurrentLobby.Players)
         {
@@ -122,6 +166,17 @@ public class LobbyUI : MonoBehaviour
             playerButton.transform.GetChild(0).GetComponent<TMP_Text>().text = playerName;
             playerButton.gameObject.SetActive(true);
         }
+    }
+    
+    private async void OnMapChange(int mapIdx)
+    {
+        if (!lobbyController.IsHost)
+            return;
+        
+        Array values = Enum.GetValues(typeof(Map));
+        Map selectedMap = (Map)values.GetValue(mapIdx);
+        
+        await lobbyController.ChangeMap(selectedMap);
     }
     
     private void OnConnectionLost()
@@ -157,7 +212,10 @@ public class LobbyUI : MonoBehaviour
                         joinAllocation.Key,
                         joinAllocation.ConnectionData,
                         joinAllocation.HostConnectionData);
-                    SceneManager.LoadScene("Marcin K");
+
+                    lobbyController.CurrentLobby.Data.TryGetValue("map", out DataObject dataObject);
+                    
+                    SceneManager.LoadScene(dataObject.Value);
                 }
                 catch (RelayServiceException ex)
                 {
@@ -190,7 +248,10 @@ public class LobbyUI : MonoBehaviour
                 allocation.AllocationIdBytes,
                 allocation.Key,
                 allocation.ConnectionData);
-            SceneManager.LoadScene("Marcin K");
+            
+            lobbyController.CurrentLobby.Data.TryGetValue("map", out DataObject dataObject);
+                    
+            SceneManager.LoadScene(dataObject.Value);
             await lobbyController.AddRelayCodeToLobby(code);
         }
         catch (RelayServiceException ex)

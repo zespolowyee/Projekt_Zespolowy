@@ -12,6 +12,7 @@ using UnityEngine;
 
 public class LobbyController : MonoBehaviour
 {
+    //Public atributes
     public Lobby CurrentLobby;
     public bool IsHost{
         get => _isHost;
@@ -27,6 +28,9 @@ public class LobbyController : MonoBehaviour
             _isHost = value;
         }
     }
+    
+    
+    //Events
     public delegate void LobbyInfoRefresh();
     public event LobbyInfoRefresh OnLobbyInfoRefresh;
     
@@ -36,6 +40,7 @@ public class LobbyController : MonoBehaviour
     public delegate void ConnectionRestored();
     public event ConnectionRestored OnConnectionRestored;
     
+    //Private atributes
     private ILobbyEvents _lobbyEvents;
     private LobbyEventCallbacks _lobbyEventCallbacks;
     private LobbyEventConnectionState? _lastConnectionState;
@@ -51,9 +56,34 @@ public class LobbyController : MonoBehaviour
         _lobbyEventCallbacks.LobbyEventConnectionStateChanged += OnConnectionStateChanged;
     }
 
-    public string GetMyPlayerId()
+    private string GetMyPlayerId()
     {
         return AuthenticationService.Instance.PlayerId;
+    }
+    
+    private string GetMyPlayerName()
+    {
+        return AuthenticationService.Instance.PlayerName;
+    }
+
+    private Player GetDefaultPlayer()
+    {
+        return new Player
+        {
+            Data = new Dictionary<string, PlayerDataObject>
+            {
+                {"playerName", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, GetMyPlayerName())}
+            }
+        };
+    }
+    
+    private Dictionary<string, DataObject> GetDefaultLobbyData()
+    {
+        return new Dictionary<string, DataObject>
+        {
+            { "relayCode", new DataObject(DataObject.VisibilityOptions.Member, null, DataObject.IndexOptions.S1)},
+            { "map", new DataObject(DataObject.VisibilityOptions.Member, MapExtensions.GetName(Map.MarcinK), DataObject.IndexOptions.S2)},
+        };
     }
 
     public async Task CreateLobby(string lobbyName, int maxPlayers, bool isPrivate)
@@ -61,17 +91,8 @@ public class LobbyController : MonoBehaviour
         CreateLobbyOptions options = new CreateLobbyOptions
         {
             IsPrivate = isPrivate,
-            Player = new Player
-            {
-                Data = new Dictionary<string, PlayerDataObject>
-                {
-                    {"playerName", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, AuthenticationService.Instance.PlayerName)}
-                }
-            },
-            Data = new Dictionary<string, DataObject>
-            {
-                {"relayCode", new DataObject(DataObject.VisibilityOptions.Member, null, DataObject.IndexOptions.S1)}
-            }
+            Player = GetDefaultPlayer(),
+            Data = GetDefaultLobbyData()
         };
         Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, options);
         CurrentLobby = lobby;
@@ -81,6 +102,9 @@ public class LobbyController : MonoBehaviour
 
     public async Task AddRelayCodeToLobby(string relayCode)
     {
+        if (CurrentLobby == null)
+            return;
+        
         UpdateLobbyOptions options = new UpdateLobbyOptions
         {
             Data = new Dictionary<string, DataObject>
@@ -91,18 +115,28 @@ public class LobbyController : MonoBehaviour
 
         await LobbyService.Instance.UpdateLobbyAsync(CurrentLobby.Id, options);
     }
+    
+    public async Task ChangeMap(Map map)
+    {
+        if (CurrentLobby == null)
+            return;
+        
+        UpdateLobbyOptions options = new UpdateLobbyOptions
+        {
+            Data = new Dictionary<string, DataObject>
+            {
+                {"map", new DataObject(DataObject.VisibilityOptions.Member, MapExtensions.GetName(map), DataObject.IndexOptions.S2)}
+            }
+        };
+
+        await LobbyService.Instance.UpdateLobbyAsync(CurrentLobby.Id, options);
+    }
 
     public async Task JoinLobby(string lobbyId)
     {
         JoinLobbyByIdOptions options = new JoinLobbyByIdOptions
         {
-            Player = new Player
-            {
-                Data = new Dictionary<string, PlayerDataObject>
-                {
-                    {"playerName", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, AuthenticationService.Instance.PlayerName)}
-                }
-            }
+            Player = GetDefaultPlayer()
         };
         Lobby lobby = await LobbyService.Instance.JoinLobbyByIdAsync(lobbyId, options);
         CurrentLobby = lobby;
@@ -114,13 +148,7 @@ public class LobbyController : MonoBehaviour
     {
         JoinLobbyByCodeOptions options = new JoinLobbyByCodeOptions
         {
-            Player = new Player
-            {
-                Data = new Dictionary<string, PlayerDataObject>
-                {
-                    {"playerName", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, AuthenticationService.Instance.PlayerName)}
-                }
-            }
+            Player = GetDefaultPlayer()
         };
         Lobby lobby = await LobbyService.Instance.JoinLobbyByCodeAsync(lobbyCode, options);
         CurrentLobby = lobby;
@@ -154,12 +182,12 @@ public class LobbyController : MonoBehaviour
         return queryResponse;
     }
 
-    public async Task RegisterCallbacks(string lobbyId)
+    private async Task RegisterCallbacks(string lobbyId)
     {
         _lobbyEvents = await LobbyService.Instance.SubscribeToLobbyEventsAsync(lobbyId, _lobbyEventCallbacks);
     }
     
-    public async Task UnregisterCallbacks()
+    private async Task UnregisterCallbacks()
     {
         if (_lobbyEvents != null)
         {
