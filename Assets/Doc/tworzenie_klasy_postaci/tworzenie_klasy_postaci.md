@@ -303,6 +303,7 @@ Jeżeli chcemy zedytować prefab później, to musimy go spowrotem dodać na sce
 
 ## 10. Dodawanie nowej klasy do player spawnera
 Początkowo trzeba dodać nową klasę do pliku [Assets\Code\Scripts\Player\PlayerClass\PlayerClassType.cs](/Assets/Code/Scripts/Player/PlayerClass/PlayerClassType.cs)
+
 ```cs
 public enum PlayerClassType
 {
@@ -310,8 +311,11 @@ public enum PlayerClassType
     Axeman
 }
 ```
+
 Jeżeli klasa jest już dodana do enum'a, to należy dodać jeszcze mapowanie wartości enum'a do prefab'a klasy. Można to zrobić w pliku `Assets/Level/Prefabs/PlayerClassPrefabMapping.asset`, poprzez otwarcie go w edytorze Unity.
+
 ![prefab_mapping.png](./prefab_mapping.png)
+
 Przyciskiem `+` dodajemy nowe mapowanie, następnie wybieramy za pomocą dropdown'a klasę dla której mapujemy prefab i na koniec przeciągamy prefab w wyznaczone miejsce.
 
 ## 11. Testowanie
