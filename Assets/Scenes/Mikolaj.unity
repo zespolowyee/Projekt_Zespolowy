@@ -798,6 +798,7 @@ MonoBehaviour:
   OnEnemyTakeDamage:
     m_PersistentCalls:
       m_Calls: []
+  DeathParticleEfect: {fileID: 0}
 --- !u!1 &1058961675
 GameObject:
   m_ObjectHideFlags: 0
@@ -932,7 +933,7 @@ GameObject:
   - component: {fileID: 1130201844}
   - component: {fileID: 1130201843}
   m_Layer: 5
-  m_Name: PaladinButton
+  m_Name: AxemanButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1469,7 +1470,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   knightButton: {fileID: 889285355}
-  paladinButton: {fileID: 1130201843}
+  axemanButton: {fileID: 1130201843}
 --- !u!1 &1635041254
 GameObject:
   m_ObjectHideFlags: 0
@@ -1660,8 +1661,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  knightPrefab: {fileID: 977076010543325541, guid: 720003cc4617f72dd888021a022ac6d7, type: 3}
-  paladinPrefab: {fileID: 4064567944803448117, guid: f353a7bdc8c6eb4a4918480caf847fcf, type: 3}
+  playerClassPrefabMapping: {fileID: 11400000, guid: 0a5158abe0f419f4fae0911ee6ef7f2b, type: 2}
 --- !u!4 &1653434028
 Transform:
   m_ObjectHideFlags: 0

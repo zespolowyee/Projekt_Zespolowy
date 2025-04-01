@@ -4,9 +4,9 @@ using UnityEngine.UI;
 public class SelectClassUI : MonoBehaviour
 {
     [SerializeField] private Button knightButton;
-    [SerializeField] private Button paladinButton;
+    [SerializeField] private Button axemanButton;
 
-    public delegate void ClassSelected(string className);
+    public delegate void ClassSelected(PlayerClassType playerClass);
     public static event ClassSelected OnClassSelected;
 
     private void Awake()
@@ -14,13 +14,13 @@ public class SelectClassUI : MonoBehaviour
         // Add logging for Knight button click
         knightButton.onClick.AddListener(() =>
         {
-            OnClassSelected?.Invoke("Knight");
+            OnClassSelected?.Invoke(PlayerClassType.Knight);
         });
 
         // Add logging for Hunter button click
-        paladinButton.onClick.AddListener(() =>
+        axemanButton.onClick.AddListener(() =>
         {
-            OnClassSelected?.Invoke("Paladin");
+            OnClassSelected?.Invoke(PlayerClassType.Axeman);
         });
     }
 }
