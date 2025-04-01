@@ -11,7 +11,7 @@ public class EnemyNavigation : NetworkBehaviour
 {
     private EnemyPath path;
 
-    [SerializeField] private float playerCheckFrequency = 0.4f;
+    [SerializeField] private float playerCheckFrequency = 0.3f;
     [SerializeField] private float checkForPlayerDistance = 9f;
     [SerializeField] private LayerMask whatIsPlayer;
     private float lastPlayerCheckTime;
@@ -89,13 +89,17 @@ public class EnemyNavigation : NetworkBehaviour
 
         if (lastPlayerCheckTime + playerCheckFrequency < Time.time)
         {
+            lastPlayerCheckTime = Time.time;
+            Debug.Log("makaka");
+            if (attackState.CheckAllConditions())
+            {
+                SwitchState(attackState);
+            }
+
             SearchForPlayerInRange();
         }
 
-        if (attackState.CheckAllConditions())
-        {
-            SwitchState(attackState);
-        }
+
 
 
 
