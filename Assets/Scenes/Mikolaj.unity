@@ -787,9 +787,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  currentHP:
+    m_InternalValue: 100
   maxHP: 100
   isDead: 0
   animator: {fileID: 0}
+  OnEnemyDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEnemyTakeDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  DeathParticleEfect: {fileID: 0}
 --- !u!1 &1058961675
 GameObject:
   m_ObjectHideFlags: 0
@@ -924,7 +933,7 @@ GameObject:
   - component: {fileID: 1130201844}
   - component: {fileID: 1130201843}
   m_Layer: 5
-  m_Name: PaladinButton
+  m_Name: AxemanButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1461,7 +1470,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   knightButton: {fileID: 889285355}
-  paladinButton: {fileID: 1130201843}
+  axemanButton: {fileID: 1130201843}
 --- !u!1 &1635041254
 GameObject:
   m_ObjectHideFlags: 0
@@ -1473,7 +1482,6 @@ GameObject:
   - component: {fileID: 1635041257}
   - component: {fileID: 1635041256}
   - component: {fileID: 1635041255}
-  - component: {fileID: 1635041258}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -1568,20 +1576,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1635041258
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1635041254}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb23ec795ad0414eaf579d6f0d82ac86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  knightPrefab: {fileID: 977076010543325541, guid: 720003cc4617f72dd888021a022ac6d7, type: 3}
-  paladinPrefab: {fileID: 661236070342234390, guid: 3de8d03cf81dc47269e78b2f51457a0c, type: 3}
 --- !u!1 &1636885101
 GameObject:
   m_ObjectHideFlags: 0
@@ -1636,6 +1630,78 @@ MonoBehaviour:
   serverButton: {fileID: 1058961677}
   clientButton: {fileID: 1268767146}
   hostButton: {fileID: 253923872}
+--- !u!1 &1653434026
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1653434028}
+  - component: {fileID: 1653434029}
+  - component: {fileID: 1653434027}
+  m_Layer: 0
+  m_Name: PlayerSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1653434027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1653434026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb23ec795ad0414eaf579d6f0d82ac86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  playerClassPrefabMapping: {fileID: 11400000, guid: 0a5158abe0f419f4fae0911ee6ef7f2b, type: 2}
+--- !u!4 &1653434028
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1653434026}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.447421, y: 6.3150578, z: -8.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1653434029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1653434026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 303874342
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &1785591393
 GameObject:
   m_ObjectHideFlags: 0
@@ -1791,6 +1857,10 @@ PrefabInstance:
     - target: {fileID: 4419481995502041677, guid: f9886c5bc56a1a54fb5e6a1afe241561, type: 3}
       propertyPath: m_Name
       value: TestEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 4419481995502041677, guid: f9886c5bc56a1a54fb5e6a1afe241561, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5120360981365344012, guid: f9886c5bc56a1a54fb5e6a1afe241561, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2109,7 +2179,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Paladin
+  m_text: Axeman
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2199,3 +2269,4 @@ SceneRoots:
   - {fileID: 1866084137}
   - {fileID: 690370151}
   - {fileID: 1859249476}
+  - {fileID: 1653434028}

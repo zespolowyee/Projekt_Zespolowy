@@ -1,19 +1,25 @@
 using UnityEngine;
 using System.Collections;
+using Unity.Multiplayer.Samples.Utilities.ClientAuthority;
+using Unity.Netcode;
 
 // Ten skrypt jest odpowiedzialny za atakowanie przeciwników za pomocą miecza.
 // Dodawaj go do prefabów będących mele postaciami gracza.
 // W Animation Controller musisz użyć animacji "Attack" z triggerem "Attack".
-public class SwordAttack : MonoBehaviour
+public class SwordAttack : NetworkBehaviour
 {
     private int damage;  // Amount of damage dealt by the sword
     private float attackRange;  // Range of the sword attack
-    private Animator animator;
+    private ClientNetworkAnimator networkAnimator;
     private bool isAttacking = false;
 
     void Start()
     {
-        animator = GetComponent<Animator>();
+        if (!IsOwner)
+        {
+            enabled = false;
+        }
+        networkAnimator = GetComponent<ClientNetworkAnimator>();
         PlayerClass playerClass = GetComponent<PlayerClass>();
         if (playerClass != null)
         {
@@ -41,7 +47,7 @@ public class SwordAttack : MonoBehaviour
     void Attack()
     {
         isAttacking = true;
-        animator.CrossFade("Attack", 0f);
+        networkAnimator.Animator.CrossFade("Attack", 0f);
 
         // Detect all colliders in range of the attack
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange);
@@ -63,7 +69,7 @@ public class SwordAttack : MonoBehaviour
     IEnumerator ResetAttack()
     {
         yield return new WaitForSeconds(0.1f);
-        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+        yield return new WaitForSeconds(networkAnimator.Animator.GetCurrentAnimatorStateInfo(0).length);
         isAttacking = false;
     }
 
