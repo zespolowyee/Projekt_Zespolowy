@@ -797,7 +797,7 @@ Transform:
   m_GameObject: {fileID: 1663992127083235107}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.914, z: 0.316}
+  m_LocalPosition: {x: 0, y: 1.913, z: 0.395}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -952,13 +952,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2132496571108872644}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.2844067, y: -0, z: -0, w: 0.95870376}
-  m_LocalPosition: {x: 0.59, y: 2.14, z: 0.246}
+  m_LocalRotation: {x: -0.021382445, y: -0, z: -0, w: 0.99977136}
+  m_LocalPosition: {x: -0.08, y: 1.674, z: 2.327}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3538306911475062657}
-  m_LocalEulerAnglesHint: {x: -33.047, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -2.45, y: 0, z: 0}
 --- !u!1 &2191767900173525350
 GameObject:
   m_ObjectHideFlags: 0
@@ -1773,7 +1773,7 @@ MonoBehaviour:
     Layer: 0
     OriginatingState: 229373857
     DestinationState: 1080829965
-    TransitionDuration: 0.25
+    TransitionDuration: 2.5392172
     TriggerNameHash: 1080829965
     TransitionIndex: 0
   m_Animator: {fileID: 7618565004223678981}
