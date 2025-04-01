@@ -20,7 +20,7 @@ public class EnemyHp : HPSystem
         TakeDamage(damage);
     }
 
-    protected override void Die()
+    public override void Die()
     {
         base.Die();
         OnEnemyDeath?.Invoke();

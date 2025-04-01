@@ -27,10 +27,15 @@ public class EnemyAttackState : EnemyState
         timeSinceEnter = 0f;
 
         controller.Agent.speed = attacks[attackToPerformIndex].MoveSpeedWhileAttacking;
-        controller.animator.Animator.CrossFadeInFixedTime(attacks[attackToPerformIndex].AttackAnimation.name, 0.1f);
+        if (attacks[attackToPerformIndex].AttackAnimation != null)
+        {
+            controller.animator.Animator.CrossFadeInFixedTime(attacks[attackToPerformIndex].AttackAnimation.name, 0.1f);
+            timeToExit = attacks[attackToPerformIndex].AttackAnimation.length;
+            delay = attacks[attackToPerformIndex].AttackDelay;
+        }
 
-        timeToExit = attacks[attackToPerformIndex].AttackAnimation.length;
-        delay = attacks[attackToPerformIndex].AttackDelay;
+
+
 
         base.Enter();
     }
