@@ -10,7 +10,8 @@ By *Mikołaj*
 - [7. Utworzenie brakujących skryptów dla nowej klasy](#7-utworzenie-brakujących-skryptów-dla-nowej-klasy)
 - [8. Dodanie animacji poruszania się](#8-dodanie-animacji-poruszania-się)
 - [9. Zapisanie prefabu](#9-zapisanie-prefabu)
-- [10. Testowanie](#10-testowanie)
+- [10. Dodawanie nowej klasy do player spawnera](#10-dodawanie-nowej-klasy-do-player-spawnera)
+- [11. Testowanie](#11-testowanie)
 - [FAQ](#faq)
 
 > **Important**: O czym jest ten dokument
@@ -300,7 +301,20 @@ Na koniec przeciągamy nasz obiekt ze sceny do eksploratora plików. W taki spos
 Zmieniamy nazwę poprzedniego pliku na `[nazwa-klasy]_model`, żeby się potem nie myliło co jest tylko modelem, a co gotowym do użycia Prefabem.
 Jeżeli chcemy zedytować prefab później, to musimy go spowrotem dodać na scenę, usunąć plik, zmienić prefab na scenie, i przeciągnąć spowrotem na dół.
 
-## 10. Testowanie
+## 10. Dodawanie nowej klasy do player spawnera
+Początkowo trzeba dodać nową klasę do pliku [Assets\Code\Scripts\Player\PlayerClass\PlayerClassType.cs](/Assets/Code/Scripts/Player/PlayerClass/PlayerClassType.cs)
+```cs
+public enum PlayerClassType
+{
+    Knight,
+    Axeman
+}
+```
+Jeżeli klasa jest już dodana do enum'a, to należy dodać jeszcze mapowanie wartości enum'a do prefab'a klasy. Można to zrobić w pliku `Assets/Level/Prefabs/PlayerClassPrefabMapping.asset`, poprzez otwarcie go w edytorze Unity.
+![prefab_mapping.png](./prefab_mapping.png)
+Przyciskiem `+` dodajemy nowe mapowanie, następnie wybieramy za pomocą dropdown'a klasę dla której mapujemy prefab i na koniec przeciągamy prefab w wyznaczone miejsce.
+
+## 11. Testowanie
 Stawiamy naszą klasę na scenie, stawiamy jakiegoś przeciwnika. Sprawdzamy animacje, zasięg ataku (jeżeli mele), czy HUD na górze przedstawia prawdziwe wartości, czy śmierć działa prawidłowo itd.
 
 # FAQ
