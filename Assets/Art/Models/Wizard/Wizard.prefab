@@ -797,7 +797,7 @@ Transform:
   m_GameObject: {fileID: 1663992127083235107}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.953, z: 0.24}
+  m_LocalPosition: {x: 0, y: 1.914, z: 0.316}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -819,8 +819,8 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   lookDistance: 5
   interactionDistance: 5
-  playerPublicPreferences: {fileID: 0}
-  playerRef: {fileID: 0}
+  playerPublicPreferences: {fileID: 11400000, guid: 8523793f66d24b54c9d23dadd41565aa, type: 2}
+  playerRef: {fileID: 3589263348831743932}
 --- !u!1 &1671097361089949898
 GameObject:
   m_ObjectHideFlags: 0
@@ -928,6 +928,37 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &2132496571108872644
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2552616908203067016}
+  m_Layer: 7
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2552616908203067016
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2132496571108872644}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.2844067, y: -0, z: -0, w: 0.95870376}
+  m_LocalPosition: {x: 0.59, y: 2.14, z: 0.246}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3538306911475062657}
+  m_LocalEulerAnglesHint: {x: -33.047, y: 0, z: 0}
 --- !u!1 &2191767900173525350
 GameObject:
   m_ObjectHideFlags: 0
@@ -1419,7 +1450,10 @@ GameObject:
   - component: {fileID: 7404348013996003374}
   - component: {fileID: 3799184028282602223}
   - component: {fileID: 4430677674308333642}
-  - component: {fileID: 1096833372417154781}
+  - component: {fileID: 4388344686205821947}
+  - component: {fileID: 5623833020963394433}
+  - component: {fileID: 2343367675074815133}
+  - component: {fileID: 6263749331696081245}
   m_Layer: 7
   m_Name: Wizard
   m_TagString: Untagged
@@ -1448,6 +1482,7 @@ Transform:
   - {fileID: 2086301394920685412}
   - {fileID: 1525467943013687240}
   - {fileID: 5288455409421170007}
+  - {fileID: 2552616908203067016}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &7618565004223678981
@@ -1654,7 +1689,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af4e234b8d64e8f41a424d8316d91a5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turretUpgradeUI: {fileID: 0}
+  turretUpgradeUI: {fileID: 2345384520125782939, guid: f7bd249fc3badfb4d80f15a7f961b534, type: 3}
 --- !u!114 &4430677674308333642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1671,7 +1706,7 @@ MonoBehaviour:
   className: Wizard
   attackRange: 3
   damage: 20
---- !u!114 &1096833372417154781
+--- !u!114 &4388344686205821947
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1680,9 +1715,84 @@ MonoBehaviour:
   m_GameObject: {fileID: 3589263348831743932}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 165137311442f4e26be6a4a8f53d8f38, type: 3}
+  m_Script: {fileID: 11500000, guid: 62703c8fee94ee1908376e740f5e9b96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+--- !u!114 &5623833020963394433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3589263348831743932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df2868252ab5c4d1da357e8f11f1b524, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  NetworkTransformExpanded: 1
+  AuthorityMode: 0
+  TickSyncChildren: 0
+  UseUnreliableDeltas: 0
+  SyncPositionX: 1
+  SyncPositionY: 1
+  SyncPositionZ: 1
+  SyncRotAngleX: 1
+  SyncRotAngleY: 1
+  SyncRotAngleZ: 1
+  SyncScaleX: 1
+  SyncScaleY: 1
+  SyncScaleZ: 1
+  PositionThreshold: 0.001
+  RotAngleThreshold: 0.01
+  ScaleThreshold: 0.01
+  UseQuaternionSynchronization: 0
+  UseQuaternionCompression: 0
+  UseHalfFloatPrecision: 0
+  InLocalSpace: 0
+  SwitchTransformSpaceWhenParented: 0
+  Interpolate: 1
+  SlerpPosition: 0
+--- !u!114 &2343367675074815133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3589263348831743932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad8deae8091111f4eb30a56c1f4e0d3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  TransitionStateInfoList:
+  - IsCrossFadeExit: 0
+    Layer: 0
+    OriginatingState: 229373857
+    DestinationState: 1080829965
+    TransitionDuration: 0.25
+    TriggerNameHash: 1080829965
+    TransitionIndex: 0
+  m_Animator: {fileID: 7618565004223678981}
+--- !u!114 &6263749331696081245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3589263348831743932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c19bba1f72b34e6f9e2a65f73624a6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  fireballPrefab: {fileID: 6579231970503553122, guid: 4675da74674b74398a8e2b3c4aabad2c, type: 3}
+  firePoint: {fileID: 2552616908203067016}
+  fireballSpeed: 30
 --- !u!1 &3665190100538273556
 GameObject:
   m_ObjectHideFlags: 0
@@ -2313,7 +2423,7 @@ Transform:
   m_GameObject: {fileID: 5012384908811517935}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.88, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
