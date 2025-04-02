@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class Explosion : MonoBehaviour
+public class Explosion : NetworkBehaviour
 {
     [SerializeField] protected float explosionRange;
     [SerializeField] protected int explosionDamage;
@@ -24,9 +25,17 @@ public class Explosion : MonoBehaviour
 
     public virtual IEnumerator Explode()
     {
-        explosionParticles.Play();
-        audioSource.Play();
-        DisableVisuals();
+        if (IsServer)
+        {
+            PlayVisualsRpc();
+            explosionParticles.Play();
+            audioSource.Play();
+        }
+        else
+        {
+            yield return null;
+        }
+            DisableVisuals();
 
         Collider[] objectsInRange = Physics.OverlapSphere(transform.position, explosionRange, whatIsTarget);
         List<GameObject> damagedObjects = new List<GameObject>();
@@ -45,5 +54,11 @@ public class Explosion : MonoBehaviour
         Destroy(gameObject);
     }
 
-    protected virtual void DisableVisuals(){}
+    [Rpc(SendTo.NotServer)]
+    public virtual void PlayVisualsRpc()
+    {
+        explosionParticles.Play();
+        audioSource.Play();
+    }
+    protected virtual void DisableVisuals() { }
 }

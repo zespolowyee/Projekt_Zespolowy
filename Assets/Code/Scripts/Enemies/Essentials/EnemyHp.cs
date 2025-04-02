@@ -23,7 +23,11 @@ public class EnemyHp : HPSystem
     public override void Die()
     {
         base.Die();
-        OnEnemyDeath?.Invoke();
+        if (OnEnemyDeath != null)
+        {
+            OnEnemyDeath.Invoke();
+        }
+
         Destroy(gameObject);
     }
 

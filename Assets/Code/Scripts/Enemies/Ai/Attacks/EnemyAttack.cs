@@ -7,8 +7,10 @@ public class EnemyAttack : NetworkBehaviour
     [SerializeField] protected int damage;
     [SerializeField] protected float cooldown;
     [SerializeField] protected LayerMask whatIsTarget;
+    [SerializeField] protected bool checksForDistanceToTarget = true;
     [SerializeField] protected float minDistanceToPlayer;     
-    [SerializeField] protected float maxDistanceToPlayer;     
+    [SerializeField] protected float maxDistanceToPlayer;
+
 
 
     [Tooltip("Position of attack, if left null, defaults to gameObject.transform")]
@@ -57,14 +59,17 @@ public class EnemyAttack : NetworkBehaviour
             return false;
         }
 
-        if (controller.DistanceToTarget >= maxDistanceToPlayer)
+        if (checksForDistanceToTarget)
         {
-            return false;
-        }
+            if (controller.DistanceToTarget >= maxDistanceToPlayer)
+            {
+                return false;
+            }
 
-        if (controller.DistanceToTarget <= minDistanceToPlayer)
-        {
-            return false;
+            if (controller.DistanceToTarget <= minDistanceToPlayer)
+            {
+                return false;
+            }
         }
 
         return true;

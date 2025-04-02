@@ -3279,6 +3279,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Turret_Cannon
       objectReference: {fileID: 0}
+    - target: {fileID: 8527545519523951861, guid: 3b494635d9ea64a44985b6f6824fd4bf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4559,7 +4563,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  enemyPrefab: {fileID: 5258696127845268000, guid: 80a1eea2ba670644caf6d2cd2fca1324, type: 3}
+  enemyPrefab: {fileID: 3882269441730364350, guid: 8c754771a9cc55c41a64aae1523d093f, type: 3}
   enemyAmount: 2
   enemyPath:
     Waypoints: []

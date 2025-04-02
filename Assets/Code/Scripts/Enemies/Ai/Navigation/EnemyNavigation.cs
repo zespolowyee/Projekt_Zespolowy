@@ -33,7 +33,7 @@ public class EnemyNavigation : NetworkBehaviour
     public EnemyPath EnemyPath
     {
         get { return path; }
-        private set { path = value; }
+        set { path = value; }
     }
     public Transform Target { get { return target; } }
 
@@ -85,12 +85,15 @@ public class EnemyNavigation : NetworkBehaviour
         {
             return;
         }
-        CurrentState.Handle();
+        if (CurrentState != null)
+        {
+            CurrentState.Handle();
+        }
+
 
         if (lastPlayerCheckTime + playerCheckFrequency < Time.time)
         {
             lastPlayerCheckTime = Time.time;
-            Debug.Log("makaka");
             if (attackState.CheckAllConditions())
             {
                 SwitchState(attackState);
