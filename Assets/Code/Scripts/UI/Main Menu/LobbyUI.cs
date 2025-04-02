@@ -26,6 +26,9 @@ public class LobbyUI : MonoBehaviour
     [SerializeField] private Toggle lobbyPrivate;
     [SerializeField] private RectTransform playerList;
     [SerializeField] private Button playerTemplate;
+    [SerializeField] private RectTransform selectClassContainer;
+    [SerializeField] private RectTransform classList;
+    [SerializeField] private Button classTemplate;
     [SerializeField] private LobbyController lobbyController;
     [SerializeField] private MainMenuCanvasController mainMenuCanvasController;
     [SerializeField] private Button startButton;
@@ -41,6 +44,7 @@ public class LobbyUI : MonoBehaviour
         startButton.onClick.AddListener(OnStartButtonClicked);
         lobbyMapHost.onValueChanged.AddListener(OnMapChange);
         FillMapDropdown();
+        FillClassList();
     }
 
     public void OnEnable()
@@ -102,6 +106,56 @@ public class LobbyUI : MonoBehaviour
             lobbyMapHost.options.Add(new TMP_Dropdown.OptionData(map));
         }
     }
+    
+    private void FillClassList()
+    {
+        Button classButton;
+        Array values = Enum.GetValues(typeof(PlayerClassType));
+        foreach (PlayerClassType playerClass in values)
+        {
+            classButton = Instantiate(classTemplate, classList);
+            classButton.transform.GetChild(0).GetComponent<TMP_Text>().text = playerClass.ToString();
+            classButton.onClick.AddListener(() => ChangeMyPlayerClass(playerClass));
+            classButton.gameObject.SetActive(true);
+        }
+    }
+
+    private async void ChangeMyPlayerClass(PlayerClassType playerClass)
+    {
+        if (lobbyController.CurrentLobby == null)
+        {
+            selectClassContainer.gameObject.SetActive(false);
+            return;
+        }
+
+        var myPlayer = lobbyController.GetMyPlayer();
+        if (myPlayer.Data.TryGetValue(lobbyController.playerClassVariableName, out PlayerDataObject currentClass) &&
+            currentClass.Value == playerClass.ToString())
+        {
+            selectClassContainer.gameObject.SetActive(false);
+            return;
+        }
+
+        try
+        {
+            await lobbyController.ChangeMyPlayerClass(playerClass);
+        }
+        catch(LobbyServiceException ex)
+        {
+            switch (ex.Reason)
+            {
+                case LobbyExceptionReason.NetworkError:
+                    mainMenuCanvasController.ShowMessage("Check your internet connection.");
+                    break;
+                default:
+                    mainMenuCanvasController.ShowMessage("There was an unknown problem while changing the class. Please try again.");
+                    break;
+            }
+            Debug.LogException(ex);
+        }
+        
+        selectClassContainer.gameObject.SetActive(false);
+    }
 
     private async Task<bool> LeaveLobby()
     {
@@ -112,27 +166,26 @@ public class LobbyUI : MonoBehaviour
         }
         catch (Exception ex)
         {
-            mainMenuCanvasController.ShowMessage("There was a problem leaving the lobby. Please try again.");
+            mainMenuCanvasController.ShowMessage("There was an unknown problem while leaving the lobby. Please try again.");
             Debug.LogException(ex);
         }
         return false;
     }
 
-    private void RefreshLobbyInfo()
+    private void RefreshLobbyDetails()
     {
-        if (lobbyController.CurrentLobby == null) return;
-        
         int usedSlots = lobbyController.CurrentLobby.MaxPlayers - lobbyController.CurrentLobby.AvailableSlots;
-        Button playerButton;
-        String playerName;
         
         lobbyName.text = lobbyController.CurrentLobby.Name;
         lobbySlots.text = usedSlots + " / " + lobbyController.CurrentLobby.MaxPlayers;
         lobbyCode.text = lobbyController.CurrentLobby.LobbyCode;
         lobbyPrivate.isOn = lobbyController.CurrentLobby.IsPrivate;
         startButton.gameObject.SetActive(lobbyController.IsHost);
-        
-        lobbyController.CurrentLobby.Data.TryGetValue("map", out DataObject dataObject);
+    }
+    
+    private void RefreshMapInfo()
+    {
+        lobbyController.CurrentLobby.Data.TryGetValue(lobbyController.mapVariableName, out DataObject dataObject);
         string currentMap = dataObject.Value;
         if (lobbyController.IsHost)
         {
@@ -155,17 +208,48 @@ public class LobbyUI : MonoBehaviour
             lobbyMapHost.gameObject.SetActive(false);
             lobbyMap.text = currentMap;
         }
-
+    }
+    
+    private void RefreshPlayerList()
+    {
+        Button playerButton;
+        String playerName;
+        String playerClass;
+        
         ClearPlayerList();
+        
         foreach (Player player in lobbyController.CurrentLobby.Players)
         {
-            playerName = player.Data.TryGetValue("playerName", out PlayerDataObject playerDataObject)
-                ? playerDataObject.Value
-                : "Nameless player";
+            playerName = player.Data.TryGetValue(lobbyController.playerNameVariableName, out PlayerDataObject playerNameDataObject)
+                ? playerNameDataObject.Value
+                : "Error";
+            
+            playerClass = player.Data.TryGetValue(lobbyController.playerClassVariableName, out PlayerDataObject playerClassDataObject)
+                ? playerClassDataObject.Value
+                : "Error";
+            
             playerButton = Instantiate(playerTemplate, playerList);
+            if(player.Id == lobbyController.GetMyPlayerId())
+            {
+                playerButton.onClick.AddListener(() =>
+                {
+                    var currentState = selectClassContainer.gameObject.activeSelf;
+                    selectClassContainer.gameObject.SetActive(!currentState);
+                });
+            }
             playerButton.transform.GetChild(0).GetComponent<TMP_Text>().text = playerName;
+            playerButton.transform.GetChild(1).GetComponent<TMP_Text>().text = playerClass;
             playerButton.gameObject.SetActive(true);
         }
+    }
+
+    private void RefreshLobbyInfo()
+    {
+        if (lobbyController.CurrentLobby == null) return;
+        
+        RefreshLobbyDetails();
+        RefreshMapInfo();
+        RefreshPlayerList();
     }
     
     private async void OnMapChange(int mapIdx)
@@ -196,7 +280,7 @@ public class LobbyUI : MonoBehaviour
 
     private async void CheckIfGameStarted()
     {
-        if (lobbyController.CurrentLobby.Data.TryGetValue("relayCode", out DataObject relayCode))
+        if (lobbyController.CurrentLobby.Data.TryGetValue(lobbyController.relayCodeVariableName, out DataObject relayCode))
         {
             if (relayCode.Value == null) return;
 
@@ -213,7 +297,7 @@ public class LobbyUI : MonoBehaviour
                         joinAllocation.ConnectionData,
                         joinAllocation.HostConnectionData);
 
-                    lobbyController.CurrentLobby.Data.TryGetValue("map", out DataObject dataObject);
+                    lobbyController.CurrentLobby.Data.TryGetValue(lobbyController.mapVariableName, out DataObject dataObject);
                     
                     SceneManager.LoadScene(dataObject.Value);
                 }
@@ -249,7 +333,7 @@ public class LobbyUI : MonoBehaviour
                 allocation.Key,
                 allocation.ConnectionData);
             
-            lobbyController.CurrentLobby.Data.TryGetValue("map", out DataObject dataObject);
+            lobbyController.CurrentLobby.Data.TryGetValue(lobbyController.mapVariableName, out DataObject dataObject);
                     
             SceneManager.LoadScene(dataObject.Value);
             await lobbyController.AddRelayCodeToLobby(code);

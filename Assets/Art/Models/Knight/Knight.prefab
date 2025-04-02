@@ -1787,10 +1787,10 @@ PrefabInstance:
       addedObject: {fileID: -6011953891441880031}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ad026c1bc08c7252c9078546bc6248f9, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1273110352922761535}
+      addedObject: {fileID: 3522752965847350956}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ad026c1bc08c7252c9078546bc6248f9, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8568776242108040772}
+      addedObject: {fileID: 2079068702083390986}
   m_SourcePrefab: {fileID: 100100000, guid: ad026c1bc08c7252c9078546bc6248f9, type: 3}
 --- !u!4 &487679418707082207 stripped
 Transform:
@@ -2027,7 +2027,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
---- !u!114 &1273110352922761535
+--- !u!114 &3522752965847350956
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2036,11 +2036,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 977076010543325541}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df2868252ab5c4d1da357e8f11f1b524, type: 3}
+  m_Script: {fileID: 11500000, guid: e6400db12b6d4896894102bb718d6475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  NetworkTransformExpanded: 1
+  TransitionStateInfoList:
+  - IsCrossFadeExit: 0
+    Layer: 0
+    OriginatingState: 229373857
+    DestinationState: 1080829965
+    TransitionDuration: 0.25
+    TriggerNameHash: 1080829965
+    TransitionIndex: 0
+  m_Animator: {fileID: 5774944085285544357}
+--- !u!114 &2079068702083390986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 977076010543325541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6c0a902a73a404f8e5de5a296c8681e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  NetworkTransformExpanded: 0
   AuthorityMode: 1
   TickSyncChildren: 0
   UseUnreliableDeltas: 0
@@ -2063,28 +2085,6 @@ MonoBehaviour:
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
---- !u!114 &8568776242108040772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 977076010543325541}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad8deae8091111f4eb30a56c1f4e0d3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  TransitionStateInfoList:
-  - IsCrossFadeExit: 0
-    Layer: 0
-    OriginatingState: 229373857
-    DestinationState: 1080829965
-    TransitionDuration: 0.25
-    TriggerNameHash: 1080829965
-    TransitionIndex: 0
-  m_Animator: {fileID: 5774944085285544357}
 --- !u!95 &5774944085285544357 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: ad026c1bc08c7252c9078546bc6248f9, type: 3}

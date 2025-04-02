@@ -48,6 +48,13 @@ public class LobbyController : MonoBehaviour
     private Coroutine _heartbeat;
     private bool _isHost = false;
     
+    //Player data and Lobby data variable names
+
+    public string mapVariableName = "map";
+    public string relayCodeVariableName = "relayCode";
+    public string playerNameVariableName = "playerName";
+    public string playerClassVariableName = "playerClass";
+    
     public void Start()
     {
         DontDestroyOnLoad(this);
@@ -56,9 +63,14 @@ public class LobbyController : MonoBehaviour
         _lobbyEventCallbacks.LobbyEventConnectionStateChanged += OnConnectionStateChanged;
     }
 
-    private string GetMyPlayerId()
+    public string GetMyPlayerId()
     {
         return AuthenticationService.Instance.PlayerId;
+    }
+
+    public Player GetMyPlayer()
+    {
+        return CurrentLobby.Players.Find(p => p.Id == GetMyPlayerId());
     }
     
     private string GetMyPlayerName()
@@ -72,7 +84,8 @@ public class LobbyController : MonoBehaviour
         {
             Data = new Dictionary<string, PlayerDataObject>
             {
-                {"playerName", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, GetMyPlayerName())}
+                {playerNameVariableName, new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, GetMyPlayerName())},
+                {playerClassVariableName, new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, PlayerClassType.Knight.ToString())}
             }
         };
     }
@@ -81,8 +94,8 @@ public class LobbyController : MonoBehaviour
     {
         return new Dictionary<string, DataObject>
         {
-            { "relayCode", new DataObject(DataObject.VisibilityOptions.Member, null, DataObject.IndexOptions.S1)},
-            { "map", new DataObject(DataObject.VisibilityOptions.Member, MapExtensions.GetName(Map.MarcinK), DataObject.IndexOptions.S2)},
+            { relayCodeVariableName, new DataObject(DataObject.VisibilityOptions.Member, null, DataObject.IndexOptions.S1)},
+            { mapVariableName, new DataObject(DataObject.VisibilityOptions.Member, MapExtensions.GetName(Map.MarcinK), DataObject.IndexOptions.S2)},
         };
     }
 
@@ -130,6 +143,22 @@ public class LobbyController : MonoBehaviour
         };
 
         await LobbyService.Instance.UpdateLobbyAsync(CurrentLobby.Id, options);
+    }
+    
+    public async Task ChangeMyPlayerClass(PlayerClassType playerClass)
+    {
+        if (CurrentLobby == null)
+            return;
+        
+        UpdatePlayerOptions options = new UpdatePlayerOptions
+        {
+            Data = new Dictionary<string, PlayerDataObject>
+            {
+                {"playerClass", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, playerClass.ToString())}
+            }
+        };
+
+        await LobbyService.Instance.UpdatePlayerAsync(CurrentLobby.Id, GetMyPlayerId(), options);
     }
 
     public async Task JoinLobby(string lobbyId)

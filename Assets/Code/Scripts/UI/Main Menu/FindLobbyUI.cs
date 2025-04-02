@@ -66,12 +66,15 @@ public class FindLobbyUI : MonoBehaviour
                     break;
                 case LobbyExceptionReason.LobbyFull:
                     mainMenuCanvasController.ShowMessage("This lobby is full.");
+                    RefreshLobbyList();
                     break;
                 case LobbyExceptionReason.LobbyNotFound:
                     mainMenuCanvasController.ShowMessage("This lobby cannot be found.");
+                    RefreshLobbyList();
                     break;
                 default:
                     mainMenuCanvasController.ShowMessage("There was an unknown problem while joining the lobby. Please try again.");
+                    RefreshLobbyList();
                     break;
             }
             Debug.LogException(ex);

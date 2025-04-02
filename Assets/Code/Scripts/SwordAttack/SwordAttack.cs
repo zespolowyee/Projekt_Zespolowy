@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using Unity.Multiplayer.Samples.Utilities.ClientAuthority;
 using Unity.Netcode;
 
 // Ten skrypt jest odpowiedzialny za atakowanie przeciwników za pomocą miecza.

@@ -3,10 +3,7 @@ using System.ComponentModel;
 
 public enum Map
 {
-    MarcinK,
-    Test1,
-    Test2,
-    Test3,
+    MarcinK
 }
 
 public static class MapExtensions
