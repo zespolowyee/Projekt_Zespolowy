@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
@@ -10,6 +11,8 @@ public class PlayerUpgradeManager : MonoBehaviour
     [Header("Player Reference")]
     [SerializeField] private PlayerStatsDemo playerStats;
 
+    private PlayerHp playerHp;
+
     public PlayerUpgradeTree UpgradeTree { get => upgradeTree; set => upgradeTree = value; }
 
     public delegate void UpgradeBoughtHandler();
@@ -17,6 +20,7 @@ public class PlayerUpgradeManager : MonoBehaviour
     private void Start()
     {
         ResetUpgrades();
+        playerHp = playerStats.GetComponent<PlayerHp>();
     }
 
     private void ResetUpgrades()
@@ -72,6 +76,7 @@ public class PlayerUpgradeManager : MonoBehaviour
         {
             OnUpgradeBought();
         }
+
 
         Debug.Log($"Upgrade {node.description} unlocked!");
 

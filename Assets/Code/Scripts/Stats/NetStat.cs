@@ -12,6 +12,8 @@ public class NetStat
     [SerializeField] private float maxValue;
     [SerializeField] private float minValue;
 
+    public delegate void ModifiersChangedHandler();
+    public event ModifiersChangedHandler OnModifiersChanged;
 
     private float _value;
     private bool isDirty = true;
@@ -49,6 +51,10 @@ public class NetStat
         statModifiers.Add(modifier);
         isDirty = true;
         statModifiers.Sort(CompareModifierOrder);
+        if (OnModifiersChanged != null)
+        {
+            OnModifiersChanged();
+        }
 
     }
 
@@ -69,6 +75,10 @@ public class NetStat
             {
                 statModifiers.RemoveAt(i);
                 isDirty = true;
+                if (OnModifiersChanged != null)
+                {
+                    OnModifiersChanged();
+                }
                 return true;
             }
         }

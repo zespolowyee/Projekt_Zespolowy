@@ -45,6 +45,21 @@ public class PlayerHp : HPSystem
         }
     }
 
+    public override void Heal(int amount)
+    {
+        if (IsServer)
+        {
+            InvokeOnHpChangedClientRpc(currentHP.Value + amount);
+            currentHP.Value += amount;
+            if (currentHP.Value >= (int)playerStats.GetNetStatValue(NetStatType.MaxHp))
+            {
+                currentHP.Value = (int)playerStats.GetNetStatValue(NetStatType.MaxHp);
+
+            }
+
+        }
+    }
+
     [Rpc(SendTo.ClientsAndHost)]
     void InvokeOnHpChangedClientRpc(int currentValue)
     {
