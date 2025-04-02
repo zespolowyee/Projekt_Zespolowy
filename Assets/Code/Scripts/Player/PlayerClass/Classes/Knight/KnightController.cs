@@ -1,12 +1,19 @@
+using System.Globalization;
+using Unity.Multiplayer.Samples.Utilities.ClientAuthority;
+using Unity.Netcode;
 using UnityEngine;
 
-public class KnightController : MonoBehaviour
+public class KnightController : NetworkBehaviour
 {
-    private Animator animator;
+    private ClientNetworkAnimator animator;
 
     void Start()
     {
-        animator = GetComponent<Animator>();
+        if (!IsOwner)
+        {
+            enabled = false;
+        }
+        animator = GetComponent<ClientNetworkAnimator>();
     }
 
     void Update()
@@ -22,7 +29,7 @@ public class KnightController : MonoBehaviour
         float y = Input.GetAxis("Vertical");
 
         // Update movement parameters in the animator
-        animator.SetFloat("Strafe", x);
-        animator.SetFloat("Forward", y);
+        animator.Animator.SetFloat("Strafe", x);
+        animator.Animator.SetFloat("Forward", y);
     }
 }
