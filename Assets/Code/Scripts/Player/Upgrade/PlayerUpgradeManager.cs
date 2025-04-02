@@ -1,9 +1,10 @@
 using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Unity.Netcode;
 using UnityEngine;
 
-public class PlayerUpgradeManager : MonoBehaviour
+public class PlayerUpgradeManager : NetworkBehaviour
 {
     [Header("Player Upgrade Tree")]
     [SerializeField] private PlayerUpgradeTree upgradeTree;
@@ -68,7 +69,14 @@ public class PlayerUpgradeManager : MonoBehaviour
         }
 
         // Deduct EXP and unlock upgrade
-        playerStats.AddEXP(-node.cost);
+        if (IsServer)
+        {
+            playerStats.AddEXP(-node.cost);
+        }
+        else
+        {
+            playerStats.AddExpRPC(-node.cost);
+        }
         node.isUnlocked = true;
         playerStats.ApplyUpgrade(node.effects);
         

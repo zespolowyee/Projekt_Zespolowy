@@ -72,8 +72,8 @@ MonoBehaviour:
       - StatType: 1
         ModType: 300
         Value: 2
-      - StatType: 4
-        ModType: 200
+      - StatType: 1
+        ModType: 100
         Value: 50
       - StatType: 3
         ModType: 200
@@ -89,7 +89,7 @@ MonoBehaviour:
         Value: 50
     childNodes:
     - knight_health_3
-    isUnlocked: 0
+    isUnlocked: 1
     isRoot: 0
   - id: test
     description: test
@@ -100,7 +100,7 @@ MonoBehaviour:
         ModType: 200
         Value: 50
     childNodes: []
-    isUnlocked: 1
+    isUnlocked: 0
     isRoot: 0
   - id: test2
     description: test2
