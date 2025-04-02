@@ -1,24 +1,42 @@
+using System;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using Unity.Netcode;
 using UnityEngine;
 
-public class PlayerUpgradeManager : MonoBehaviour
+public class PlayerUpgradeManager : NetworkBehaviour
 {
     [Header("Player Upgrade Tree")]
     [SerializeField] private PlayerUpgradeTree upgradeTree;
 
     [Header("Player Reference")]
-    [SerializeField] private PlayerStats playerStats;
+    [SerializeField] private PlayerStatsDemo playerStats;
 
+    private PlayerHp playerHp;
 
+    public PlayerUpgradeTree UpgradeTree { get => upgradeTree; set => upgradeTree = value; }
+
+    public delegate void UpgradeBoughtHandler();
+    public static UpgradeBoughtHandler OnUpgradeBought;
     private void Start()
+    {
+        ResetUpgrades();
+        playerHp = playerStats.GetComponent<PlayerHp>();
+    }
+
+    private void ResetUpgrades()
     {
         foreach (var node in upgradeTree.nodes)
         {
-            node.isUnlocked = false;
+            if (!node.isRoot)
+            {
+                node.isUnlocked = false;
+            }
             Debug.Log($"Node {node.id} ({node.description}) set to isUnlocked = false.");
+
         }
+
     }
-
-
 
     public void UnlockUpgrade(string nodeId)
     {
@@ -32,10 +50,15 @@ public class PlayerUpgradeManager : MonoBehaviour
 
         Debug.Log($"Attempting to unlock: {node.description}, Cost: {node.cost} EXP");
 
-
         if (node.isUnlocked)
         {
             Debug.Log("Upgrade already unlocked!");
+            return;
+        }
+
+        if(!IsParentUnlocked(node))
+        {
+            Debug.Log("Parent node is not unlocked. Cannot unlock this upgrade.");
             return;
         }
 
@@ -46,9 +69,22 @@ public class PlayerUpgradeManager : MonoBehaviour
         }
 
         // Deduct EXP and unlock upgrade
-        playerStats.DeductEXP(node.cost);
+        if (IsServer)
+        {
+            playerStats.AddEXP(-node.cost);
+        }
+        else
+        {
+            playerStats.AddExpRPC(-node.cost);
+        }
         node.isUnlocked = true;
         playerStats.ApplyUpgrade(node.effects);
+        
+        if (OnUpgradeBought!= null)
+        {
+            OnUpgradeBought();
+        }
+
 
         Debug.Log($"Upgrade {node.description} unlocked!");
 
@@ -69,7 +105,20 @@ public class PlayerUpgradeManager : MonoBehaviour
         }
     }
 
-    
+    private bool IsParentUnlocked(UpgradeNode node)
+    {
+        foreach (var potentialParent in upgradeTree.nodes)
+        {
+            if (potentialParent.childNodes.Contains(node.id) && !potentialParent.isUnlocked)
+            {
+                Debug.Log($"Parent node {potentialParent.id} is not unlocked.");
+                return false;
+            }
+        }
+        return true;
+    }
+
+
 
 
 }

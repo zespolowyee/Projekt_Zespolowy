@@ -25,4 +25,9 @@ public struct NetStatModifier : INetworkSerializable
         serializer.SerializeValue(ref ModType);
         serializer.SerializeValue(ref Value);
     }
+
+    public string GetEffectString()
+    {
+        return ($"{StatType.ToString()} {Value} {ModType.ToString()}");
+    }
 }

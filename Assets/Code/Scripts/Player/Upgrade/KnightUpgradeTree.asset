@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23e1385f5bce8a54b92a3b5c9347cb95, type: 3}
+  m_Name: KnightUpgradeTree
+  m_EditorClassIdentifier: 
+  nodes:
+  - id: root
+    description: root
+    cost: 0
+    effects:
+      modifiers: []
+    childNodes:
+    - knight_health_1
+    - knight_damage_1
+    isUnlocked: 1
+    isRoot: 1
+  - id: knight_health_1
+    description: Increase Health
+    cost: 100
+    effects:
+      modifiers:
+      - StatType: 1
+        ModType: 100
+        Value: 50
+    childNodes:
+    - knight_health_2
+    - test
+    - test2
+    isUnlocked: 1
+    isRoot: 0
+  - id: knight_damage_1
+    description: Increase Damage
+    cost: 100
+    effects:
+      modifiers:
+      - StatType: 0
+        ModType: 200
+        Value: 50
+    childNodes:
+    - knight_damage_2
+    isUnlocked: 0
+    isRoot: 0
+  - id: knight_damage_2
+    description: Increase Damage 2
+    cost: 120
+    effects:
+      modifiers:
+      - StatType: 0
+        ModType: 200
+        Value: 50
+    childNodes:
+    - knight_damage_3
+    isUnlocked: 0
+    isRoot: 0
+  - id: knight_health_2
+    description: Increase Health 2
+    cost: 120
+    effects:
+      modifiers:
+      - StatType: 0
+        ModType: 200
+        Value: 50
+      - StatType: 1
+        ModType: 300
+        Value: 2
+      - StatType: 1
+        ModType: 100
+        Value: 50
+      - StatType: 3
+        ModType: 200
+        Value: 50
+      - StatType: 3
+        ModType: 200
+        Value: 50
+      - StatType: 3
+        ModType: 200
+        Value: 50
+      - StatType: 3
+        ModType: 200
+        Value: 50
+    childNodes:
+    - knight_health_3
+    isUnlocked: 1
+    isRoot: 0
+  - id: test
+    description: test
+    cost: 120
+    effects:
+      modifiers:
+      - StatType: 0
+        ModType: 200
+        Value: 50
+    childNodes: []
+    isUnlocked: 0
+    isRoot: 0
+  - id: test2
+    description: test2
+    cost: 120
+    effects:
+      modifiers:
+      - StatType: 0
+        ModType: 200
+        Value: 50
+    childNodes: []
+    isUnlocked: 0
+    isRoot: 0
