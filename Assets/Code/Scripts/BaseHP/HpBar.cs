@@ -11,7 +11,7 @@ public class HpBar : MonoBehaviour
     [SerializeField] private float barHeight;
 
     [SerializeField] private float visibleTime;
-    private int maxHp;
+    private int maxHp = 100;
     void Start()
     {
         maxHp = hpSystem.maxHP;

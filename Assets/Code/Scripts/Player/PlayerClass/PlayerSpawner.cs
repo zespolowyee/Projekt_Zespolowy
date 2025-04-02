@@ -5,57 +5,47 @@ using UnityEngine;
 // W przypadku dodania nowej klasy, uwzględnij ją w metodzie SpawnPlayer.
 public class PlayerSpawner : NetworkBehaviour
 {
-    [SerializeField] private GameObject knightPrefab;
-    [SerializeField] private GameObject paladinPrefab;
-    [SerializeField] private GameObject axemanPrefab;
+    [SerializeField] private PlayerClassPrefabMapping playerClassPrefabMapping;
+
     private void Start()
     {
         // Subscribe to class selection event
         SelectClassUI.OnClassSelected += OnClassSelected;
     }
 
-    private void OnDestroy()
+    public override void OnDestroy()
     {
         // Unsubscribe to avoid memory leaks
         SelectClassUI.OnClassSelected -= OnClassSelected;
+        base.OnDestroy();
     }
 
-    private void OnClassSelected(string className)
+    private void OnClassSelected(PlayerClassType playerClass)
     {
         if (NetworkManager.Singleton.IsClient && NetworkManager.Singleton.IsHost)
         {
-            SpawnPlayer(className, NetworkManager.Singleton.LocalClientId);
+            SpawnPlayer(playerClass, NetworkManager.Singleton.LocalClientId);
         }
         else if (NetworkManager.Singleton.IsClient)
         {
             // Tell the server to spawn the selected class
-            SpawnPlayerServerRpc(className);
+            SpawnPlayerServerRpc(playerClass);
         }
     }
 
     [ServerRpc(RequireOwnership = false)]
-    private void SpawnPlayerServerRpc(string className, ServerRpcParams rpcParams = default)
+    private void SpawnPlayerServerRpc(PlayerClassType playerClass, ServerRpcParams rpcParams = default)
     {
-        SpawnPlayer(className, rpcParams.Receive.SenderClientId);
+        SpawnPlayer(playerClass, rpcParams.Receive.SenderClientId);
     }
 
-    private void SpawnPlayer(string className, ulong clientId)
+
+    private void SpawnPlayer(PlayerClassType playerClass, ulong clientId)
     {
         GameObject playerPrefab = null;
-        Debug.Log("Spawning: " + className);
+        Debug.Log("Spawning: " + playerClass.ToString());
 
-        switch (className)
-        {
-            case "Knight":
-                playerPrefab = knightPrefab;
-                break;
-            case "Paladin":
-                playerPrefab = paladinPrefab;
-                break;
-            case "Axeman":
-                playerPrefab = axemanPrefab;
-                break;
-        }
+        playerPrefab = playerClassPrefabMapping.GetPrefab(playerClass);
 
         if (playerPrefab != null)
         {
