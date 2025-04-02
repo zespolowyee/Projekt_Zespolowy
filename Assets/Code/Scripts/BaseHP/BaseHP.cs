@@ -22,4 +22,16 @@ public class BaseHP : HPSystem
         base.Update();
         
     }
+
+    public override void TakeDamage(int damage)
+    {
+        base.TakeDamage(damage);
+
+        BaseHitEffect hitEffect = GetComponent<BaseHitEffect>();
+        if (hitEffect != null)
+        {
+            hitEffect.TriggerHitEffect();
+        }
+    }
+
 }
