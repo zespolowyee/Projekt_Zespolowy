@@ -55,6 +55,7 @@ public class LobbyUI : MonoBehaviour
         lobbyController.OnConnectionLost += OnConnectionLost;
         lobbyController.OnConnectionRestored += OnConnectionRestored;
         RefreshLobbyInfo();
+        CheckIfGameStarted();
     }
 
     public void OnDisable()
@@ -280,6 +281,8 @@ public class LobbyUI : MonoBehaviour
 
     private async void CheckIfGameStarted()
     {
+        if (lobbyController.CurrentLobby == null) return;
+        
         if (lobbyController.CurrentLobby.Data.TryGetValue(lobbyController.relayCodeVariableName, out DataObject relayCode))
         {
             if (relayCode.Value == null) return;
