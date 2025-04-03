@@ -26,7 +26,7 @@ public class SelectClassUI : MonoBehaviour
 
         axemanButton.onClick.AddListener(() =>
         {
-            OnClassSelected?.Invoke("Axeman");
+            OnClassSelected?.Invoke(PlayerClassType.Axeman);
         });
     }
 }
