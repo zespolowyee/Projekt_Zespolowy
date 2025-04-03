@@ -1,5 +1,6 @@
 public enum PlayerClassType
 {
     Knight,
-    Axeman
+    Axeman,
+    Paladin
 }

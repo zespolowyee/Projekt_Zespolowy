@@ -12,21 +12,20 @@ public class SelectClassUI : MonoBehaviour
 
     private void Awake()
     {
-        // Add logging for Knight button click
         knightButton.onClick.AddListener(() =>
         {
             OnClassSelected?.Invoke(PlayerClassType.Knight);
         });
 
-        // Add logging for Hunter button click
-        axemanButton.onClick.AddListener(() =>
+        paladinButton.onClick.AddListener(() =>
         {
-            OnClassSelected?.Invoke(PlayerClassType.Axeman);
+            OnClassSelected?.Invoke(PlayerClassType.Paladin);
         });
 
         axemanButton.onClick.AddListener(() =>
         {
             OnClassSelected?.Invoke(PlayerClassType.Axeman);
         });
+
     }
 }
