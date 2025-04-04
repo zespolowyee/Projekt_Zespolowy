@@ -18,13 +18,9 @@ public class Fireball : NetworkBehaviour
  
      void OnCollisionEnter(Collision collision)
      {
-         ExplodeServerRpc();
-     }
- 
-     [ServerRpc]
-     void ExplodeServerRpc()
-     {
-         Explode();
+        if (IsServer) {
+            Explode();
+        }
      }
  
      void Explode()
