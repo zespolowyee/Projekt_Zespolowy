@@ -1,9 +1,29 @@
 fileFormatVersion: 2
-guid: a625b5798114f2c4b84c4d90e4abfaea
+guid: c5f6e47fc51ff4b4499c161cbaf03aca
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Concrete
+    second: {fileID: 2100000, guid: bd82a18f31f7736468342b9e0acc3737, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Diamonds
+    second: {fileID: 2100000, guid: e2df44c03927d834185ebfa847f6c57d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Gold
+    second: {fileID: 2100000, guid: 03d1b65d58dc2f045b85dd2a7f6e9599, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rubins
+    second: {fileID: 2100000, guid: 9da69298df1cb9044b539305e33f82d1, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
