@@ -8,6 +8,8 @@ public class EnemyHp : HPSystem
     public UnityEvent OnEnemyDeath;
     public UnityEvent OnEnemyTakeDamage;
 
+    [SerializeField] private GameObject DeathParticleEfect;
+
     protected override void Start()
     {
         base.Start();
@@ -24,6 +26,10 @@ public class EnemyHp : HPSystem
     {
         base.Die();
         OnEnemyDeath?.Invoke();
+        if(DeathParticleEfect != null)
+        {
+            Instantiate(DeathParticleEfect, transform.position, Quaternion.identity);
+        }
         Destroy(gameObject);
     }
 
