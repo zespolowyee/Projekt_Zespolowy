@@ -4,7 +4,7 @@ public class BaseHP : HPSystem
 {
     public static event System.Action OnBaseDestroyed;
 
-    protected override void Die()
+    public override void Die()
     {
         base.Die();
         OnBaseDestroyed?.Invoke();

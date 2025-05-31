@@ -39,7 +39,7 @@ public class EnemyDeathHandler : NetworkBehaviour
 
     public void Die()
     {
-        if (IsServer)
+        if (IsServer && goldReward > 0)
         {
             DropGold();
         }
@@ -67,6 +67,10 @@ public class EnemyDeathHandler : NetworkBehaviour
     }
     private void DistributeXPAmongAll(int totalExp)
     {
+        if (totalExp <= 0)
+        {
+            return;
+        }
         PlayerStatsDemo[] allXPSystems = FindObjectsByType<PlayerStatsDemo>(FindObjectsSortMode.None);
         if (allXPSystems.Length > 0)
         {
