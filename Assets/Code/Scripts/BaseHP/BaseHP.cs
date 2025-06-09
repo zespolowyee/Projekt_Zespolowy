@@ -8,7 +8,8 @@ public class BaseHP : HPSystem
     public UnityEvent OnBaseTakeDamage;
     public UnityEvent OnBaseDie;
 
-    protected override void Die()
+    public override void Die()
+
     {
         base.Die();
         OnBaseDestroyed?.Invoke();
