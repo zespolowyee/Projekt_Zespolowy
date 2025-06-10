@@ -1,5 +1,4 @@
 using System.Globalization;
-using Unity.Multiplayer.Samples.Utilities.ClientAuthority;
 using Unity.Netcode;
 using UnityEngine;
 

@@ -1,4 +1,8 @@
+using System;
+using System.Collections;
 using Unity.Netcode;
+using Unity.Services.Lobbies.Models;
+using UnityEditor.MemoryProfiler;
 using UnityEngine;
 
 // Ten skrypt spawnuje gracza w zależności od jego wyboru klasy.
@@ -11,6 +15,36 @@ public class PlayerSpawner : NetworkBehaviour
     {
         // Subscribe to class selection event
         SelectClassUI.OnClassSelected += OnClassSelected;
+        
+        //If the game was stared from a lobby. Try to get class from lobby controller.
+        LobbyController lobbyController = FindFirstObjectByType<LobbyController>();
+        if (lobbyController != null)
+        {
+            var myPlayer = lobbyController.GetMyPlayer();
+            if (myPlayer.Data.TryGetValue(lobbyController.playerClassVariableName, out PlayerDataObject currentClassObject))
+            {
+                PlayerClassType currentClass = Enum.Parse<PlayerClassType>(currentClassObject.Value);
+                NetworkManager.Singleton.OnConnectionEvent += (manager, eventData) =>
+                {
+                    if (eventData.EventType != ConnectionEvent.ClientConnected)
+                        return;
+
+                    if (eventData.ClientId == NetworkManager.Singleton.LocalClientId)
+                    {
+                        OnClassSelected(currentClass);   
+                    }
+                };
+                
+                if (lobbyController.IsHost)
+                {
+                    NetworkManager.Singleton.StartHost();
+                }
+                else
+                {
+                    NetworkManager.Singleton.StartClient();
+                }
+            }
+        }
     }
 
     public override void OnDestroy()
