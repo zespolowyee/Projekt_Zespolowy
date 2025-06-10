@@ -10,8 +10,6 @@ public class HPSystem : NetworkBehaviour
 	public bool getAnimatorOnStart = true;
     public Animator animator;
 
-	public Animator animator;
-
 	
 	protected virtual void Start()
 	{
@@ -61,7 +59,7 @@ public class HPSystem : NetworkBehaviour
         }
     }
 
-    protected virtual void Die()
+    public virtual void Die()
 
 	{
 		isDead = true;
