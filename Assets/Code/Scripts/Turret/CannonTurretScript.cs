@@ -4,7 +4,7 @@ using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class TurretScript : NetworkBehaviour
+public class CannonTurretScript : NetworkBehaviour
 {
 	[Header("Rotation objects")]
 	[SerializeField] private Transform barrelObject;
