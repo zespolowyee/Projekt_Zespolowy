@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using Unity.Netcode;
 using Unity.Services.Lobbies.Models;
-using UnityEditor.MemoryProfiler;
 using UnityEngine;
 
 // Ten skrypt spawnuje gracza w zależności od jego wyboru klasy.
