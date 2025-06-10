@@ -1,20 +1,16 @@
-using System;
+﻿using System;
 using System.Linq;
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class TurretScript : NetworkBehaviour
+public class BalistaTurretScript : NetworkBehaviour
 {
 	[Header("Rotation objects")]
-	[SerializeField] private Transform barrelObject;
-	[SerializeField] private Transform barrelClamp;
-	[SerializeField] private Transform barrelShootingPoint;
-	[SerializeField] private Transform cannonPivot;
-	
-	[Header("Cannonball info")]
-	[SerializeField] private GameObject cannonball;
-	[SerializeField] private float cannonballVelocity;
+	[SerializeField] private Transform bowObject;
+	[SerializeField] private Transform bowClamp;
+	[SerializeField] private Transform bowShootingPoint;
+	[SerializeField] private Transform balistaPivot;
 	
 	[Header("Turret's target")]
 	[SerializeField] private LayerMask targetLayer;
@@ -22,6 +18,9 @@ public class TurretScript : NetworkBehaviour
 	[Header("Up and down rotation limits")]
 	[SerializeField] private float maxUpRotation = -10;
 	[SerializeField] private float maxDownRotation = 20;
+	
+	[SerializeField] private LineRenderer lineRendererPrefab;
+	[SerializeField] private float beamDuration = 0.1f;
 	
 	private Collider _currentTarget;
 	private float _timeElapsed = 0f;
@@ -59,13 +58,13 @@ public class TurretScript : NetworkBehaviour
 		Vector3 targetPostition = new Vector3(_currentTarget.transform.position.x,
 			transform.position.y,
 			_currentTarget.transform.position.z);
-		cannonPivot.LookAt(targetPostition);
+		balistaPivot.LookAt(targetPostition);
 
 		//Lower or raise the hidden element that is at the same position as barrel
-		barrelClamp.LookAt(_currentTarget.transform.position);
+		bowClamp.LookAt(_currentTarget.transform.position);
 
 		//Get the rotation from the hidden element
-		Vector3 clampedRotation = barrelClamp.eulerAngles;
+		Vector3 clampedRotation = bowClamp.eulerAngles;
 
 		//Clamp the x rotation of barrel
 		float xRotation = clampedRotation.x;
@@ -78,17 +77,32 @@ public class TurretScript : NetworkBehaviour
 		clampedRotation.x = Math.Clamp(xRotation, maxUpRotation, maxDownRotation);
 
 		//Apply the rotation with clamped x to the barrel
-		barrelObject.eulerAngles = clampedRotation;
+		bowObject.eulerAngles = clampedRotation;
+	}
+	
+	void DrawBeam(Vector3 start, Vector3 end)
+	{
+		var beam = Instantiate(lineRendererPrefab);
+		beam.SetPosition(0, start);
+		beam.SetPosition(1, end);
+		Destroy(beam.gameObject, beamDuration);
 	}
 
 	void ShootAtTarget()
 	{
-		Debug.Log("Shooting at target: ");
-        var ball = Instantiate(cannonball, barrelShootingPoint.position, barrelShootingPoint.rotation);
-		ball.GetComponent<CannonballScript>()
-			.SetTargetLayer(targetLayer)
-			.SetBallDamage((int) _turretStats.GetNetStatValue(NetStatType.Damage));
-		ball.GetComponent<Rigidbody>().linearVelocity = barrelShootingPoint.transform.forward * cannonballVelocity;
+		Ray ray = new Ray(bowShootingPoint.transform.position, bowShootingPoint.transform.forward);
+		RaycastHit hit;
+
+		// Perform the raycast
+		if (Physics.Raycast(ray, out hit, _turretStats.GetNetStatValue(NetStatType.Range), targetLayer))
+		{
+			if (hit.collider.TryGetComponent<HPSystem>(out var otherHp))
+			{
+				otherHp.TakeDamage((int)_turretStats.GetNetStatValue(NetStatType.Damage));
+				DrawBeam(bowShootingPoint.transform.position, hit.transform.position);
+			}
+		}
+
 	}
 
 	[ServerRpc]
