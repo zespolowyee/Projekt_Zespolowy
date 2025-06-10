@@ -83,7 +83,8 @@ public class TurretScript : NetworkBehaviour
 
 	void ShootAtTarget()
 	{
-		var ball = Instantiate(cannonball, barrelShootingPoint.position, barrelShootingPoint.rotation);
+		Debug.Log("Shooting at target: ");
+        var ball = Instantiate(cannonball, barrelShootingPoint.position, barrelShootingPoint.rotation);
 		ball.GetComponent<CannonballScript>()
 			.SetTargetLayer(targetLayer)
 			.SetBallDamage((int) _turretStats.GetNetStatValue(NetStatType.Damage));

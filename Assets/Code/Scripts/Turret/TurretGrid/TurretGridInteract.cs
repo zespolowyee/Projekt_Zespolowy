@@ -30,7 +30,7 @@ public class TurretGridInteract : NetworkBehaviour, IInteractable
             }
             else
             {
-                placeTurret();
+                RequestTurretPlacementServerRpc(transform.position);
 
             }
         }
@@ -39,11 +39,43 @@ public class TurretGridInteract : NetworkBehaviour, IInteractable
     {
         if (turretPrefab != null)
         {
-            Instantiate(turretPrefab, transform.position, Quaternion.identity);
+            // Sprawdü czy mamy uprawnienia do spawnowania (tylko serwer/host)
+            if (NetworkManager.Singleton.IsServer || NetworkManager.Singleton.IsHost)
+            {
+                GameObject turretInstance = Instantiate(turretPrefab, transform.position, Quaternion.identity);
+                NetworkObject turretNetworkObject = turretInstance.GetComponent<NetworkObject>();
+
+                if (turretNetworkObject != null)
+                {
+                    turretNetworkObject.Spawn();
+                }
+                else
+                {
+                    Debug.LogError("Turret prefab doesn't have NetworkObject component!");
+                    Destroy(turretInstance);
+                }
+            }
+            else
+            {
+                // Jeúli to klient, wyúlij request do serwera
+                RequestTurretPlacementServerRpc(transform.position);
+            }
         }
         else
         {
             Debug.LogError("Turret prefab is null");
+        }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void RequestTurretPlacementServerRpc(Vector3 position)
+    {
+        GameObject turretInstance = Instantiate(turretPrefab, position, Quaternion.identity);
+        NetworkObject turretNetworkObject = turretInstance.GetComponent<NetworkObject>();
+
+        if (turretNetworkObject != null)
+        {
+            turretNetworkObject.Spawn();
         }
     }
 
