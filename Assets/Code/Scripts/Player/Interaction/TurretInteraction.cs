@@ -10,4 +10,5 @@ public class TurretInteraction : NetworkBehaviour, IInteractable
         TurretStats turretStats = gameObject.GetComponentInParent<TurretStats>();
         uiController.DisplayTurretUpgradeUI(turretStats);
     }
+
 }

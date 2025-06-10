@@ -83,7 +83,7 @@ public class PlayerSpawner : NetworkBehaviour
 
         if (playerPrefab != null)
         {
-            GameObject playerInstance = Instantiate(playerPrefab);
+            GameObject playerInstance = Instantiate(playerPrefab, transform.position, Quaternion.identity);
             playerInstance.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
         }
     }

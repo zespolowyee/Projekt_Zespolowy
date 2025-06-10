@@ -2,41 +2,41 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class TurretGridInteract : NetworkBehaviour, IInteractableTwoWay
+public class TurretGridInteract : NetworkBehaviour, IInteractable
 {
-    [SerializeField] private bool shouldInteractionBeSyncedOnNet = true; 
-
+    [SerializeField] private bool shouldInteractionBeSyncedOnNet = true;
+    [SerializeField] private GameObject turretPrefab;
     [ServerRpc(RequireOwnership = false)]
-    protected virtual void TriggerInteractionServerRpc(TurretManager.TurretType turret)
+    protected virtual void TriggerInteractionServerRpc()
     {
-        TriggerInteractionClientRpc(turret);
+        TriggerInteractionClientRpc();
     }
 
     [ClientRpc]
-    protected virtual void TriggerInteractionClientRpc(TurretManager.TurretType turret)
+    protected virtual void TriggerInteractionClientRpc()
     {
-        placeTurret(turret);
+        placeTurret();
+        Destroy(gameObject); // Destroy the grid after placing the turret
     }
 
     public void Interact(Object sender)
     {
         if (sender is PlayerPublicPreferences playerPublicPreferences)
         {
-            var turret = playerPublicPreferences.selectedTurret;
 
             if (shouldInteractionBeSyncedOnNet)
             {
-                TriggerInteractionServerRpc(turret);
+                TriggerInteractionServerRpc();
             }
             else
             {
-                placeTurret(turret);
+                placeTurret();
+
             }
         }
     }
-    public void placeTurret(TurretManager.TurretType turret)
+    public void placeTurret()
     {
-        var turretPrefab = TurretManager.GetTurretPrefab(turret);
         if (turretPrefab != null)
         {
             Instantiate(turretPrefab, transform.position, Quaternion.identity);
@@ -45,5 +45,11 @@ public class TurretGridInteract : NetworkBehaviour, IInteractableTwoWay
         {
             Debug.LogError("Turret prefab is null");
         }
+    }
+
+
+    void IInteractable.Interact(GameObject interactingPlayer)
+    {
+        TriggerInteractionServerRpc();
     }
 }

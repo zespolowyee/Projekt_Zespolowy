@@ -217,7 +217,7 @@ MonoBehaviour:
   lookDistance: 5
   interactionDistance: 5
   playerPublicPreferences: {fileID: 0}
-  playerRef: {fileID: 0}
+  playerRef: {fileID: 977076010543325541}
 --- !u!1 &1624321601206913597
 GameObject:
   m_ObjectHideFlags: 0
@@ -1996,6 +1996,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turretUpgradeUI: {fileID: 2345384520125782939, guid: f7bd249fc3badfb4d80f15a7f961b534, type: 3}
+  playerUpgradeUI: {fileID: 0}
 --- !u!114 &4798868245685592663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2013,6 +2014,7 @@ MonoBehaviour:
     m_InternalValue: 100
   maxHP: 100
   isDead: 0
+  getAnimatorOnStart: 1
   animator: {fileID: 5774944085285544357}
 --- !u!114 &-6011953891441880031
 MonoBehaviour:

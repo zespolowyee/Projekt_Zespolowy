@@ -23,6 +23,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/sample-scene.unity
     guid: 2cc6fe28b65d6444da40a8c1b502fc22
+  - enabled: 1
+    path: Assets/Level/Maps/DemoMap/DemoMap.unity
+    guid: 4aee7298b19b2984a9015aa5ff0a01ca
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

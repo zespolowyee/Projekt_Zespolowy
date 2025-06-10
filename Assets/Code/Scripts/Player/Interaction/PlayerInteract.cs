@@ -56,10 +56,10 @@ public class PlayerInteract : NetworkBehaviour
                 return;
             }
 
-            IInteractableTwoWay targetInteractableTwoWay = hit.transform.GetComponent<IInteractableTwoWay>();
+            IInteractable targetInteractableTwoWay = hit.transform.GetComponent<IInteractable>();
             if (targetInteractableTwoWay != null)
             {
-                targetInteractableTwoWay.Interact(playerPublicPreferences);
+                targetInteractableTwoWay.Interact(null);
             }
         }
     }

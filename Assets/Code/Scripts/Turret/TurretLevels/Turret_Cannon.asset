@@ -60,5 +60,5 @@ MonoBehaviour:
       Value: 5
     - StatType: 8
       ModType: 100
-      Value: -2.9
+      Value: -1
     upgradeCost: 1000
