@@ -68,7 +68,7 @@ public class PlayerHp : HPSystem
             OnHpChanged(OwnerClientId, currentValue, (int)playerStats.GetNetStatValue(NetStatType.MaxHp));
         }
     }
-    protected override void Die()
+    public override void Die()
     {
         base.Die();
         if (IsServer)

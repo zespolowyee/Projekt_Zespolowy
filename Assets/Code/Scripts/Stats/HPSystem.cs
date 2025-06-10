@@ -7,8 +7,11 @@ public class HPSystem : NetworkBehaviour
 	public NetworkVariable<int> currentHP = new NetworkVariable<int>(100);
 	public int maxHP = 100;
 	public bool isDead = false;
+	public bool getAnimatorOnStart = true;
+    public Animator animator;
 
 	public Animator animator;
+
 	
 	protected virtual void Start()
 	{
@@ -17,7 +20,11 @@ public class HPSystem : NetworkBehaviour
 			currentHP.Value = maxHP;
 		}
 
-		animator = GetComponent<Animator>();
+		if (getAnimatorOnStart)
+		{
+            animator = GetComponent<Animator>();
+        }
+
 	}
 
 	public virtual void Update()
@@ -42,7 +49,6 @@ public class HPSystem : NetworkBehaviour
 		}
 	}
 
-
     public virtual void Heal(int amount)
     {
         if (IsServer)
@@ -56,6 +62,7 @@ public class HPSystem : NetworkBehaviour
     }
 
     protected virtual void Die()
+
 	{
 		isDead = true;
 		if (animator != null)
