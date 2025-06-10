@@ -36,7 +36,7 @@ MonoBehaviour:
       Value: 10
     - StatType: 8
       ModType: 100
-      Value: -1
+      Value: -0.3
     upgradeCost: 50
   - level: 3
     modifiers:
@@ -48,5 +48,5 @@ MonoBehaviour:
       Value: 15
     - StatType: 8
       ModType: 100
-      Value: -1
+      Value: -0.3
     upgradeCost: 200

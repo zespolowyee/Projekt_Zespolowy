@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 73378302180869306}
   - component: {fileID: 2224977708209973595}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fuse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 5969329135055031839}
   - component: {fileID: 888608455475633945}
   - component: {fileID: 3776381889916030717}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ExplodeAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -223,6 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e618dfaa9169a7f419782009857c774b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   explosionRange: 4
   explosionDamage: 30
   whatIsTarget:
@@ -5231,21 +5232,81 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8432709212547291325, guid: 92812b44bf2a814428b2ba81c9115f09, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: -8391222552659086748, guid: 92812b44bf2a814428b2ba81c9115f09, type: 3}
       propertyPath: m_Name
       value: Chicken
       objectReference: {fileID: 0}
+    - target: {fileID: -8391222552659086748, guid: 92812b44bf2a814428b2ba81c9115f09, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -7197843745397295513, guid: 92812b44bf2a814428b2ba81c9115f09, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -6071627403428206164, guid: 92812b44bf2a814428b2ba81c9115f09, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: -5117700066308340382, guid: 92812b44bf2a814428b2ba81c9115f09, type: 3}
       propertyPath: m_Name
       value: Bomb
+      objectReference: {fileID: 0}
+    - target: {fileID: -5117700066308340382, guid: 92812b44bf2a814428b2ba81c9115f09, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -4543687271559952881, guid: 92812b44bf2a814428b2ba81c9115f09, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -2821761757288588400, guid: 92812b44bf2a814428b2ba81c9115f09, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -2646625857217001969, guid: 92812b44bf2a814428b2ba81c9115f09, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 412306187271166687, guid: 92812b44bf2a814428b2ba81c9115f09, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 92812b44bf2a814428b2ba81c9115f09, type: 3}
       propertyPath: m_Name
       value: DemonChicken
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 92812b44bf2a814428b2ba81c9115f09, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 92812b44bf2a814428b2ba81c9115f09, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1249997991525041651, guid: 92812b44bf2a814428b2ba81c9115f09, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1790183945725220954, guid: 92812b44bf2a814428b2ba81c9115f09, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1893667240869121792, guid: 92812b44bf2a814428b2ba81c9115f09, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6905609870639353253, guid: 92812b44bf2a814428b2ba81c9115f09, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7036213049465896255, guid: 92812b44bf2a814428b2ba81c9115f09, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5507,6 +5568,7 @@ MonoBehaviour:
   OnEnemyTakeDamage:
     m_PersistentCalls:
       m_Calls: []
+  DeathParticleEfect: {fileID: 0}
 --- !u!114 &2973118056896576991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5571,6 +5633,14 @@ PrefabInstance:
     - target: {fileID: 706924751136051752, guid: 7e8064a30a034d54a923f5876722c3b5, type: 3}
       propertyPath: m_Name
       value: HpBar (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 706924751136051752, guid: 7e8064a30a034d54a923f5876722c3b5, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2496789369768005314, guid: 7e8064a30a034d54a923f5876722c3b5, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7475465711082719928, guid: 7e8064a30a034d54a923f5876722c3b5, type: 3}
       propertyPath: hpSystem
