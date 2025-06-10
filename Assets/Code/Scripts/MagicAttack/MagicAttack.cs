@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using Unity.Netcode;
-using Unity.Multiplayer.Samples.Utilities.ClientAuthority;
+
 
 public class MagicAttack : NetworkBehaviour
 {
