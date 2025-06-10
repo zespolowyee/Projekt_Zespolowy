@@ -4032,7 +4032,6 @@ GameObject:
   - component: {fileID: 8772735560775969004}
   - component: {fileID: 971318665522388343}
   - component: {fileID: 8917512636873394364}
-  - component: {fileID: 7390431640309843900}
   m_Layer: 0
   m_Name: Paladin J Nordstrom
   m_TagString: Untagged
@@ -4219,6 +4218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a084c2de80dd42708479810150b35bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!114 &2115288395327622801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4231,6 +4231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1a02c426803341238cb7969ccd5eee8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   arrowPrefab: {fileID: 4227766295056173182, guid: 42f26f0e9642c48c6a840118dd4a03a3, type: 3}
   arrowSpawnPoint: {fileID: 7912261358227097143}
   baseShootForce: 30
@@ -4268,9 +4269,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d88903ac39611e418411469e84df20a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   lookDistance: 0
   interactionDistance: 0
   playerPublicPreferences: {fileID: 11400000, guid: 8523793f66d24b54c9d23dadd41565aa, type: 2}
+  playerRef: {fileID: 0}
 --- !u!114 &8917512636873394364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4285,23 +4288,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   maxHP: 100
+  isDead: 0
   animator: {fileID: 4898325958261134333}
---- !u!114 &7390431640309843900
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8366909806467494178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1362a4259e95435489c20ff15fa1cba5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 100
-  damage: 10
-  speed: 5
-  currentEXP: 1000
 --- !u!1 &8462858325339113138
 GameObject:
   m_ObjectHideFlags: 0
@@ -4442,9 +4430,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d88903ac39611e418411469e84df20a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   lookDistance: 5
   interactionDistance: 5
   playerPublicPreferences: {fileID: 0}
+  playerRef: {fileID: 0}
 --- !u!1 &9006908669535317665
 GameObject:
   m_ObjectHideFlags: 0

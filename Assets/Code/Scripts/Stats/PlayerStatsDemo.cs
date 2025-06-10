@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerStatsDemo : NetStatController
 {
-    public  delegate void GoldChangedUpHandler(ulong clientId, int goldAmount);
+    public delegate void GoldChangedUpHandler(ulong clientId, int goldAmount);
     public static event GoldChangedUpHandler OnGoldChanged;
 
     public delegate void ExpChangedHandler(ulong clientId, int expAmount);
@@ -29,7 +29,7 @@ public class PlayerStatsDemo : NetStatController
         gold.Value += amount;
     }
 
-    public void SetGold( int amount)
+    public void SetGold(int amount)
     {
         if (!IsServer)
         {
@@ -42,7 +42,7 @@ public class PlayerStatsDemo : NetStatController
 
     public int GetGold()
     {
-        return gold.Value; 
+        return gold.Value;
     }
 
     public void AddEXP(int amount)
@@ -63,6 +63,12 @@ public class PlayerStatsDemo : NetStatController
             InvokeOnExpChangedClientRpc(currentEXP.Value + amount);
             currentEXP.Value += amount;
         }
+    }
+
+    [Rpc(SendTo.Server)]
+    public void AddExpRPC(int amount)
+    {
+        AddEXP(amount);
     }
 
     public void SetEXP(int amount)
@@ -96,5 +102,14 @@ public class PlayerStatsDemo : NetStatController
         {
             OnExpChanged(OwnerClientId, currentValue);
         }
+    }
+
+    public void ApplyUpgrade(UpgradeEffects effects)
+    {
+        foreach (var modifier in effects.modifiers)
+        {
+            AddModifierServerRPC(modifier);
+        }
+
     }
 }

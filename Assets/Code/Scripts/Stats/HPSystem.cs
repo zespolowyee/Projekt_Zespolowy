@@ -10,6 +10,8 @@ public class HPSystem : NetworkBehaviour
 	public bool getAnimatorOnStart = true;
     public Animator animator;
 
+	public Animator animator;
+
 	
 	protected virtual void Start()
 	{
@@ -47,7 +49,20 @@ public class HPSystem : NetworkBehaviour
 		}
 	}
 
-	public virtual void Die()
+    public virtual void Heal(int amount)
+    {
+        if (IsServer)
+        {
+            currentHP.Value += amount;
+            if (currentHP.Value >= maxHP)
+            {
+                currentHP.Value = maxHP;
+            }
+        }
+    }
+
+    protected virtual void Die()
+
 	{
 		isDead = true;
 		if (animator != null)

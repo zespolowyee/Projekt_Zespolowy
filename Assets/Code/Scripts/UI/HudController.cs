@@ -25,10 +25,11 @@ public class HudController : NetworkBehaviour
             PlayerHp.OnHpChanged += UpdateHealthBarData;
             PlayerStatsDemo.OnGoldChanged += UpdateGoldData;
             PlayerStatsDemo.OnExpChanged += UpdateExpData;
+            playerStats.GetNetStat(NetStatType.MaxHp).OnModifiersChanged += UpdateHealthBarData;
             if (playerHp != null)
             {
                 health.fillAmount = ((float)playerHp.GetCurrentHP() / (float)playerHp.GetMaxHp());
-                currentHpText.text = playerHp.GetCurrentHP().ToString();
+                currentHpText.text = playerHp.currentHP.Value.ToString() + " / " + playerHp.GetMaxHp().ToString();
             }
             if (playerStats != null)
             {
@@ -45,6 +46,7 @@ public class HudController : NetworkBehaviour
         PlayerHp.OnHpChanged -= UpdateHealthBarData;
         PlayerStatsDemo.OnGoldChanged -= UpdateGoldData;
         PlayerStatsDemo.OnExpChanged -= UpdateExpData;
+        playerStats.GetNetStat(NetStatType.MaxHp).OnModifiersChanged -= UpdateHealthBarData;
     }
 
     public void UpdateHealthBarData(ulong clientId, int currentHp, int maxHp)
@@ -58,9 +60,17 @@ public class HudController : NetworkBehaviour
             return;
         }
         health.fillAmount = ((float)currentHp / (float)maxHp);
-        currentHpText.text = currentHp.ToString();
+        currentHpText.text = currentHp.ToString() + " / " + maxHp;
 
     }
+
+    public void UpdateHealthBarData()
+    {
+        health.fillAmount = ((float)playerHp.currentHP.Value / (float)playerHp.GetMaxHp());
+        currentHpText.text = playerHp.currentHP.Value.ToString() + " / "+ playerHp.GetMaxHp().ToString();
+
+    }
+
 
     public void UpdateGoldData(ulong clientId, int gold)
     {
