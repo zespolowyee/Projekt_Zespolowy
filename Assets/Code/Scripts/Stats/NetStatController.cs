@@ -61,4 +61,17 @@ public class NetStatController : NetworkBehaviour, INetStatController
         return 0f;
     }
 
+    public NetStat GetNetStat(NetStatType type)
+    {
+        foreach (NetStat stat in statList)
+        {
+            if (type == stat.Type)
+            {
+                return stat;
+            }
+        }
+        Debug.LogError("No stat of type" + type + " in controller");
+        return null;
+    }
+
 }

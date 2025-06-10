@@ -11,7 +11,7 @@ public class EnemyNavigation : NetworkBehaviour
 {
     private EnemyPath path;
 
-    [SerializeField] private float playerCheckFrequency = 0.4f;
+    [SerializeField] private float playerCheckFrequency = 0.3f;
     [SerializeField] private float checkForPlayerDistance = 9f;
     [SerializeField] private LayerMask whatIsPlayer;
     private float lastPlayerCheckTime;
@@ -33,7 +33,7 @@ public class EnemyNavigation : NetworkBehaviour
     public EnemyPath EnemyPath
     {
         get { return path; }
-        private set { path = value; }
+        set { path = value; }
     }
     public Transform Target { get { return target; } }
 
@@ -85,17 +85,24 @@ public class EnemyNavigation : NetworkBehaviour
         {
             return;
         }
-        CurrentState.Handle();
+        if (CurrentState != null)
+        {
+            CurrentState.Handle();
+        }
+
 
         if (lastPlayerCheckTime + playerCheckFrequency < Time.time)
         {
+            lastPlayerCheckTime = Time.time;
+            if (attackState.CheckAllConditions())
+            {
+                SwitchState(attackState);
+            }
+
             SearchForPlayerInRange();
         }
 
-        if (attackState.CheckAllConditions())
-        {
-            SwitchState(attackState);
-        }
+
 
 
 
